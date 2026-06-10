@@ -486,7 +486,6 @@
         <button class="btn primary" id="add-tool-btn">新增工具站</button>
         <button class="btn" id="manage-category-btn">修改分类</button>
         <button class="btn" id="export-btn">导出配置</button>
-        <button class="btn" id="export-default-btn">导出默认配置</button>
         <button class="btn" id="import-btn">导入配置</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
       </div>
@@ -1007,11 +1006,6 @@
       showToast("配置已导出");
     }
 
-    function exportDefaultConfig() {
-      downloadConfig("mytools.default.json");
-      showToast("默认配置已导出");
-    }
-
     function downloadConfig(filename) {
       const payload = JSON.stringify({
         version: 1,
@@ -1123,7 +1117,6 @@
         showModal(elements.categoryModal);
       });
       document.getElementById("export-btn").addEventListener("click", exportConfig);
-      document.getElementById("export-default-btn").addEventListener("click", exportDefaultConfig);
       document.getElementById("import-btn").addEventListener("click", () => elements.importFile.click());
       elements.importFile.addEventListener("change", () => importConfig(elements.importFile.files[0]));
       elements.toolForm.addEventListener("submit", saveTool);
