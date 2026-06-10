@@ -1,5 +1,77 @@
 {
   "version": 1,
-  "categories": [],
-  "tools": []
+  "categories": [
+    {
+      "id": "cat-ai",
+      "name": "AI 工具"
+    },
+    {
+      "id": "cat-dev",
+      "name": "开发工具"
+    },
+    {
+      "id": "cat-design",
+      "name": "设计工具"
+    },
+    {
+      "id": "cat-productivity",
+      "name": "效率工具"
+    }
+  ],
+  "tools": [
+    {
+      "id": "tool-chatgpt",
+      "name": "ChatGPT",
+      "url": "https://chatgpt.com/",
+      "categoryIds": [
+        "cat-ai"
+      ],
+      "isFavorite": true
+    },
+    {
+      "id": "tool-claude",
+      "name": "Claude",
+      "url": "https://claude.ai/",
+      "categoryIds": [
+        "cat-ai"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-github",
+      "name": "GitHub",
+      "url": "https://github.com/",
+      "categoryIds": [
+        "cat-dev"
+      ],
+      "isFavorite": true
+    },
+    {
+      "id": "tool-mdn",
+      "name": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/",
+      "categoryIds": [
+        "cat-dev"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-figma",
+      "name": "Figma",
+      "url": "https://www.figma.com/",
+      "categoryIds": [
+        "cat-design"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-notion",
+      "name": "Notion",
+      "url": "https://www.notion.so/",
+      "categoryIds": [
+        "cat-productivity"
+      ],
+      "isFavorite": false
+    }
+  ]
 }

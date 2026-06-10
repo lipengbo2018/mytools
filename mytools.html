@@ -564,6 +564,7 @@
   <script>
     const STORAGE_KEY = "mytools-config-v1";
     const DEFAULT_CONFIG_URL = "mytools.default.json";
+    const DEFAULT_CONFIG_VERSION = 2;
 
     let state = { version: 1, categories: [], tools: [] };
     let currentView = "categories";
@@ -599,7 +600,12 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         try {
-          return normalizeState(JSON.parse(raw));
+          const storedState = JSON.parse(raw);
+          const normalizedState = normalizeState(storedState);
+          if (shouldRefreshDefaultState(storedState, normalizedState)) {
+            return loadDefaultState();
+          }
+          return normalizedState;
         } catch {
           localStorage.removeItem(STORAGE_KEY);
         }
@@ -615,6 +621,8 @@
           throw new Error("default config not found");
         }
         const defaultState = normalizeState(await response.json());
+        defaultState.source = "default";
+        defaultState.defaultVersion = DEFAULT_CONFIG_VERSION;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultState));
         return defaultState;
       } catch {
@@ -622,11 +630,23 @@
       }
     }
 
+    function shouldRefreshDefaultState(storedState, normalizedState) {
+      const isEmpty = normalizedState.categories.length === 0 && normalizedState.tools.length === 0;
+      const isDefaultCache = storedState.source === "default" || storedState.defaultVersion;
+      const isLegacyEmptyCache = !storedState.source && !storedState.updatedAt && isEmpty;
+      const isOldDefaultCache = isDefaultCache && storedState.defaultVersion !== DEFAULT_CONFIG_VERSION;
+      return isEmpty && (isLegacyEmptyCache || isOldDefaultCache);
+    }
+
     function normalizeState(data) {
+      data = data && typeof data === "object" ? data : {};
       const categories = Array.isArray(data.categories) ? data.categories : [];
       const tools = Array.isArray(data.tools) ? data.tools : [];
       return {
         version: 1,
+        source: data.source || "user",
+        defaultVersion: data.defaultVersion || null,
+        updatedAt: data.updatedAt || null,
         categories: categories
           .filter((item) => item && item.name)
           .map((item) => ({
@@ -653,6 +673,9 @@
     }
 
     function saveState() {
+      state.source = "user";
+      state.defaultVersion = null;
+      state.updatedAt = new Date().toISOString();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
@@ -990,7 +1013,11 @@
     }
 
     function downloadConfig(filename) {
-      const payload = JSON.stringify(state, null, 2);
+      const payload = JSON.stringify({
+        version: 1,
+        categories: state.categories,
+        tools: state.tools,
+      }, null, 2);
       const blob = new Blob([payload], { type: "application/json;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
