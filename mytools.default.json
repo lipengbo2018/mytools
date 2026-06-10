@@ -2,74 +2,102 @@
   "version": 1,
   "categories": [
     {
-      "id": "cat-ai",
-      "name": "AI 工具"
+      "id": "cat-1781101140448-hulcrr",
+      "name": "AI工具"
     },
     {
-      "id": "cat-dev",
-      "name": "开发工具"
+      "id": "cat-1781101173855-h8hhwt",
+      "name": "知识笔记"
     },
     {
-      "id": "cat-design",
-      "name": "设计工具"
-    },
-    {
-      "id": "cat-productivity",
-      "name": "效率工具"
+      "id": "cat-1781101184871-iit0zu",
+      "name": "自媒体"
     }
   ],
   "tools": [
     {
-      "id": "tool-chatgpt",
-      "name": "ChatGPT",
-      "url": "https://chatgpt.com/",
+      "id": "tool-1781101241991-5zzih8",
+      "name": "豆包",
+      "url": "https://www.doubao.com/chat/67540901634",
       "categoryIds": [
-        "cat-ai"
-      ],
-      "isFavorite": true
-    },
-    {
-      "id": "tool-claude",
-      "name": "Claude",
-      "url": "https://claude.ai/",
-      "categoryIds": [
-        "cat-ai"
+        "cat-1781101140448-hulcrr"
       ],
       "isFavorite": false
     },
     {
-      "id": "tool-github",
-      "name": "GitHub",
-      "url": "https://github.com/",
+      "id": "tool-1781101520495-g0217g",
+      "name": "GPT",
+      "url": "https://chatgpt.com/c/6a28220a-c5c4-83ea-8997-ebea6b198c05",
       "categoryIds": [
-        "cat-dev"
-      ],
-      "isFavorite": true
-    },
-    {
-      "id": "tool-mdn",
-      "name": "MDN Web Docs",
-      "url": "https://developer.mozilla.org/",
-      "categoryIds": [
-        "cat-dev"
+        "cat-1781101140448-hulcrr"
       ],
       "isFavorite": false
     },
     {
-      "id": "tool-figma",
-      "name": "Figma",
-      "url": "https://www.figma.com/",
+      "id": "tool-1781101566199-r5mjqt",
+      "name": "DeepSeek",
+      "url": "https://chat.deepseek.com/a/chat/s/58e31ced-4965-4798-a147-a911c82e3115",
       "categoryIds": [
-        "cat-design"
+        "cat-1781101140448-hulcrr"
       ],
       "isFavorite": false
     },
     {
-      "id": "tool-notion",
-      "name": "Notion",
-      "url": "https://www.notion.so/",
+      "id": "tool-1781102407727-ex426t",
+      "name": "即梦",
+      "url": "https://jimeng.jianying.com/ai-tool/generate",
       "categoryIds": [
-        "cat-productivity"
+        "cat-1781101140448-hulcrr"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781102450023-wfkpkm",
+      "name": "飞书知识库",
+      "url": "https://fcn8yf92chgf.feishu.cn/wiki/",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781102486150-5sy2co",
+      "name": "知识星球",
+      "url": "https://wx.zsxq.com/group/15552545485212",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781102583639-ta6qzg",
+      "name": "飞影数字人",
+      "url": "https://hifly.cc/subtitle-remove",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781102622814-xz46c5",
+      "name": "扣子",
+      "url": "https://www.coze.cn/session/7626313901503791366",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781102705407-bt8uhe",
+      "name": "公众号",
+      "url": "https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token=1886245920",
+      "categoryIds": [
+        "cat-1781101184871-iit0zu"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781103382695-qoz0ek",
+      "name": "Gemini",
+      "url": "https://gemini.google.com/app",
+      "categoryIds": [
+        "cat-1781101140448-hulcrr"
       ],
       "isFavorite": false
     }

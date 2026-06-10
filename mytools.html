@@ -564,7 +564,7 @@
   <script>
     const STORAGE_KEY = "mytools-config-v1";
     const DEFAULT_CONFIG_URL = "mytools.default.json";
-    const DEFAULT_CONFIG_VERSION = 2;
+    const DEFAULT_CONFIG_VERSION = 3;
 
     let state = { version: 1, categories: [], tools: [] };
     let currentView = "categories";
@@ -635,7 +635,7 @@
       const isDefaultCache = storedState.source === "default" || storedState.defaultVersion;
       const isLegacyEmptyCache = !storedState.source && !storedState.updatedAt && isEmpty;
       const isOldDefaultCache = isDefaultCache && storedState.defaultVersion !== DEFAULT_CONFIG_VERSION;
-      return isEmpty && (isLegacyEmptyCache || isOldDefaultCache);
+      return isLegacyEmptyCache || isOldDefaultCache;
     }
 
     function normalizeState(data) {
