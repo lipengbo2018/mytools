@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { execFile } = require("child_process");
 
 const rootDir = __dirname;
 const port = Number(process.env.PORT || 4174);
@@ -18,8 +19,21 @@ function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
   });
   response.end(JSON.stringify(payload));
+}
+
+function sendOptions(response) {
+  response.writeHead(204, {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+    "Access-Control-Max-Age": "86400",
+  });
+  response.end();
 }
 
 function readRequestBody(request) {
@@ -66,28 +80,98 @@ function normalizeConfig(config) {
 }
 
 async function handleUpload(request, response) {
-  if (!uploadPassword) {
-    sendJson(response, 500, { message: "服务端未配置上传口令" });
-    return;
-  }
-
   try {
-    const body = JSON.parse(await readRequestBody(request));
-    if (body.password !== uploadPassword) {
-      sendJson(response, 403, { message: "口令错误" });
-      return;
-    }
-
-    const config = normalizeConfig(body.config);
-    const targetPath = path.join(rootDir, "mytools.default.json");
-    fs.writeFileSync(targetPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
+    const config = await readAuthorizedConfig(request);
+    writeDefaultConfig(config);
     sendJson(response, 200, {
       message: "默认配置已更新",
       categories: config.categories.length,
       tools: config.tools.length,
     });
   } catch (error) {
-    sendJson(response, 400, { message: error.message || "上传失败" });
+    sendJson(response, error.statusCode || 400, { message: error.message || "上传失败" });
+  }
+}
+
+async function handleDeploy(request, response) {
+  try {
+    const config = await readAuthorizedConfig(request);
+    writeDefaultConfig(config);
+    const statusBeforeCommit = await runGit(["status", "--short"]);
+    if (!statusBeforeCommit.stdout.includes("mytools.default.json")) {
+      sendJson(response, 200, {
+        message: "默认配置无变化，无需部署",
+        categories: config.categories.length,
+        tools: config.tools.length,
+      });
+      return;
+    }
+
+    await runGit(["add", "mytools.default.json"]);
+    const hasStagedChanges = await hasGitStagedChanges();
+    if (!hasStagedChanges) {
+      sendJson(response, 200, {
+        message: "默认配置无变化，无需部署",
+        categories: config.categories.length,
+        tools: config.tools.length,
+      });
+      return;
+    }
+
+    const commitMessage = `Update default config ${new Date().toISOString().slice(0, 10)}`;
+    await runGit(["commit", "-m", commitMessage]);
+    await runGit(["push"]);
+    const latestCommit = await runGit(["rev-parse", "--short", "HEAD"]);
+    sendJson(response, 200, {
+      message: "默认配置已提交并推送，GitHub Pages 将自动部署",
+      categories: config.categories.length,
+      tools: config.tools.length,
+      commit: latestCommit.stdout.trim(),
+      pagesUrl: "https://lipengbo2018.github.io/mytools/",
+    });
+  } catch (error) {
+    sendJson(response, error.statusCode || 500, { message: error.message || "部署失败" });
+  }
+}
+
+async function readAuthorizedConfig(request) {
+  if (!uploadPassword) {
+    throw new Error("服务端未配置上传口令");
+  }
+
+  const body = JSON.parse(await readRequestBody(request));
+  if (body.password !== uploadPassword) {
+    const error = new Error("口令错误");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  return normalizeConfig(body.config);
+}
+
+function writeDefaultConfig(config) {
+  const targetPath = path.join(rootDir, "mytools.default.json");
+  fs.writeFileSync(targetPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
+}
+
+function runGit(args) {
+  return new Promise((resolve, reject) => {
+    execFile("git", args, { cwd: rootDir }, (error, stdout, stderr) => {
+      if (error) {
+        reject(new Error((stderr || stdout || error.message).trim()));
+        return;
+      }
+      resolve({ stdout, stderr });
+    });
+  });
+}
+
+async function hasGitStagedChanges() {
+  try {
+    await runGit(["diff", "--cached", "--quiet"]);
+    return false;
+  } catch {
+    return true;
   }
 }
 
@@ -113,14 +197,23 @@ function serveStatic(request, response) {
     response.writeHead(200, {
       "Content-Type": mimeTypes[path.extname(filePath)] || "application/octet-stream",
       "Cache-Control": "no-store",
+      "Access-Control-Allow-Origin": "*",
     });
     response.end(content);
   });
 }
 
 const server = http.createServer((request, response) => {
+  if (request.method === "OPTIONS") {
+    sendOptions(response);
+    return;
+  }
   if (request.method === "POST" && request.url === "/api/default-config") {
     handleUpload(request, response);
+    return;
+  }
+  if (request.method === "POST" && request.url === "/api/deploy-config") {
+    handleDeploy(request, response);
     return;
   }
   if (request.method === "GET" || request.method === "HEAD") {
