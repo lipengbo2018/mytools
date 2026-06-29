@@ -12,13 +12,17 @@
     {
       "id": "cat-1781101184871-iit0zu",
       "name": "自媒体"
+    },
+    {
+      "id": "cat-1781140384604-ob2wq0",
+      "name": "随手记"
     }
   ],
   "tools": [
     {
-      "id": "tool-1781101241991-5zzih8",
-      "name": "豆包",
-      "url": "https://www.doubao.com/chat/67540901634",
+      "id": "tool-1781103382695-qoz0ek",
+      "name": "Gemini",
+      "url": "https://gemini.google.com/app",
       "categoryIds": [
         "cat-1781101140448-hulcrr"
       ],
@@ -27,7 +31,16 @@
     {
       "id": "tool-1781101520495-g0217g",
       "name": "GPT",
-      "url": "https://chatgpt.com/c/6a28220a-c5c4-83ea-8997-ebea6b198c05",
+      "url": "https://chatgpt.com/",
+      "categoryIds": [
+        "cat-1781101140448-hulcrr"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781101241991-5zzih8",
+      "name": "豆包",
+      "url": "https://www.doubao.com/chat/67540901634",
       "categoryIds": [
         "cat-1781101140448-hulcrr"
       ],
@@ -70,6 +83,15 @@
       "isFavorite": false
     },
     {
+      "id": "tool-1781947268990-mebl3m",
+      "name": "个人账号",
+      "url": "https://uxdj1s2axjv.feishu.cn/wiki/UwMJwdWJ9iKf9VkLqwUccjbTn1g?fromScene=spaceOverview",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
       "id": "tool-1781102583639-ta6qzg",
       "name": "飞影数字人",
       "url": "https://hifly.cc/subtitle-remove",
@@ -80,7 +102,9 @@
       "id": "tool-1781102622814-xz46c5",
       "name": "扣子",
       "url": "https://www.coze.cn/session/7626313901503791366",
-      "categoryIds": [],
+      "categoryIds": [
+        "cat-1781101140448-hulcrr"
+      ],
       "isFavorite": false
     },
     {
@@ -93,12 +117,135 @@
       "isFavorite": false
     },
     {
-      "id": "tool-1781103382695-qoz0ek",
-      "name": "Gemini",
-      "url": "https://gemini.google.com/app",
+      "id": "tool-1781850521759-q2oyxx",
+      "name": "Outlook邮箱",
+      "url": "https://outlook.live.com/mail/",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781850822111-a28ems",
+      "name": "QQ邮箱",
+      "url": "https://wx.mail.qq.com/home/index?sid=zQFBVYwna0QuZWtpACQzVwAA#/list/1",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781864186154-zb3apz",
+      "name": "小程序",
+      "url": "https://mp.weixin.qq.com/wxamp/tools/wasysnotify?token=1126169659&lang=zh_CN",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781886466822-lvvrza",
+      "name": "Workbuddy帮助文档",
+      "url": "https://www.codebuddy.cn/docs/workbuddy/Claw",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781910291102-r3l23p",
+      "name": "Workbuddy",
+      "url": "https://www.codebuddy.cn/profile/usage",
       "categoryIds": [
         "cat-1781101140448-hulcrr"
       ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1781964064982-85hts9",
+      "name": "云柏 API",
+      "url": "https://api-hub.vip/console/log?channel_id=23&money=8&name=product&out_trade_no=USR485475NOTqTgS21778058326&pid=1000&trade_no=2026050617052714197&trade_status=TRADE_SUCCESS&type=wxpay&sign=bfdb7963667cba3c087800506415590d&sign_type=MD5",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782096612858-s7a1a0",
+      "name": "美图Wink",
+      "url": "https://wink.cn/workspace",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782100416527-2yzbzn",
+      "name": "帧界",
+      "url": "https://www.frameos.cn/#/workflow/01KTBBYF86Y10ABH1QN4HPCW40/workbench-premium2/production/shot/01KTBEJBSZ7KQMCVX8DQF11HTV?shot_id=01KTBEJBSZ7KQMCVX8DQF11HTV&episode_id=01KTBC1YCTF0DAD8HYV9S1CTDN",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782104500602-6awo9k",
+      "name": "抖音短剧创作者中心",
+      "url": "https://creator.shortdramas.com/page/login",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782263307495-0rhr7b",
+      "name": "电子税务局",
+      "url": "https://etax.zhejiang.chinatax.gov.cn:8443/loginb/",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782263468319-2jtm3d",
+      "name": "浙江政务服务网",
+      "url": "https://www.zjzwfw.gov.cn/zjservice-fe/#/home?siteCode=330000000000",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782263533463-4zykhs",
+      "name": "扣子",
+      "url": "https://www.coze.cn/overview",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782263778503-g4pa2x",
+      "name": "火山引擎",
+      "url": "https://console.volcengine.com/home",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782276001989-67afoq",
+      "name": "AI私域智能体训练营",
+      "url": "https://yx7re01glnh.feishu.cn/wiki/ECXCw12PJiU3cBkDemecXuP1nFe",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782290807855-3v6pi9",
+      "name": "朋友圈变现",
+      "url": "https://my.feishu.cn/docx/Xcdddg1hvod2oUxj6nAc3W8undb",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782311992423-059jrx",
+      "name": "MiniMax Token",
+      "url": "https://platform.minimaxi.com/console/usage",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782312019360-k5z8xk",
+      "name": "MinMax Agent",
+      "url": "https://agent.minimaxi.com/",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1782444759856-qq7im0",
+      "name": "VPN",
+      "url": "https://ikuuu.boo/",
+      "categoryIds": [],
       "isFavorite": false
     }
   ]

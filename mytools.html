@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>工具站导航</title>
+  <title>极简KitBox</title>
   <style>
     :root {
       --bg: #f6f7f9;
@@ -104,6 +104,60 @@
       background: #fff0eb;
       color: var(--primary);
       font-weight: 700;
+    }
+
+    .side-category-panel {
+      display: grid;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .side-title {
+      padding: 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .side-category-list {
+      display: grid;
+      gap: 6px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .side-category-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .side-category-btn:hover {
+      background: #f3f4f6;
+    }
+
+    .side-category-btn.active {
+      background: #fff0eb;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .side-category-count {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .side-category-btn.active .side-category-count {
+      color: var(--primary);
     }
 
     .side-actions {
@@ -474,6 +528,21 @@
         display: none;
       }
 
+      .side-category-panel {
+        gap: 10px;
+      }
+
+      .side-category-list {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 0 2px;
+      }
+
+      .side-category-btn {
+        width: auto;
+        white-space: nowrap;
+      }
+
       .side-actions {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -497,24 +566,27 @@
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-mark">T</div>
-        <span>工具站导航</span>
+        <div class="brand-mark">K</div>
+        <span>极简KitBox</span>
       </div>
 
       <nav class="nav" aria-label="主菜单">
-        <button class="nav-btn active" data-view="categories">
-          首页
-          <span class="count" id="category-count">0</span>
-        </button>
         <button class="nav-btn" data-view="favorites">
           收藏
           <span class="count" id="favorite-count">0</span>
         </button>
       </nav>
 
+      <div class="side-category-panel">
+        <div class="side-title">分类</div>
+        <div class="side-category-list" id="side-category-list" aria-label="分类菜单"></div>
+      </div>
+
       <div class="side-actions">
         <button class="btn primary" id="add-tool-btn">新增工具站</button>
         <button class="btn" id="manage-category-btn">修改分类</button>
+        <button class="btn" id="sync-default-btn">同步默认配置</button>
+        <button class="btn" id="upload-default-btn">上传默认配置</button>
         <button class="btn" id="export-btn">导出配置</button>
         <button class="btn" id="import-btn">导入配置</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
@@ -603,10 +675,10 @@
 
     const elements = {
       navButtons: document.querySelectorAll(".nav-btn"),
-      categoryCount: document.getElementById("category-count"),
       favoriteCount: document.getElementById("favorite-count"),
       viewTitle: document.getElementById("view-title"),
       viewDescription: document.getElementById("view-description"),
+      sideCategoryList: document.getElementById("side-category-list"),
       categoryFilter: document.getElementById("category-filter"),
       searchInput: document.getElementById("search-input"),
       toolsGrid: document.getElementById("tools-grid"),
@@ -631,12 +703,11 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         try {
-          const storedState = JSON.parse(raw);
-          const normalizedState = normalizeState(storedState);
-          if (shouldRefreshDefaultState(storedState, normalizedState)) {
-            return loadDefaultState();
+          const storedState = normalizeState(JSON.parse(raw));
+          if (storedState.categories.length > 0 || storedState.tools.length > 0) {
+            return storedState;
           }
-          return normalizedState;
+          localStorage.removeItem(STORAGE_KEY);
         } catch {
           localStorage.removeItem(STORAGE_KEY);
         }
@@ -659,14 +730,6 @@
       } catch {
         return { version: 1, categories: [], tools: [] };
       }
-    }
-
-    function shouldRefreshDefaultState(storedState, normalizedState) {
-      const isEmpty = normalizedState.categories.length === 0 && normalizedState.tools.length === 0;
-      const isDefaultCache = storedState.source === "default" || storedState.defaultVersion;
-      const isLegacyEmptyCache = !storedState.source && !storedState.updatedAt && isEmpty;
-      const isOldDefaultCache = isDefaultCache && storedState.defaultVersion !== DEFAULT_CONFIG_VERSION;
-      return isLegacyEmptyCache || isOldDefaultCache;
     }
 
     function normalizeState(data) {
@@ -728,14 +791,12 @@
 
     function setView(view) {
       currentView = view;
-      elements.navButtons.forEach((button) => {
-        button.classList.toggle("active", button.dataset.view === view);
-      });
       render();
     }
 
     function render() {
       renderCounts();
+      renderSideCategoryOptions();
       renderCategoryFilterOptions();
       renderToolCategoryOptions();
       renderCategoryManager();
@@ -743,19 +804,54 @@
     }
 
     function renderCounts() {
-      elements.categoryCount.textContent = state.tools.length;
       elements.favoriteCount.textContent = state.tools.filter((tool) => tool.isFavorite).length;
     }
 
-    function renderCategoryFilterOptions() {
-      const options = [
+    function getCategoryOptions() {
+      return [
         { id: "all", name: "全部" },
         ...state.categories,
         { id: "uncategorized", name: "未分类" },
       ];
+    }
+
+    function getCategoryToolCount(categoryId) {
+      if (categoryId === "all") return state.tools.length;
+      if (categoryId === "uncategorized") {
+        return state.tools.filter((tool) => tool.categoryIds.length === 0).length;
+      }
+      return state.tools.filter((tool) => tool.categoryIds.includes(categoryId)).length;
+    }
+
+    function ensureActiveCategory(options) {
       if (!options.some((category) => category.id === activeCategoryId)) {
         activeCategoryId = "all";
       }
+    }
+
+    function renderSideCategoryOptions() {
+      const options = getCategoryOptions();
+      ensureActiveCategory(options);
+      elements.sideCategoryList.innerHTML = options
+        .map((category) => `
+          <button class="side-category-btn ${currentView === "categories" && activeCategoryId === category.id ? "active" : ""}" data-side-category="${escapeHtml(category.id)}">
+            <span>${escapeHtml(category.name)}</span>
+            <span class="side-category-count">${getCategoryToolCount(category.id)}</span>
+          </button>
+        `)
+        .join("");
+      elements.sideCategoryList.querySelectorAll("[data-side-category]").forEach((button) => {
+        button.addEventListener("click", () => {
+          currentView = "categories";
+          activeCategoryId = button.dataset.sideCategory;
+          render();
+        });
+      });
+    }
+
+    function renderCategoryFilterOptions() {
+      const options = getCategoryOptions();
+      ensureActiveCategory(options);
       elements.categoryFilter.innerHTML = options
         .map((category) => `
           <button class="chip ${activeCategoryId === category.id ? "active" : ""}" data-category-filter="${escapeHtml(category.id)}">
@@ -804,6 +900,9 @@
     }
 
     function renderTools() {
+      elements.navButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.view === currentView);
+      });
       const titleByView = {
         categories: ["首页", "按分类筛选工具站。"],
         favorites: ["收藏", "集中展示你收藏的常用工具站。"],
@@ -1140,6 +1239,47 @@
       showToast("配置已导出");
     }
 
+    async function syncDefaultConfig() {
+      if (!confirm("确定用默认配置覆盖当前浏览器缓存配置吗？")) return;
+      state = await loadDefaultState();
+      currentView = "categories";
+      activeCategoryId = "all";
+      elements.searchInput.value = "";
+      render();
+      showToast("已同步默认配置");
+    }
+
+    async function uploadDefaultConfig() {
+      const password = prompt("请输入上传口令");
+      if (password === null) return;
+      if (!password.trim()) {
+        showToast("请输入上传口令");
+        return;
+      }
+
+      try {
+        const response = await fetch("api/default-config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            password,
+            config: {
+              version: 1,
+              categories: state.categories,
+              tools: state.tools,
+            },
+          }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(result.message || "upload failed");
+        }
+        showToast("默认配置已上传");
+      } catch (error) {
+        showToast(error.message || "上传失败，请确认使用支持上传的本地服务");
+      }
+    }
+
     function getTodayString() {
       const now = new Date();
       const year = now.getFullYear();
@@ -1259,6 +1399,8 @@
         showModal(elements.categoryModal);
       });
       document.getElementById("export-btn").addEventListener("click", exportConfig);
+      document.getElementById("sync-default-btn").addEventListener("click", syncDefaultConfig);
+      document.getElementById("upload-default-btn").addEventListener("click", uploadDefaultConfig);
       document.getElementById("import-btn").addEventListener("click", () => elements.importFile.click());
       elements.importFile.addEventListener("change", () => importConfig(elements.importFile.files[0]));
       elements.toolForm.addEventListener("submit", saveTool);
