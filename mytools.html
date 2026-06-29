@@ -585,9 +585,6 @@
       <div class="side-actions">
         <button class="btn primary" id="add-tool-btn">新增工具站</button>
         <button class="btn" id="manage-category-btn">修改分类</button>
-        <button class="btn" id="sync-default-btn">同步默认配置</button>
-        <button class="btn" id="upload-default-btn">上传默认配置</button>
-        <button class="btn" id="deploy-default-btn">一键部署配置</button>
         <button class="btn" id="export-btn">导出配置</button>
         <button class="btn" id="import-btn">导入配置</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
@@ -667,7 +664,6 @@
     const STORAGE_KEY = "mytools-config-v1";
     const DEFAULT_CONFIG_URL = "mytools.default.json";
     const DEFAULT_CONFIG_VERSION = 3;
-    const LOCAL_API_BASE = "http://localhost:4174";
 
     let state = { version: 1, categories: [], tools: [] };
     let currentView = "categories";
@@ -1241,86 +1237,6 @@
       showToast("配置已导出");
     }
 
-    async function syncDefaultConfig() {
-      if (!confirm("确定用默认配置覆盖当前浏览器缓存配置吗？")) return;
-      state = await loadDefaultState();
-      currentView = "categories";
-      activeCategoryId = "all";
-      elements.searchInput.value = "";
-      render();
-      showToast("已同步默认配置");
-    }
-
-    async function uploadDefaultConfig() {
-      const password = prompt("请输入上传口令");
-      if (password === null) return;
-      if (!password.trim()) {
-        showToast("请输入上传口令");
-        return;
-      }
-
-      try {
-        const response = await fetch(getLocalApiUrl("api/default-config"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            password,
-            config: {
-              version: 1,
-              categories: state.categories,
-              tools: state.tools,
-            },
-          }),
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) {
-          throw new Error(result.message || "upload failed");
-        }
-        showToast("默认配置已上传");
-      } catch (error) {
-        showToast(error.message || "上传失败，请确认使用支持上传的本地服务");
-      }
-    }
-
-    async function deployDefaultConfig() {
-      const password = prompt("请输入部署口令");
-      if (password === null) return;
-      if (!password.trim()) {
-        showToast("请输入部署口令");
-        return;
-      }
-      if (!confirm("确定把当前浏览器缓存配置写入默认配置，并提交推送到 GitHub 吗？")) return;
-
-      try {
-        showToast("正在部署配置...");
-        const response = await fetch(getLocalApiUrl("api/deploy-config"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            password,
-            config: {
-              version: 1,
-              categories: state.categories,
-              tools: state.tools,
-            },
-          }),
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) {
-          throw new Error(result.message || "deploy failed");
-        }
-        showToast(result.message || "配置已部署");
-      } catch (error) {
-        showToast(error.message || "部署失败，请确认本地服务已启动");
-      }
-    }
-
-    function getLocalApiUrl(path) {
-      return window.location.origin === LOCAL_API_BASE
-        ? path
-        : `${LOCAL_API_BASE}/${path}`;
-    }
-
     function getTodayString() {
       const now = new Date();
       const year = now.getFullYear();
@@ -1440,9 +1356,6 @@
         showModal(elements.categoryModal);
       });
       document.getElementById("export-btn").addEventListener("click", exportConfig);
-      document.getElementById("sync-default-btn").addEventListener("click", syncDefaultConfig);
-      document.getElementById("upload-default-btn").addEventListener("click", uploadDefaultConfig);
-      document.getElementById("deploy-default-btn").addEventListener("click", deployDefaultConfig);
       document.getElementById("import-btn").addEventListener("click", () => elements.importFile.click());
       elements.importFile.addEventListener("change", () => importConfig(elements.importFile.files[0]));
       elements.toolForm.addEventListener("submit", saveTool);

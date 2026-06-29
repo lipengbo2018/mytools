@@ -24,19 +24,3 @@ MyTools 是一个单页个人工具站导航，用来集中收藏和管理日常
 直接用浏览器打开 `mytools.html`，或使用任意静态文件服务器托管当前目录。
 
 页面会把用户修改保存到浏览器 `localStorage`。如果需要更新仓库里的默认数据，可以在页面中点击“导出配置”，再用导出的文件覆盖 `mytools.default.json`。
-
-## 本地上传默认配置
-
-如果要在页面里使用“上传默认配置”或“一键部署配置”按钮，需要启动本地 Node 服务：
-
-```powershell
-$env:KITBOX_UPLOAD_PASSWORD="lipbotw"
-node kitbox-server.js
-```
-
-然后访问 `http://localhost:4174/mytools.html`。
-
-- “上传默认配置”：把当前浏览器配置写入本地 `mytools.default.json`。
-- “一键部署配置”：把当前浏览器配置写入本地 `mytools.default.json`，然后自动执行 `git add`、`git commit`、`git push`，GitHub Pages 会随后自动部署。
-
-GitHub Pages 是静态托管，不能自己写回仓库文件；如果从线上页面触发“一键部署配置”，需要本机同时运行上面的本地 Node 服务。
