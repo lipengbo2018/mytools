@@ -585,6 +585,7 @@
       <div class="side-actions">
         <button class="btn primary" id="add-tool-btn">新增工具站</button>
         <button class="btn" id="manage-category-btn">修改分类</button>
+        <button class="btn" id="sync-default-btn">同步默认配置</button>
         <button class="btn" id="export-btn">导出配置</button>
         <button class="btn" id="import-btn">导入配置</button>
         <input id="import-file" type="file" accept="application/json,.json" hidden>
@@ -1237,6 +1238,16 @@
       showToast("配置已导出");
     }
 
+    async function syncDefaultConfig() {
+      if (!confirm("确定用默认配置覆盖当前浏览器缓存配置吗？")) return;
+      state = await loadDefaultState();
+      currentView = "categories";
+      activeCategoryId = "all";
+      elements.searchInput.value = "";
+      render();
+      showToast("已同步默认配置");
+    }
+
     function getTodayString() {
       const now = new Date();
       const year = now.getFullYear();
@@ -1356,6 +1367,7 @@
         showModal(elements.categoryModal);
       });
       document.getElementById("export-btn").addEventListener("click", exportConfig);
+      document.getElementById("sync-default-btn").addEventListener("click", syncDefaultConfig);
       document.getElementById("import-btn").addEventListener("click", () => elements.importFile.click());
       elements.importFile.addEventListener("change", () => importConfig(elements.importFile.files[0]));
       elements.toolForm.addEventListener("submit", saveTool);
