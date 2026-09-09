@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>企业AI落地团队实战手册</title>
+<style>
+:root{--bg:#07121f;--panel:#0d1d2d;--panel2:#11263a;--line:#233b50;--text:#edf5fb;--muted:#9aafc0;--cyan:#35d4e8;--yellow:#ffbb32;--green:#6fe0a6;--sidebar:280px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.75 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}button,input{font:inherit}.topbar{position:fixed;z-index:30;top:0;left:0;right:0;height:68px;background:rgba(7,18,31,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);display:flex;align-items:center;padding:0 24px}.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:900}.logo{width:38px;height:38px;border-radius:11px;background:var(--yellow);color:#16222d;display:grid;place-items:center}.menu-btn{display:none;margin-left:auto;background:transparent;color:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 12px}.sidebar{position:fixed;z-index:20;top:68px;bottom:0;left:0;width:var(--sidebar);padding:24px 18px;background:#091725;border-right:1px solid var(--line);overflow:auto}.sidebar-label{font-size:11px;color:var(--cyan);font-weight:800;letter-spacing:.14em;margin:0 10px 12px}.doc-nav{width:100%;display:grid;grid-template-columns:36px 1fr;align-items:center;text-align:left;gap:9px;border:0;background:transparent;color:#bed0dc;padding:11px 10px;border-radius:11px;cursor:pointer}.doc-nav small{color:#5e7b92}.doc-nav:hover,.doc-nav.active{background:var(--panel2);color:#fff}.doc-nav.active small{color:var(--yellow)}.search{margin:20px 4px}.search input{width:100%;padding:10px 12px;border-radius:10px;background:#06111d;border:1px solid var(--line);color:#fff;outline:0}.search input:focus{border-color:var(--cyan)}.search-status{font-size:12px;color:var(--muted);margin-top:7px}.main{margin-left:var(--sidebar);padding-top:68px}.hero{padding:56px clamp(24px,5vw,72px) 40px;background:radial-gradient(circle at 80% 10%,rgba(53,212,232,.12),transparent 32%),linear-gradient(135deg,#0b2133,#091725)}.hero .eyebrow{color:var(--yellow);font-size:12px;font-weight:900;letter-spacing:.14em}.hero h1{font-size:clamp(34px,5vw,62px);line-height:1.1;margin:12px 0 16px;letter-spacing:-.04em}.hero p{max-width:900px;color:#b7c8d5;font-size:17px}.role-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;margin-top:28px;max-width:1050px}.role{padding:18px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.035)}.role b{display:block;color:var(--cyan);font-size:12px}.role strong{display:block;font-size:19px}.role span{color:var(--muted);font-size:13px}.arrow{color:var(--yellow);font-size:23px}.content{max-width:1180px;margin:0 auto;padding:40px clamp(22px,5vw,70px) 90px}.doc-page{display:none}.doc-page.active{display:block}.doc-page>h1{font-size:clamp(30px,4vw,46px);line-height:1.2;margin:0 0 26px}.chapter{scroll-margin-top:90px;margin:0 0 16px;border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}.chapter h2{margin:0}.chapter-toggle{width:100%;border:0;background:linear-gradient(90deg,var(--panel2),var(--panel));color:#fff;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;text-align:left;font-size:21px;font-weight:850;cursor:pointer}.chapter-toggle b{color:var(--cyan);font-size:24px}.chapter-body{padding:8px 24px 26px}.chapter.collapsed .chapter-body{display:none}.chapter.collapsed .chapter-toggle b{transform:rotate(0)}h3{font-size:18px;color:var(--cyan);margin:25px 0 8px}p{margin:10px 0;color:#c7d4de}strong{color:#fff}a{color:var(--cyan)}ul,ol{padding-left:22px;color:#c7d4de}li{margin:5px 0}blockquote{margin:18px 0;padding:16px 19px;border-left:3px solid var(--yellow);background:rgba(255,187,50,.055);color:#f0dfae}.callout{margin:19px 0;padding:16px 18px;border:1px solid rgba(53,212,232,.25);border-radius:12px;background:rgba(53,212,232,.055)}.callout strong{color:var(--cyan)}.callout p{margin:4px 0 0}.table-wrap{overflow:auto;margin:17px 0;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:620px;background:#091725}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--yellow);background:#102337}td{color:#c2d0da}.flow-code{display:flex;align-items:stretch;gap:8px;overflow:auto;padding:16px 0}.flow-code span{min-width:145px;padding:13px;border-radius:10px;border:1px solid rgba(53,212,232,.25);background:#0a1a29;text-align:center}.flow-code i{align-self:center;color:var(--yellow);font-style:normal}code{background:#06111d;color:#baf4fa;padding:2px 5px;border-radius:5px}pre{overflow:auto;background:#06111d;padding:16px;border-radius:10px}.empty{display:none;padding:30px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}mark{background:#ffcf57;color:#17212b;border-radius:3px;padding:0 2px}.progress{position:fixed;top:68px;left:var(--sidebar);right:0;height:3px;z-index:35}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),var(--cyan))}
+@media(max-width:900px){:root{--sidebar:250px}.role-flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}.content{padding-left:28px;padding-right:28px}}
+@media(max-width:700px){.topbar{height:60px;padding:0 14px}.brand{font-size:16px}.logo{width:34px;height:34px}.menu-btn{display:block}.sidebar{top:60px;width:min(86vw,310px);transform:translateX(-105%);transition:.25s;box-shadow:20px 0 50px rgba(0,0,0,.45)}.sidebar.open{transform:none}.main{margin-left:0;padding-top:60px}.progress{top:60px;left:0}.hero{padding:38px 18px 28px}.hero p{font-size:15px}.content{padding:25px 12px 70px}.chapter-toggle{font-size:18px;padding:17px 16px}.chapter-body{padding:7px 16px 21px}.doc-page>h1{font-size:30px}.flow-code{flex-direction:column}.flow-code i{transform:rotate(90deg)}.flow-code span{min-width:0}.table-wrap{margin-left:-5px;margin-right:-5px}}
+.topbar{height:76px}.brand{min-width:0}.brand-copy{display:flex;min-width:0;flex-direction:column;line-height:1.25}.brand-copy strong{font-size:17px;white-space:nowrap}.brand-copy small{margin-top:5px;color:var(--muted);font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(60vw,760px)}.top-slogan{margin-left:auto;padding-left:24px;color:var(--yellow);font-size:16px;white-space:nowrap}.sidebar{top:76px}.main{padding-top:76px}.progress{top:76px}.content{padding-top:34px}@media(max-width:900px){.brand-copy small{max-width:46vw}.top-slogan{font-size:14px}}@media(max-width:700px){.topbar{height:68px;padding:0 10px}.logo{width:32px;height:32px}.brand{gap:8px}.brand-copy strong{font-size:13px}.brand-copy small{max-width:43vw;font-size:9px;margin-top:3px}.top-slogan{font-size:11px;line-height:1.25;white-space:normal;text-align:right;max-width:88px;padding-left:8px}.menu-btn{margin-left:7px;padding:5px 8px;font-size:12px}.sidebar{top:68px}.main{padding-top:68px}.progress{top:68px}.content{padding-top:20px}}@media(max-width:430px){.brand-copy strong{max-width:116px;white-space:normal;line-height:1.15}.brand-copy small{display:none}.top-slogan{max-width:78px;font-size:10px}}.collapse-all{margin-left:14px;min-height:36px;padding:0 13px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:#fff;font-size:13px;font-weight:750;white-space:nowrap;cursor:pointer}.collapse-all:hover{border-color:var(--cyan);color:var(--cyan)}.page-toc{margin:0 0 25px;padding:18px;border:1px solid var(--line);border-radius:14px;background:rgba(17,38,58,.58)}.page-toc strong{display:block;margin-bottom:10px;color:var(--yellow);font-size:12px;letter-spacing:.1em}.page-toc-list{display:flex;flex-wrap:wrap;gap:8px}.page-toc button{padding:7px 11px;border:1px solid var(--line);border-radius:9px;background:#091725;color:#bed0dc;cursor:pointer}.page-toc button:hover{border-color:var(--cyan);color:var(--cyan)}@media(max-width:700px){.collapse-all{margin-left:6px;padding:0 8px;min-height:31px;font-size:11px}.page-toc{padding:14px;margin-bottom:18px}.page-toc-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.page-toc button{text-align:left;font-size:12px}}@media(max-width:430px){.collapse-all{font-size:0;width:34px;padding:0}.collapse-all:after{content:"折叠";font-size:10px}.collapse-all[data-mode="expand"]:after{content:"展开"}.page-toc-list{grid-template-columns:1fr}}.top-page-nav{margin-left:16px;display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;white-space:nowrap}.top-page-nav select{width:180px;height:36px;padding:0 30px 0 10px;border:1px solid var(--line);border-radius:9px;background:#11263a;color:#fff;outline:0;cursor:pointer}.top-page-nav select:focus{border-color:var(--cyan)}@media(max-width:1100px){.top-page-nav span{display:none}.top-page-nav select{width:145px}}@media(max-width:900px){.top-slogan{display:none}.top-page-nav{margin-left:auto}}@media(max-width:700px){.top-page-nav{margin-left:auto}.top-page-nav select{width:112px;height:31px;font-size:11px}.collapse-all{margin-left:5px}}@media(max-width:430px){.top-page-nav select{width:94px;padding-left:7px}.top-slogan{display:none}}</style></head><body>
+<header class="topbar"><div class="brand"><span class="logo">工</span><span class="brand-copy"><strong>企业 AI 落地团队实战手册</strong><small>一套面向普通人的企业 AI 落地协作体系。先理解三个岗位如何分工，再分别学习商务、方案和实施的完整做法。</small></span></div><strong class="top-slogan">从找到问题，到交付结果</strong><label class="top-page-nav"><span>本页导航</span><select aria-label="选择当前页面章节"><option value="">本页导航</option></select></label><button class="collapse-all" type="button">全部折叠</button><button class="menu-btn" aria-label="打开目录">目录</button></header>
+<aside class="sidebar"><p class="sidebar-label">LEARNING MODULES</p><button class="doc-nav" data-doc="roles"><small>01</small><span>岗位总览</span></button><button class="doc-nav" data-doc="relations"><small>02</small><span>协作关系</span></button><button class="doc-nav" data-doc="business"><small>03</small><span>商务实战</span></button><button class="doc-nav" data-doc="solution"><small>04</small><span>方案实战</span></button><button class="doc-nav" data-doc="delivery"><small>05</small><span>实施实战</span></button><div class="search"><input id="search" type="search" placeholder="搜索当前手册…"><div class="search-status">输入关键词定位相关章节</div></div></aside>
+<div class="progress"><span></span></div><main class="main"><div class="content"><article class="doc-page" data-page="roles" id="page-roles"><h1>企业 AI 改造项目三类核心角色说明</h1>
+<blockquote>实战手册：<a href="#" class="doc-link" data-doc="business">AI落地商务与需求挖掘实战手册</a>｜<a href="#" class="doc-link" data-doc="solution">AI落地方案设计实战手册</a>｜<a href="#" class="doc-link" data-doc="delivery">AI落地实施交付实战手册</a>｜<a href="#" class="doc-link" data-doc="relations">商务-方案-实施协作与交互关系图</a>。</blockquote>
+<p>我们的项目由三类角色协同完成：</p>
+<ul><li><strong>商务负责人：负责把合适的需求接进来。</strong></li><li><strong>方案负责人：负责把需求定义清楚，形成可实施、可验收的方案。</strong></li><li><strong>实施负责人：负责按照确认后的方案，把系统做出来并稳定交付。</strong></li></ul>
+<blockquote>商务找到真实问题 → 方案确定做什么、怎么验收 → 实施把方案做成可用成果</blockquote>
+<p>一个人可以兼任多个角色，但每个项目中必须明确当前以哪个角色作决定，不能把三类职责混在一起。</p>
+<section class="chapter" id="roles-一商务负责人"><h2><button class="chapter-toggle" aria-expanded="true"><span>一、商务负责人</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="roles-负责什么">负责什么</h3>
+<p>商务判断：这个客户的问题是否真实，是否值得继续投入，有没有成交和推进的可能。</p>
+<p>主要工作：</p>
+<ol><li>找到潜在客户和业务场景。</li><li>了解客户为什么想做 AI。</li><li>找到使用者、项目推动人和采购决策人。</li><li>组织需求访谈和客户沟通。</li><li>判断客户是否愿意投入人员、数据、时间和预算。</li><li>方案确认后负责价格、合同、付款、周期和维护条件。</li><li>交付后负责回款、续约和新增机会。</li></ol>
+<h3 id="roles-怎么做">怎么做</h3>
+<p>不要先介绍产品或承诺能力，先问四件事：客户遇到什么问题；问题影响谁；谁推动；客户愿意投入什么。</p>
+<p>围绕最近一次真实事件追问：何时发生、谁处理、花多长时间、造成什么影响、多久发生一次、不处理有什么后果。</p>
+<p>商务交出的不能只是“客户想做 AI 客服”，应说明：每天多少工单、哪一步耗时、谁处理、造成什么影响、想改善什么结果。</p>
+<h3 id="roles-怎样算完成">怎样算完成</h3>
+<ul><li>有具体业务场景、使用者和客户负责人。</li><li>问题来自真实事件。</li><li>客户愿意接受调查并提供必要样例、人员或数据。</li><li>决策路径和预算状态已了解，未知项已标明。</li><li>客户愿望、确认事实和我们的判断分开记录。</li></ul>
+<p>主要产物：商机卡、访谈记录、当前流程、需求证据包、商务条件及项目确认记录。</p>
+<h3 id="roles-边界">边界</h3>
+<p>商务可以确认客户关系、沟通计划、价格、采购和付款。不能单独承诺技术一定实现、准确率、上线日期、数据一定可接、临时功能免费增加或演示成功等于正式交付。技术效果、范围和日期须经方案与实施评估。</p>
+<blockquote>不把客户愿望直接当需求，不把未经评估的想法直接卖给客户。</blockquote>
+</div></section>
+<section class="chapter" id="roles-二方案负责人"><h2><button class="chapter-toggle" aria-expanded="true"><span>二、方案负责人</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="roles-负责什么-2">负责什么</h3>
+<p>方案负责人回答：客户真正应该做什么，第一阶段做多大，怎样做，最后怎样判断成功。</p>
+<p>主要工作：审计需求证据；还原真实流程；选择首个场景；定义做与不做；检查数据、系统、权限和人员；选择规则、工作流、知识库、模型或智能体；验证最大不确定性；制定业务、产品和技术指标；定义人审、异常与风险；形成实施人员能理解的任务。</p>
+<h3 id="roles-怎么做-2">怎么做</h3>
+<p>先检查能否说清：</p>
+<blockquote>谁，在什么场景，使用什么输入，完成什么任务，目前卡在哪里，造成什么影响，希望将哪个指标从什么状态改善到什么状态。</blockquote>
+<p>说不清则退回商务补充。说清后：</p>
+<ol><li>还原角色、触发、输入、动作、输出和异常。</li><li>选择证据充分、价值明确、数据可得、风险可控、能较快使用的小场景。</li><li>定义包含输入、处理、输出、人审、回写、异常的最小可交付方案。</li><li>同时写清做什么和不做什么。</li><li>核实数据、接口、权限及客户配合。</li><li>能用规则先用规则；步骤固定优先工作流；需要企业资料用知识检索；开放路径才考虑 Agent。</li><li>用少量真实样例验证最大不确定性，预先设定样本、方法、期限和停止条件。</li><li>指标写清基线、目标、样本、计算方法、周期、证据来源和确认人。</li></ol>
+<h3 id="roles-怎样算完成-2">怎样算完成</h3>
+<p>商务、实施和客户都能看明白：解决什么、为何先做、做与不做、需要哪些条件、人／AI／系统如何分工、异常如何处理、投入多少、怎样验收、关键不确定性是否验证、实施能否估算开工。</p>
+<p>主要产物：问题定义、目标流程、场景结论、MVD、PoC 及结果、数据系统要求、技术路线、人机边界、验收指标、一页式方案和实施任务包。</p>
+<h3 id="roles-边界-2">边界</h3>
+<p>方案负责人不能代替商务决定价格合同，不能代替客户确认事实，不能无证据保证效果，不能绕过实施承诺工作量和日期，不能随意扩范围或把 PoC 当正式验收。</p>
+<blockquote>先定义问题和边界，再选技术；先交付小而完整的业务闭环，再扩展。</blockquote>
+</div></section>
+<section class="chapter" id="roles-三实施负责人"><h2><button class="chapter-toggle" aria-expanded="true"><span>三、实施负责人</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="roles-负责什么-3">负责什么</h3>
+<p>实施负责人回答：怎样把确认后的方案做出来，并保证能够运行、测试、部署和维护。</p>
+<p>主要工作：评估工作量与依赖；拆分数据、开发、页面、测试、部署任务；准备数据、账号、接口和环境；完成规则、提示词、知识库、工作流、Agent、页面及连接；补齐人审、异常、权限、日志、监控和恢复；完成测试、试点支持、培训、部署、移交和运行维护。</p>
+<h3 id="roles-怎么做-3">怎么做</h3>
+<p>开工前检查：业务问题、做与不做、输入输出和规则、数据接口权限、测试验收标准是否明确。不完整则退回方案，不能边猜边做。</p>
+<p>开工后依次：任务唯一主责 → 明确输入输出和检查方法 → 实测数据接口权限 → 跑主流程 → 补人审回写异常 → 固定样本测试 → 完成正常异常权限恢复测试 → 形成试点版本和说明 → 交独立质检。</p>
+<h3 id="roles-怎样算完成-3">怎样算完成</h3>
+<p>必需功能完成；真实数据接口实测；业务闭环跑通；缺资料不编造；失败超时有处理；高风险有人审；不能越权；结果可回写；日志监控明确；有部署恢复接手说明；阻断、数据破坏、越权问题清零；达到试点准入标准。</p>
+<p>主要产物：实施任务清单、数据环境就绪清单、字段接口约定、可运行版本、测试记录、已知问题、部署恢复说明、操作维护说明。</p>
+<h3 id="roles-边界-3">边界</h3>
+<p>实施可以决定不影响业务范围的技术细节，并提出风险和估算。不能改变需求、降低验收、私下加功能、把模拟数据当真实可用、把内部测试当客户验收、未授权读写数据、自动执行资金合规不可逆动作，或把新增需求混入维护。</p>
+<blockquote>按确认方案建设，按约定标准测试；范围或目标有问题时退回评估。</blockquote>
+</div></section>
+<section class="chapter" id="roles-四三类角色怎样交接"><h2><button class="chapter-toggle" aria-expanded="true"><span>四、三类角色怎样交接</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>交接</th><th>上游交什么</th><th>下游检查什么</th></tr></thead><tbody>
+<tr><td>商务 → 方案</td><td>商机卡、访谈、真实流程、问题证据、客户联系人</td><td>问题是否真实，证据是否够</td></tr>
+<tr><td>方案 → 商务</td><td>可行性、范围、估算、风险、验收方式</td><td>能否形成商务约定</td></tr>
+<tr><td>商务 → 实施</td><td>已确认范围、周期、客户配合、启动条件</td><td>承诺是否与方案一致</td></tr>
+<tr><td>方案 → 实施</td><td>目标流程、范围、数据、路线、任务、用例</td><td>能否估算、开发和测试</td></tr>
+<tr><td>实施 → 方案／质检</td><td>试点版本、测试、已知问题、部署说明</td><td>是否符合方案，能否试点</td></tr>
+<tr><td>方案／质检 → 商务</td><td>验收结论、遗留问题、维护范围</td><td>是否推进回款、续约或新项目</td></tr>
+</tbody></table></div>
+<p>交接结论只有三种：通过；退回补充（写明缺项、补充人和期限）；暂停（写明预算、数据、权限、价值或风险原因）。</p>
+</div></section>
+<section class="chapter" id="roles-五共同规则"><h2><button class="chapter-toggle" aria-expanded="true"><span>五、共同规则</span><b>−</b></button></h2><div class="chapter-body">
+<ol><li>商务不直接给实施增加任务；实施不私下承诺新增功能。</li><li>方案不在缺证据时承诺效果。</li><li>新诉求先登记，再判断缺陷、数据问题或新增需求。</li><li>每个成果一个负责人，每个任务有输入、输出和通过标准。</li><li>交接保留版本、日期、交出人和接收人。</li><li>事实、判断和待验证分开。</li><li>报价、合同、数据授权、生产写入、上线及最终验收由人确认。</li><li>按已交付且被接收的成果汇报进度。</li></ol>
+<blockquote><strong>商务把正确的问题带回来，方案把问题变成可交付的任务，实施把任务变成真实可用的结果。</strong></blockquote>
+</div></section></article>
+<article class="doc-page" data-page="relations" id="page-relations"><h1>商务、方案、实施协作与交互关系图</h1>
+<blockquote>三个岗位不是三段互不往来的流水线，而是围绕同一个业务结果分阶段主责、双向校验。上游对输入质量负责，下游有权退回不合格输入，范围和目标变化必须回到对应负责人重新确认。</blockquote>
+<p>相关文档：<a href="#" class="doc-link" data-doc="roles">企业AI改造项目三类核心角色说明</a>｜<a href="#" class="doc-link" data-doc="business">AI落地商务与需求挖掘实战手册</a>｜<a href="#" class="doc-link" data-doc="solution">AI落地方案设计实战手册</a>｜<a href="#" class="doc-link" data-doc="delivery">AI落地实施交付实战手册</a></p>
+<section class="chapter" id="relations-一三个岗位分别对什么结果负责"><h2><button class="chapter-toggle" aria-expanded="true"><span>一、三个岗位分别对什么结果负责</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>岗位</th><th>核心问题</th><th>主要结果</th><th>决策边界</th></tr></thead><tbody>
+<tr><td>商务负责人</td><td>客户和问题值不值得接</td><td>有证据、有意愿、有推进条件的合格需求</td><td>客户关系、商务条件、成交与回款</td></tr>
+<tr><td>方案负责人</td><td>应该做什么，怎样算成功</td><td>可实施、可验收、范围清楚的方案</td><td>问题定义、首期范围、业务流程、验收标准</td></tr>
+<tr><td>实施负责人</td><td>怎样稳定地把方案做出来</td><td>可运行、可测试、可使用、可维护的系统</td><td>技术实现、任务拆解、测试、部署和运维</td></tr>
+</tbody></table></div>
+<p>一句话关系：</p>
+<blockquote><strong>商务把正确的问题带回来，方案把问题变成正确的项目，实施把项目变成真实可用的结果。</strong></blockquote>
+</div></section>
+<section class="chapter" id="relations-二端到端主流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>二、端到端主流程</span><b>−</b></button></h2><div class="chapter-body">
+<div class="flow-code" aria-label="流程关系文字图"><span>商务：寻找客户</span><i>→</i><span>商务：访谈与初筛</span><i>→</i><span>方案：需求准入</span><i>→</i><span>方案：流程与问题定义</span><i>→</i><span>方案：首期范围与PoC</span><i>→</i><span>实施：开工检查</span><i>→</i><span>实施：建设与测试</span><i>→</i><span>实施：业务试用</span><i>→</i><span>方案：效果与范围复核</span><i>→</i><span>商务：验收、回款与续约</span><i>→</i><span>运营：发现新问题</span></div>
+</div></section>
+<section class="chapter" id="relations-三不同阶段谁主责谁参与"><h2><button class="chapter-toggle" aria-expanded="true"><span>三、不同阶段谁主责、谁参与</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>主责</th><th>必须参与</th><th>最终确认</th></tr></thead><tbody>
+<tr><td>客户寻找与商机初筛</td><td>商务</td><td>必要时方案支持</td><td>商务</td></tr>
+<tr><td>正式需求访谈</td><td>商务</td><td>方案、实际使用者</td><td>商务确认事实，方案确认是否足够评估</td></tr>
+<tr><td>需求准入</td><td>方案</td><td>商务</td><td>方案</td></tr>
+<tr><td>当前流程与问题定义</td><td>方案</td><td>商务、客户业务人员</td><td>客户确认事实，方案确认定义</td></tr>
+<tr><td>场景选择与PoC</td><td>方案</td><td>实施、商务、客户</td><td>方案确认业务，实施确认技术条件</td></tr>
+<tr><td>报价、合同与付款</td><td>商务</td><td>方案、实施提供范围和估算</td><td>商务与客户</td></tr>
+<tr><td>实施开工检查</td><td>实施</td><td>方案</td><td>实施</td></tr>
+<tr><td>建设与内部测试</td><td>实施</td><td>方案按需答疑</td><td>实施</td></tr>
+<tr><td>业务试用</td><td>实施</td><td>方案、客户使用者</td><td>方案确认效果，客户确认可用性</td></tr>
+<tr><td>验收与范围确认</td><td>方案</td><td>商务、实施、客户</td><td>客户与商务按合同确认</td></tr>
+<tr><td>上线与移交</td><td>实施</td><td>方案、客户技术和业务人员</td><td>实施确认技术，客户确认接收</td></tr>
+<tr><td>回款、续约和新商机</td><td>商务</td><td>方案、实施提供证据</td><td>商务</td></tr>
+</tbody></table></div>
+</div></section>
+<section class="chapter" id="relations-四四次关键交接"><h2><button class="chapter-toggle" aria-expanded="true"><span>四、四次关键交接</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="relations-41-商务--方案-把商机交成合格需求">4.1 商务 → 方案：把商机交成合格需求</h3>
+<p>商务至少交付：客户与负责人、真实事件、当前做法、问题影响、工作量、目标结果、可用样例、付费与配合意愿。</p>
+<p>方案检查：事实是否真实、证据是否足够、是否值得进一步设计。</p>
+<p>退回条件：只有技术想法；缺实际使用者；无真实事件；无样例；目标无法衡量。</p>
+<h3 id="relations-42-方案--商务-把方案变成可成交范围">4.2 方案 → 商务：把方案变成可成交范围</h3>
+<p>方案至少交付：问题定义、首期范围、排除项、客户配合、PoC结论、风险、实施估算和验收方法。</p>
+<p>商务检查：对外说法是否准确；合同范围、费用、周期和付款节点是否能明确。</p>
+<h3 id="relations-43-方案--实施-把方案交成可开工任务">4.3 方案 → 实施：把方案交成可开工任务</h3>
+<p>方案至少交付：目标流程、角色权限、输入输出、数据知识、系统接口、人机边界、异常处理、测试集和验收指标。</p>
+<p>实施检查：能否估算、拆任务、取得依赖、建设和测试。</p>
+<p>退回条件：需要猜需求；数据和接口未确认；异常和人审缺失；验收不可执行。</p>
+<h3 id="relations-44-实施--方案商务-把系统交成可验收结果">4.4 实施 → 方案／商务：把系统交成可验收结果</h3>
+<p>实施至少交付：可运行版本、测试报告、试用数据、已知问题、部署回滚说明、操作维护手册。</p>
+<p>方案检查：是否符合问题、范围和验收标准。商务根据确认结果推进客户验收、回款和后续合作。</p>
+</div></section>
+<section class="chapter" id="relations-五出现问题时回到谁"><h2><button class="chapter-toggle" aria-expanded="true"><span>五、出现问题时回到谁</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>问题</th><th>主责处理</th><th>处理规则</th></tr></thead><tbody>
+<tr><td>客户目标或预算变化</td><td>商务</td><td>重新确认商务条件</td></tr>
+<tr><td>问题定义或范围变化</td><td>方案</td><td>重新评估方案、验收和影响</td></tr>
+<tr><td>技术实现困难</td><td>实施</td><td>提出证据和替代路线，方案确认业务影响</td></tr>
+<tr><td>数据缺失或冲突</td><td>方案＋客户</td><td>客户确认事实，方案调整规则，实施更新数据</td></tr>
+<tr><td>已确认功能未工作</td><td>实施</td><td>按缺陷修复并复测</td></tr>
+<tr><td>AI效果未达标</td><td>方案＋实施</td><td>按固定测试集分析数据、知识、规则或模型</td></tr>
+<tr><td>新角色、新场景或新能力</td><td>商务＋方案</td><td>作为新增需求重新报价和排期</td></tr>
+<tr><td>验收争议</td><td>方案</td><td>回到事先确认的指标、样本和证据</td></tr>
+</tbody></table></div>
+</div></section>
+<section class="chapter" id="relations-六三个岗位共同遵守的协作规则"><h2><button class="chapter-toggle" aria-expanded="true"><span>六、三个岗位共同遵守的协作规则</span><b>−</b></button></h2><div class="chapter-body">
+<ol><li>商务不直接给实施增加任务。</li><li>实施不私下向客户承诺新增功能。</li><li>方案不在缺证据时承诺效果。</li><li>下游有权退回不完整的上游交付物。</li><li>退回必须写清缺项、责任人和期限。</li><li>新诉求先登记，再判断是缺陷、数据问题、配置还是新增需求。</li><li>每项成果只有一个主责人，但相关角色共同校验。</li><li>所有交接保留版本、日期、交出人、接收人和结论。</li><li>客户事实、我方判断和待验证假设分开记录。</li><li>报价、数据授权、生产写入、上线和最终验收由人确认。</li></ol>
+</div></section>
+<section class="chapter" id="relations-七会议与沟通机制"><h2><button class="chapter-toggle" aria-expanded="true"><span>七、会议与沟通机制</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>会议</th><th>参与人</th><th>目的</th><th>输出</th></tr></thead><tbody>
+<tr><td>商机初筛会</td><td>商务＋方案</td><td>判断是否进入正式调研</td><td>初筛结论、待补信息</td></tr>
+<tr><td>方案评审会</td><td>商务＋方案＋实施</td><td>对齐范围、风险、估算和验收</td><td>评审结论、修改项</td></tr>
+<tr><td>项目启动会</td><td>三方＋客户</td><td>确认目标、分工、计划和配合</td><td>启动纪要、责任表</td></tr>
+<tr><td>实施周会</td><td>方案＋实施＋客户接口人</td><td>处理阻塞和范围问题</td><td>进展、问题、决策</td></tr>
+<tr><td>试用复盘会</td><td>三方＋客户使用者</td><td>评估真实使用效果</td><td>试用结论、问题分类</td></tr>
+<tr><td>验收会</td><td>三方＋客户负责人</td><td>按证据确认交付</td><td>验收记录、遗留项</td></tr>
+</tbody></table></div>
+<p>会议只解决需要多人决策的问题。日常进展通过任务清单更新，不能用开会代替交付。</p>
+</div></section>
+<section class="chapter" id="relations-八交互关系总表"><h2><button class="chapter-toggle" aria-expanded="true"><span>八、交互关系总表</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>发起方</th><th>接收方</th><th>什么时候交互</th><th>发起方必须带什么</th><th>接收方必须给什么结论</th></tr></thead><tbody>
+<tr><td>商务</td><td>方案</td><td>发现真实商机后</td><td>需求证据包</td><td>通过、补充或暂停</td></tr>
+<tr><td>方案</td><td>商务</td><td>范围和路线初步明确后</td><td>方案、风险、估算依据</td><td>商务条件是否可形成</td></tr>
+<tr><td>方案</td><td>实施</td><td>PoC或方案评审时</td><td>数据、流程、范围、验收</td><td>技术可行性和工作量</td></tr>
+<tr><td>实施</td><td>方案</td><td>发现技术或数据阻碍时</td><td>复现证据、影响、替代建议</td><td>业务取舍和范围决定</td></tr>
+<tr><td>商务</td><td>实施</td><td>项目正式启动后</td><td>已确认合同范围与客户配合</td><td>启动条件是否满足</td></tr>
+<tr><td>实施</td><td>商务</td><td>形成可验收成果后</td><td>测试、试用和交付证据</td><td>验收、回款和客户沟通安排</td></tr>
+</tbody></table></div>
+<aside class="callout"><strong>最终判断</strong><p>三个岗位协作有效的标志，是任何人都知道当前由谁作决定、需要什么输入、交付什么结果、按什么标准通过，以及出现变化时应该退回哪一环重新确认。</p></aside>
+</div></section></article>
+<article class="doc-page" data-page="business" id="page-business"><h1>AI 落地商务与需求挖掘实战手册</h1>
+<blockquote>适用对象：不熟悉 AI、但需要找客户、谈需求、判断项目并移交方案团队的商务人员。</blockquote>
+<section class="chapter" id="business-一先记住整条业务链路"><h2><button class="chapter-toggle" aria-expanded="true"><span>一、先记住整条业务链路</span><b>−</b></button></h2><div class="chapter-body">
+<blockquote><strong>找到合适客户 → 听懂真实问题 → 判断业务价值 → 判断落地条件 → 切出首期场景 → 推进成交 → 完整移交</strong></blockquote>
+<p>商务的核心任务不是介绍 AI，也不是替技术人员设计系统，而是完成三件事：</p>
+<ol><li><strong>找到值得解决的问题。</strong></li><li><strong>判断客户是否真的愿意推动。</strong></li><li><strong>把经过初筛、有证据的需求交给方案负责人。</strong></li></ol>
+<p>最终分工参见：<a href="#" class="doc-link" data-doc="roles">企业AI改造项目三类核心角色说明</a>。商务完成需求初筛后，下一步参见：<a href="#" class="doc-link" data-doc="solution">AI落地方案设计实战手册</a>。跨岗位交接参见：<a href="#" class="doc-link" data-doc="relations">商务-方案-实施协作与交互关系图</a>。</p>
+</div></section>
+<section class="chapter" id="business-二商务到底在卖什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>二、商务到底在卖什么</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="business-1-客户购买的是结果">1. 客户购买的是结果</h3>
+<p>客户通常不关心模型、提示词、RAG 或 Agent 的技术细节。他们真正愿意付费的结果主要有四类：</p>
+<div class="table-wrap"><table><thead><tr><th>客户价值</th><th>常见表现</th><th>可验证指标</th></tr></thead><tbody>
+<tr><td>减少耗时</td><td>少查资料、少录入、少复制、少重复回复</td><td>单次处理时间、总工时、响应时间</td></tr>
+<tr><td>降低错误</td><td>统一口径、减少遗漏、增加检查</td><td>错误率、退回率、投诉率</td></tr>
+<tr><td>沉淀经验</td><td>把老员工经验转成团队能力</td><td>知识覆盖率、新人上手时间、复用次数</td></tr>
+<tr><td>扩大产能</td><td>同样人力处理更多业务</td><td>人均处理量、客户承载量、交付周期</td></tr>
+</tbody></table></div>
+<p>因此，商务不要说：</p>
+<blockquote>“我们可以给您做一个智能体。”</blockquote>
+<p>而要说：</p>
+<blockquote>“我们先找出团队最耗时、最容易出错的一步，再验证 AI 能否减少处理时间和错误；验证有效后，再交付可以实际使用的系统。”</blockquote>
+<h3 id="business-2-三条基本原则">2. 三条基本原则</h3>
+<ol><li><strong>先找业务问题，再选择技术。</strong></li><li><strong>先验证一个小闭环，再扩大范围。</strong></li><li><strong>先约定验收证据，再讨论预期效果。</strong></li></ol>
+<aside class="callout"><strong>商务第一原则</strong><p>客户说“想做 AI”只是意愿，不是需求。只有当使用者、场景、问题、影响和目标结果基本明确时，才形成可评估的需求。</p></aside>
+</div></section>
+<section class="chapter" id="business-三什么样的客户值得优先找"><h2><button class="chapter-toggle" aria-expanded="true"><span>三、什么样的客户值得优先找</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="business-1-优先客户的六个信号">1. 优先客户的六个信号</h3>
+<ul><li>存在每天或每周反复发生的工作。</li><li>员工大量查找、整理、录入、复制或回复信息。</li><li>业务明显依赖少数老员工或专家经验。</li><li>资料散落在文档、表格、聊天记录和不同系统中。</li><li>响应慢、错误或遗漏会带来成本、投诉或收入损失。</li><li>有明确负责人愿意投入人员、资料、时间和预算。</li></ul>
+<h3 id="business-2-暂时不应优先投入的客户">2. 暂时不应优先投入的客户</h3>
+<ul><li>只想“了解一下 AI”，没有具体问题。</li><li>只有兴趣，没有负责人、时间或预算。</li><li>不愿让实际使用者参与访谈。</li><li>不愿提供任何样例、资料或测试条件。</li><li>一开始就要求改造全部业务。</li><li>要求百分之百准确或完全替代员工。</li></ul>
+<h3 id="business-3-第一轮沟通的目标">3. 第一轮沟通的目标</h3>
+<p>第一次沟通不是立即成交，而是判断是否值得进入正式访谈。至少确认：</p>
+<ul><li><strong>问题是否真实发生。</strong></li><li><strong>问题是否值得解决。</strong></li><li><strong>客户是否愿意配合。</strong></li><li><strong>谁能够推动和决定。</strong></li></ul>
+<p>推荐开场：</p>
+<blockquote>“先不讨论具体 AI 产品。您团队目前最耗时间、最重复，或者最容易出错的一项工作是什么？”</blockquote>
+</div></section>
+<section class="chapter" id="business-四需求访谈怎么开展"><h2><button class="chapter-toggle" aria-expanded="true"><span>四、需求访谈怎么开展</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="business-41-不听概念-追最近一次真实事件">4.1 不听概念，追最近一次真实事件</h3>
+<p>客户说“客服效率低”“知识太乱”时，不要马上记录为需求。请他描述最近一次真实发生的事情：</p>
+<blockquote>“最近一次出现这个问题是什么时候？谁接到任务？第一步做了什么？中间查了哪些资料？在哪里卡住？最后用了多久？”</blockquote>
+<p>真实事件能暴露实际流程、隐性动作、例外情况和真正损失。</p>
+<h3 id="business-42-六组必问问题">4.2 六组必问问题</h3>
+<h3 id="business-A-谁在做">A. 谁在做</h3>
+<ul><li>谁是实际使用者？</li><li>一共有多少人做这项工作？</li><li>谁对结果负责？</li><li>谁能推动项目，谁决定预算？</li></ul>
+<h3 id="business-B-现在怎么做">B. 现在怎么做</h3>
+<ul><li>什么事情会触发这项工作？</li><li>从开始到结束依次经过哪些步骤？</li><li>每一步使用什么资料或系统？</li><li>最终输出给谁，进入哪个下一环节？</li></ul>
+<h3 id="business-C-工作量有多大">C. 工作量有多大</h3>
+<ul><li>每天、每周或每月发生多少次？</li><li>单次通常耗时多久？</li><li>高峰期是多少？</li><li>有多少人力长期投入？</li></ul>
+<h3 id="business-D-真正痛在哪里">D. 真正痛在哪里</h3>
+<ul><li>哪一步最耗时间？</li><li>哪一步最容易出错或遗漏？</li><li>哪一步最依赖老员工判断？</li><li>哪一步经常返工、等待或反复沟通？</li></ul>
+<h3 id="business-E-不解决有什么影响">E. 不解决有什么影响</h3>
+<ul><li>浪费多少工时或成本？</li><li>是否影响客户响应、成交、交付或回款？</li><li>是否造成投诉、退货、罚款或风险？</li><li>问题继续一年，影响会有多大？</li></ul>
+<h3 id="business-F-做好以后怎样算成功">F. 做好以后怎样算成功</h3>
+<ul><li>希望哪个业务指标发生变化？</li><li>当前基线是多少？</li><li>期望改善到什么程度？</li><li>谁确认结果，依据什么数据确认？</li></ul>
+<h3 id="business-43-把想要一个-AI翻译成业务需求">4.3 把“想要一个 AI”翻译成业务需求</h3>
+<p>使用这个句式：</p>
+<blockquote><strong>某类使用者，在某个具体场景中，需要根据某些输入完成某项任务；现在因为某个卡点造成某种影响，希望把某项指标从当前状态改善到目标状态。</strong></blockquote>
+<p>例如，客户原话是：</p>
+<blockquote>“我们想做一个 AI 客服。”</blockquote>
+<p>翻译后：</p>
+<blockquote>售后人员收到文本工单后，需要判断问题类型、查找企业资料并准备回复。目前分类和查资料占用大量时间，且回复口径不一致。希望缩短首次响应时间，同时降低错误回复和不合理转人工。</blockquote>
+<aside class="callout"><strong>需求不合格的典型表现</strong><p>“做个知识库”“做个智能体”“让 AI 帮销售”都只是方案或想法。必须继续追问：谁用、何时用、输入什么、完成什么、现在有什么损失、怎样算有效。</p></aside>
+<h3 id="business-44-访谈现场的记录规则">4.4 访谈现场的记录规则</h3>
+<p>把记录分成三类：</p>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>含义</th><th>示例</th></tr></thead><tbody>
+<tr><td>已确认事实</td><td>客户能提供事件、数据或样例</td><td>每天约 200 条工单</td></tr>
+<tr><td>客户判断</td><td>客户的感受或估计，尚未核实</td><td>大约一半问题是重复咨询</td></tr>
+<tr><td>待验证假设</td><td>我方暂时推测</td><td>AI 分类可能减少人工处理时间</td></tr>
+</tbody></table></div>
+<p>不要把三类内容混写，否则后续容易把推测当成承诺。</p>
+</div></section>
+<section class="chapter" id="business-五怎么判断这个需求值不值得做"><h2><button class="chapter-toggle" aria-expanded="true"><span>五、怎么判断这个需求值不值得做</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="business-51-六维价值评分">5.1 六维价值评分</h3>
+<p>每项按 1～5 分评估，并写一句依据。没有证据时不能凭感觉给高分。</p>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>1 分表现</th><th>5 分表现</th></tr></thead><tbody>
+<tr><td>痛点强度</td><td>只是觉得麻烦</td><td>持续造成成本、投诉、风险或收入损失</td></tr>
+<tr><td>发生频率</td><td>偶尔发生</td><td>每天大量重复发生</td></tr>
+<tr><td>价值大小</td><td>改善后影响很小</td><td>能显著提效、降错、增收或沉淀经验</td></tr>
+<tr><td>负责人意愿</td><td>无人负责</td><td>有明确业务负责人持续推动</td></tr>
+<tr><td>付费意愿</td><td>只想免费体验</td><td>有预算或愿为验证和结果付费</td></tr>
+<tr><td>验证便利</td><td>很久以后才能判断</td><td>可用小样本在短周期内验证</td></tr>
+</tbody></table></div>
+<p>建议结论：</p>
+<ul><li><strong>24～30 分：优先进入方案评估。</strong></li><li><strong>18～23 分：先补证据或缩小场景。</strong></li><li><strong>低于 18 分：暂缓投入。</strong></li></ul>
+<p>分数只是辅助，以下任一情况出现时应暂停：没有负责人、没有验证条件、没有付费意愿、风险无法控制。</p>
+<h3 id="business-52-一个简单的商业价值估算">5.2 一个简单的商业价值估算</h3>
+<p>至少估算一次，避免只谈感受：</p>
+<blockquote><strong>年度可释放工时 = 每次可节省时间 × 年处理次数 × 涉及人数</strong></blockquote>
+<p>还可以补充：</p>
+<ul><li>错误减少可能避免的损失。</li><li>响应变快可能提高的成交或续约。</li><li>经验沉淀可能缩短的新人培训时间。</li><li>自动化后新增的业务承载量。</li></ul>
+<p>这里计算的是机会规模，不是效果承诺。最终效果必须通过真实试点验证。</p>
+</div></section>
+<section class="chapter" id="business-六怎么判断能不能做"><h2><button class="chapter-toggle" aria-expanded="true"><span>六、怎么判断能不能做</span><b>−</b></button></h2><div class="chapter-body">
+<p>商务不需要会开发，但必须完成以下初筛。</p>
+<h3 id="business-61-可行性七问">6.1 可行性七问</h3>
+<div class="table-wrap"><table><thead><tr><th>检查项</th><th>必须问清楚的内容</th><th>不清楚时怎么办</th></tr></thead><tbody>
+<tr><td>使用者</td><td>谁会实际使用</td><td>找到实际使用者访谈</td></tr>
+<tr><td>输入</td><td>系统会收到什么</td><td>索要真实脱敏样例</td></tr>
+<tr><td>输出</td><td>最终应产生什么结果</td><td>让客户提供合格结果示例</td></tr>
+<tr><td>数据资料</td><td>依据从哪里来</td><td>盘点文档、表格、数据库和历史记录</td></tr>
+<tr><td>业务规则</td><td>熟练员工如何判断</td><td>请业务专家演示并解释</td></tr>
+<tr><td>验收指标</td><td>怎样判断有效</td><td>确认基线、指标、样本和确认人</td></tr>
+<tr><td>风险边界</td><td>出错会造成什么后果</td><td>增加人审、权限、转人工或停止自动执行</td></tr>
+</tbody></table></div>
+<h3 id="business-62-快速结论-需求清数据有风险可控">6.2 快速结论：需求清、数据有、风险可控</h3>
+<p>三项分别打 1～5 分：</p>
+<ol><li><strong>需求清：</strong>场景、输入、输出和目标是否说得清。</li><li><strong>数据有：</strong>是否有足够且可合法使用的资料和样例。</li><li><strong>风险可控：</strong>出错是否可发现、可拦截、可转人工、可恢复。</li></ol>
+<p>判断规则：</p>
+<ul><li>三项都 ≥4：可以设计小范围 PoC。</li><li>有一项为 3：补条件后再做。</li><li>任一项 ≤2：暂不承诺实施。</li></ul>
+<h3 id="business-63-商务必须升级给方案负责人的情况">6.3 商务必须升级给方案负责人的情况</h3>
+<ul><li>需要连接客户现有业务系统或写入生产数据。</li><li>涉及个人隐私、商业机密或敏感数据。</li><li>涉及付款、审批、合同、医疗、法律或安全判断。</li><li>客户要求明确准确率、并发量、上线周期或替代人数。</li><li>数据质量、接口权限或部署方式不确定。</li><li>错误结果可能带来较大损失。</li><li>客户要求一次覆盖多个部门和流程。</li></ul>
+<p>商务可以说“我们进入评估”，不能直接说“肯定能做”。</p>
+</div></section>
+<section class="chapter" id="business-七怎么切出第一个可交付项目"><h2><button class="chapter-toggle" aria-expanded="true"><span>七、怎么切出第一个可交付项目</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="business-71-首期场景的选择标准">7.1 首期场景的选择标准</h3>
+<p>优先选择：</p>
+<ul><li>高频发生。</li><li>痛点明显。</li><li>输入和输出清楚。</li><li>有真实样例和业务专家。</li><li>出错可以人工拦截。</li><li>能在小范围、短周期内看到结果。</li></ul>
+<p>首期不要选择：跨多个部门、规则持续变化、必须完全自动、失败代价很高、短期无法取得数据的场景。</p>
+<h3 id="business-72-一个完整的小闭环">7.2 一个完整的小闭环</h3>
+<p>首期方案至少说清：</p>
+<blockquote><strong>谁使用 → 什么触发 → 输入什么 → AI／规则做什么 → 输出什么 → 谁确认 → 结果写到哪里 → 异常怎么办</strong></blockquote>
+<p>例如：</p>
+<blockquote>售后人员收到工单后，系统识别问题类型，检索批准的企业知识并生成回复建议；售后人员确认后发送。投诉、退款、无依据和低置信度问题自动转人工，处理结果回写用于统计和优化。</blockquote>
+<h3 id="business-73-首期范围必须同时写做什么和不做什么">7.3 首期范围必须同时写“做什么”和“不做什么”</h3>
+<div class="table-wrap"><table><thead><tr><th>首期做</th><th>首期不做</th></tr></thead><tbody>
+<tr><td>文本工单分类</td><td>语音、图片等全部渠道同时接入</td></tr>
+<tr><td>企业知识检索</td><td>AI 自行编写无来源答案</td></tr>
+<tr><td>回复建议</td><td>无人审核直接对外发送</td></tr>
+<tr><td>高风险转人工</td><td>自动退款、赔付或审批</td></tr>
+<tr><td>结果记录</td><td>一次替换全部售后系统</td></tr>
+</tbody></table></div>
+<p>清楚的“不做”能保护报价、周期和交付质量。</p>
+</div></section>
+<section class="chapter" id="business-八商务怎样推进成交"><h2><button class="chapter-toggle" aria-expanded="true"><span>八、商务怎样推进成交</span><b>−</b></button></h2><div class="chapter-body">
+<p>推荐按四个阶段成交：</p>
+<ol><li><strong>诊断：</strong>明确问题、价值、条件和优先级。</li><li><strong>小范围验证：</strong>用真实脱敏样例验证最大不确定性。</li><li><strong>正式实施：</strong>完成可使用系统、测试、部署和培训。</li><li><strong>运营优化：</strong>根据真实使用数据持续更新知识、流程和指标。</li></ol>
+<p>成交前必须让客户确认：</p>
+<ul><li>解决哪个具体问题。</li><li>首期包含什么、不包含什么。</li><li>客户提供哪些人员、资料、权限和环境。</li><li>哪些情况由人工处理。</li><li>使用什么数据和指标验收。</li><li>周期、费用、付款节点和变更规则。</li></ul>
+<h3 id="business-商务可以承诺">商务可以承诺</h3>
+<ul><li>安排调研和评估。</li><li>按双方确认的范围组织验证。</li><li>提供明确的交付物和验收方法。</li><li>用真实数据说明试点结果。</li></ul>
+<h3 id="business-商务不能单独承诺">商务不能单独承诺</h3>
+<ul><li>技术一定能够实现。</li><li>准确率一定达到某个数字。</li><li>一定替代多少员工。</li><li>未经评估的上线时间和工作量。</li><li>演示效果等同于正式交付效果。</li><li>临时增加的功能免费完成。</li></ul>
+</div></section>
+<section class="chapter" id="business-九商务怎样把需求交给方案负责人"><h2><button class="chapter-toggle" aria-expanded="true"><span>九、商务怎样把需求交给方案负责人</span><b>−</b></button></h2><div class="chapter-body">
+<p>不能只发一句“客户想做 AI 客服”。一份合格的需求移交包至少包含：</p>
+<ol><li>客户和项目负责人信息。</li><li>最近一次真实问题的完整描述。</li><li>当前流程及参与角色。</li><li>频率、耗时、错误和损失证据。</li><li>客户希望改善的业务指标。</li><li>可提供的数据、资料和真实脱敏样例。</li><li>涉及的系统、接口、权限和敏感信息。</li><li>客户预算、决策人、时间要求和配合意愿。</li><li>已知风险、未知项和待验证假设。</li><li>商务建议的首期场景，但不能替代方案结论。</li></ol>
+<p>方案负责人收到后给出三种结论之一：</p>
+<ul><li><strong>通过：</strong>信息足够，可以进入方案设计。</li><li><strong>退回补充：</strong>写清缺什么、谁补、什么时候补。</li><li><strong>暂停：</strong>说明价值、数据、预算、权限或风险原因。</li></ul>
+<aside class="callout"><strong>合格移交标准</strong><p>方案负责人不需要重新从头问客户，就能理解谁遇到什么问题、问题有多大、有哪些证据、客户能提供什么，以及下一步最需要验证什么。</p></aside>
+</div></section>
+<section class="chapter" id="business-十新人可直接照着执行的一页流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>十、新人可直接照着执行的一页流程</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="business-第一步-初筛客户">第一步：初筛客户</h3>
+<ul><li>是否有真实、高频、持续造成影响的问题？</li><li>是否有明确负责人和付费意愿？</li><li>是否愿意安排实际使用者参加访谈？</li></ul>
+<p>全部基本满足，再约正式访谈。</p>
+<h3 id="business-第二步-完成访谈">第二步：完成访谈</h3>
+<ul><li>追一件最近发生的真实事件。</li><li>还原触发、角色、步骤、资料、输出和异常。</li><li>问出频率、耗时、错误和业务影响。</li><li>确认客户想改善的指标。</li><li>索要真实脱敏样例。</li></ul>
+<h3 id="business-第三步-完成判断">第三步：完成判断</h3>
+<ul><li>用六维评分判断值不值得做。</li><li>用“需求清、数据有、风险可控”判断能不能验证。</li><li>高风险或系统连接问题交方案负责人评估。</li></ul>
+<h3 id="business-第四步-定义小切口">第四步：定义小切口</h3>
+<ul><li>只选一个高价值场景。</li><li>写清使用者、输入、处理、输出、人审和异常。</li><li>写清首期做什么、不做什么。</li></ul>
+<h3 id="business-第五步-推进成交和移交">第五步：推进成交和移交</h3>
+<ul><li>优先成交诊断或小范围验证。</li><li>确认范围、配合条件、验收、周期和费用。</li><li>整理完整需求证据包，移交方案负责人。</li></ul>
+</div></section>
+<section class="chapter" id="business-十一培训建议"><h2><button class="chapter-toggle" aria-expanded="true"><span>十一、培训建议</span><b>−</b></button></h2><div class="chapter-body">
+<p>这套内容可拆成七节内部培训：</p>
+<ol><li>AI 企业落地到底在卖什么。</li><li>什么样的客户值得找。</li><li>怎样完成一次需求访谈。</li><li>怎样判断需求值不值得做。</li><li>怎样判断需求能不能做。</li><li>怎样切出最小验证项目。</li><li>怎样成交并移交方案和实施团队。</li></ol>
+<p>每节统一使用：</p>
+<blockquote><strong>概念讲解 → 判断标准 → 操作步骤 → 提问话术 → 正反案例 → 表单填写 → 现场演练</strong></blockquote>
+<p>学员结业时应能独立完成四份成果：</p>
+<ul><li>《客户初筛与商机卡》</li><li>《业务问题访谈记录》</li><li>《需求价值与可行性评分表》</li><li>《首期验证项目说明书》</li></ul>
+<p>如果四份成果仍说不清“谁、在什么场景、遇到什么问题、影响多大、怎样验证、客户提供什么”，说明需求还没有挖清楚，不能直接进入实施。</p>
+</div></section></article>
+<article class="doc-page" data-page="solution" id="page-solution"><h1>AI 落地方案设计实战手册</h1>
+<blockquote>适用对象：负责把客户业务问题转化为可实施、可验收 AI 项目的方案负责人，以及需要兼任方案工作的商务、产品和交付人员。</blockquote>
+<p>相关文档：<a href="#" class="doc-link" data-doc="business">AI落地商务与需求挖掘实战手册</a>｜<a href="#" class="doc-link" data-doc="delivery">AI落地实施交付实战手册</a>｜<a href="#" class="doc-link" data-doc="roles">企业AI改造项目三类核心角色说明</a>｜<a href="#" class="doc-link" data-doc="relations">商务-方案-实施协作与交互关系图</a></p>
+<section class="chapter" id="solution-一方案负责人到底负责什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>一、方案负责人到底负责什么</span><b>−</b></button></h2><div class="chapter-body">
+<p>方案负责人承接商务筛选后的需求，回答五个问题：</p>
+<ol><li>客户真正要解决的业务问题是什么？</li><li>这个问题是否值得用 AI 解决？</li><li>第一阶段应该做多大？</li><li>人、AI 和业务系统分别负责什么？</li><li>做到什么程度才算交付成功？</li></ol>
+<blockquote><strong>核心任务：把业务问题转化成范围清楚、能够实施、可以验收的项目方案。</strong></blockquote>
+<p>方案负责人不是“写方案书的人”，而是项目定义者。方案含糊，后续就容易出现报价失真、开发返工、客户预期失控和验收争议。</p>
+<h3 id="solution-必须守住的四条原则">必须守住的四条原则</h3>
+<ol><li>先定义问题，再选择技术。</li><li>先完成小而完整的业务闭环，再扩大范围。</li><li>先验证最大不确定性，再承诺正式实施。</li><li>先确定验收证据，再讨论目标效果。</li></ol>
+<h3 id="solution-不属于方案负责人的决定">不属于方案负责人的决定</h3>
+<ul><li>不代替商务决定报价、合同和付款。</li><li>不代替客户确认未经核实的事实。</li><li>不绕过实施负责人承诺工作量和上线时间。</li><li>不直接把客户随口提出的功能清单当方案。</li><li>不在缺少证据时承诺准确率和业务效果。</li></ul>
+</div></section>
+<section class="chapter" id="solution-二方案设计的完整流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>二、方案设计的完整流程</span><b>−</b></button></h2><div class="chapter-body">
+<blockquote><strong>接收需求 → 审核证据 → 还原流程 → 定义问题 → 判断价值与可行性 → 选择首期场景 → 设计业务闭环 → PoC验证 → 明确技术路线 → 制定验收标准 → 形成实施任务包</strong></blockquote>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>核心工作</th><th>阶段产物</th><th>通过标准</th></tr></thead><tbody>
+<tr><td>需求准入</td><td>审核商务证据包</td><td>准入检查表</td><td>问题真实，负责人和证据基本明确</td></tr>
+<tr><td>业务调研</td><td>访谈并还原现状</td><td>当前流程图、痛点表</td><td>实际使用者认可流程描述</td></tr>
+<tr><td>问题定义</td><td>从愿望中提取业务问题</td><td>问题定义卡</td><td>说清谁、何时、做什么、卡在哪里</td></tr>
+<tr><td>场景判断</td><td>评估价值、条件和风险</td><td>场景评估表</td><td>有明确结论及证据</td></tr>
+<tr><td>首期切分</td><td>选择最小完整闭环</td><td>首期范围表</td><td>小范围可用、可测、可扩展</td></tr>
+<tr><td>PoC验证</td><td>验证最大不确定性</td><td>PoC方案和报告</td><td>达到事先约定的标准</td></tr>
+<tr><td>方案设计</td><td>设计目标流程与边界</td><td>一页式方案、目标流程</td><td>客户、商务、实施理解一致</td></tr>
+<tr><td>验收设计</td><td>明确指标与测试方法</td><td>验收指标表、测试用例</td><td>指标可计算、证据可取得</td></tr>
+<tr><td>实施交接</td><td>把方案转成实施输入</td><td>实施任务包</td><td>实施能够估算、拆解和开工</td></tr>
+</tbody></table></div>
+<p>每个阶段只有三种结论：通过；退回补充；暂停。</p>
+</div></section>
+<section class="chapter" id="solution-三怎样审核商务提交的需求"><h2><button class="chapter-toggle" aria-expanded="true"><span>三、怎样审核商务提交的需求</span><b>−</b></button></h2><div class="chapter-body">
+<p>方案负责人收到需求后，不应直接开始画方案。先做需求准入检查。</p>
+<div class="table-wrap"><table><thead><tr><th>检查项</th><th>必须回答的问题</th><th>合格证据</th></tr></thead><tbody>
+<tr><td>客户与负责人</td><td>谁使用、谁推动、谁决策</td><td>姓名、角色和职责明确</td></tr>
+<tr><td>真实场景</td><td>问题最近一次怎样发生</td><td>真实事件或现场演示</td></tr>
+<tr><td>当前流程</td><td>从触发到结束怎样处理</td><td>流程描述、截图或操作记录</td></tr>
+<tr><td>工作量</td><td>多久发生一次、多少人处理</td><td>业务统计或合理估算</td></tr>
+<tr><td>痛点影响</td><td>耗时、错误、成本或风险是什么</td><td>数据、投诉或返工记录</td></tr>
+<tr><td>目标结果</td><td>客户希望改善什么</td><td>可观察的业务指标</td></tr>
+<tr><td>数据资料</td><td>AI工作依据从哪里来</td><td>脱敏样例、文档或系统说明</td></tr>
+<tr><td>商务条件</td><td>是否有预算、时间和配合人员</td><td>客户负责人明确表达</td></tr>
+</tbody></table></div>
+<h3 id="solution-直接退回补充的情况">直接退回补充的情况</h3>
+<ul><li>只有“做一个智能体”等技术想法。</li><li>没有实际使用者参与。</li><li>说不出最近一次真实事件。</li><li>没有输入样例或合格输出示例。</li><li>不知道谁提供数据、谁确认结果。</li><li>客户要求的效果没有测量方式。</li></ul>
+<h3 id="solution-准入结论模板">准入结论模板</h3>
+<blockquote><strong>结论：</strong>通过／退回补充／暂停   <strong>依据：</strong>已确认的事实与材料。   <strong>缺项：</strong>当前无法判断的内容。   <strong>下一步：</strong>由谁在什么时间补充什么。   <strong>当前不得承诺：</strong>尚未确认的效果、范围、周期和接口。</blockquote>
+</div></section>
+<section class="chapter" id="solution-四怎样还原客户的真实业务流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>四、怎样还原客户的真实业务流程</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-41-从一件真实事件开始">4.1 从一件真实事件开始</h3>
+<p>请实际使用者按平时方式演示最近一次任务：</p>
+<blockquote>“请从任务进入开始，按平时的方式操作一遍，直到结果提交或写回系统。”</blockquote>
+<p>记录复制、切换系统、询问同事、等待审批、返工和例外判断，不能只照制度文件画理想流程。</p>
+<h3 id="solution-42-用八个要素记录每一步">4.2 用八个要素记录每一步</h3>
+<ol><li>角色：谁执行、谁负责。</li><li>触发：什么事情让流程开始。</li><li>输入：收到什么数据、文档或指令。</li><li>动作：具体做了什么。</li><li>规则：根据什么判断。</li><li>输出：形成什么结果。</li><li>去向：交给谁或写入哪个系统。</li><li>异常：缺资料、出错或不确定时怎么办。</li></ol>
+<div class="table-wrap"><table><thead><tr><th>步骤</th><th>角色</th><th>输入</th><th>动作与规则</th><th>输出</th><th>工具</th><th>耗时</th><th>异常</th></tr></thead><tbody>
+<tr><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table></div>
+<h3 id="solution-43-标记四类改造机会">4.3 标记四类改造机会</h3>
+<ul><li>重复耗时：大量复制、整理、录入、查询和回复。</li><li>容易出错：漏项、口径不一、字段填错、检查不足。</li><li>依赖经验：只有少数人知道怎样判断和处理。</li><li>信息分散：频繁跨文档、群聊、表格和系统查找。</li></ul>
+<h3 id="solution-44-流程还原完成标准">4.4 流程还原完成标准</h3>
+<ul><li>实际使用者确认流程基本准确。</li><li>主流程和主要异常都被记录。</li><li>每一步输入、动作、输出和负责人明确。</li><li>痛点落在具体步骤，而不是“效率低”等概括。</li></ul>
+<p>阶段产物：当前流程图、角色责任表、输入输出表、痛点清单、异常清单。</p>
+</div></section>
+<section class="chapter" id="solution-五怎样定义一个合格的业务问题"><h2><button class="chapter-toggle" aria-expanded="true"><span>五、怎样定义一个合格的业务问题</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-51-统一句式">5.1 统一句式</h3>
+<blockquote><strong>某类使用者在某个具体场景中，需要根据某些输入完成某项任务；当前因为某个卡点造成某种业务影响，希望把某项指标从当前状态改善到目标状态。</strong></blockquote>
+<p>客户原话：“我们要做一个 AI 客服。”</p>
+<p>合格定义：</p>
+<blockquote>售后人员收到文本工单后，需要判断问题类型、查找企业资料并准备回复。目前分类和查资料占用大量时间，且回复口径不一致。首期希望缩短常见问题的回复准备时间，并降低无依据回答和错误转接。</blockquote>
+<h3 id="solution-52-区分五类内容">5.2 区分五类内容</h3>
+<div class="table-wrap"><table><thead><tr><th>内容</th><th>示例</th></tr></thead><tbody>
+<tr><td>客户愿望</td><td>做一个 AI 客服</td></tr>
+<tr><td>业务问题</td><td>工单分类和查资料耗时，回复不一致</td></tr>
+<tr><td>业务目标</td><td>缩短时间，减少错误</td></tr>
+<tr><td>解决手段</td><td>知识库、分类模型、工作流</td></tr>
+<tr><td>功能需求</td><td>自动分类、检索资料、生成回复建议</td></tr>
+</tbody></table></div>
+<h3 id="solution-53-问题定义自检">5.3 问题定义自检</h3>
+<ul><li>使用者、场景和当前任务明确吗？</li><li>卡点落到具体步骤了吗？</li><li>影响有事实或数据吗？</li><li>目标能够测量吗？</li><li>是否避免预设必须使用某种技术？</li></ul>
+<p>任一关键项说不清，应继续调研，而不是开始设计功能。</p>
+</div></section>
+<section class="chapter" id="solution-六怎样判断项目值不值得做"><h2><button class="chapter-toggle" aria-expanded="true"><span>六、怎样判断项目值不值得做</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-61-六维场景评分">6.1 六维场景评分</h3>
+<p>每项按1～5分评分，并写明事实依据。</p>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>低分表现</th><th>高分表现</th></tr></thead><tbody>
+<tr><td>痛点强度</td><td>只是觉得麻烦</td><td>持续造成成本、投诉或风险</td></tr>
+<tr><td>发生频率</td><td>偶尔出现</td><td>每天大量重复发生</td></tr>
+<tr><td>业务价值</td><td>改善影响很小</td><td>明显提效、降错、增收或沉淀经验</td></tr>
+<tr><td>数据条件</td><td>没有资料或不可使用</td><td>有足量、合法、可整理的真实样例</td></tr>
+<tr><td>实施条件</td><td>依赖众多且不可控</td><td>人员、权限、接口和环境基本可得</td></tr>
+<tr><td>客户推动力</td><td>无人负责</td><td>负责人、使用者和决策人愿意配合</td></tr>
+</tbody></table></div>
+<ul><li>24～30分：优先设计首期项目。</li><li>18～23分：缩小范围或先补条件。</li><li>低于18分：暂缓投入。</li></ul>
+<h3 id="solution-62-判断-AI-是否是合适手段">6.2 判断 AI 是否是合适手段</h3>
+<p>依次问：</p>
+<ol><li>优化制度或分工能否解决？</li><li>普通表单、规则或自动化能否解决？</li><li>是否需要理解非结构化内容、生成文本或动态判断？</li><li>AI的增量价值是否高于新增成本和风险？</li></ol>
+<aside class="callout"><strong>不要为了 AI 而 AI</strong><p>固定规则能解决就优先使用规则；根因是职责不清或资料不存在时，先解决管理和数据问题。</p></aside>
+<h3 id="solution-63-商业价值估算">6.3 商业价值估算</h3>
+<blockquote><strong>年度可释放工时 = 单次可节省时间 × 年处理次数 × 涉及人数</strong></blockquote>
+<p>还可估算错误损失、客户等待、培训成本和新增业务承载量。估算用于判断投入优先级，不作为效果承诺。</p>
+</div></section>
+<section class="chapter" id="solution-七怎样判断项目能不能做"><h2><button class="chapter-toggle" aria-expanded="true"><span>七、怎样判断项目能不能做</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-71-可行性七问">7.1 可行性七问</h3>
+<div class="table-wrap"><table><thead><tr><th>检查项</th><th>核心问题</th></tr></thead><tbody>
+<tr><td>使用者</td><td>谁会实际使用，是否愿意改变现有操作？</td></tr>
+<tr><td>输入</td><td>输入格式、质量、来源和数量是否明确？</td></tr>
+<tr><td>输出</td><td>合格结果长什么样，谁负责确认？</td></tr>
+<tr><td>数据</td><td>是否有依据，是否获得合法授权？</td></tr>
+<tr><td>规则</td><td>熟练员工能否解释判断方法和例外？</td></tr>
+<tr><td>集成</td><td>需要连接哪些系统，是否有接口和权限？</td></tr>
+<tr><td>风险</td><td>出错是否可发现、拦截、转人工和恢复？</td></tr>
+</tbody></table></div>
+<h3 id="solution-72-三项快速判断">7.2 三项快速判断</h3>
+<ul><li><strong>需求清：</strong>场景、输入、输出和目标明确。</li><li><strong>数据有：</strong>真实样例、知识依据和权限可得。</li><li><strong>风险可控：</strong>错误可识别、可拦截、可人工接管。</li></ul>
+<p>三项都≥4，可进入小范围验证；一项为3，补条件后再做；任一项≤2，暂不承诺实施。</p>
+<h3 id="solution-73-重点风险">7.3 重点风险</h3>
+<ul><li>数据隐私、商业秘密和授权范围。</li><li>无依据回答和模型幻觉。</li><li>系统越权读取、写入或重复执行。</li><li>对外发布、付款、审批等高风险动作。</li><li>客户把辅助建议误解为自动决策。</li><li>使用者不采用输出，导致系统没有价值。</li></ul>
+</div></section>
+<section class="chapter" id="solution-八怎样选择首期场景"><h2><button class="chapter-toggle" aria-expanded="true"><span>八、怎样选择首期场景</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-81-首期优先条件">8.1 首期优先条件</h3>
+<ul><li>高频发生，痛点明显。</li><li>输入和输出清楚。</li><li>有真实样例和业务专家。</li><li>上下游依赖较少。</li><li>错误可以人工拦截。</li><li>短周期内能够验证。</li><li>成功后可以逐步扩展。</li></ul>
+<p>不适合作为首期：跨多个部门和系统、规则持续变化、必须完全自动才有价值、失败不可逆、短期拿不到数据或使用者。</p>
+<h3 id="solution-82-价值可行性判断">8.2 价值—可行性判断</h3>
+<div class="table-wrap"><table><thead><tr><th></th><th>可行性高</th><th>可行性低</th></tr></thead><tbody>
+<tr><td>价值高</td><td>首期优先</td><td>先验证或补条件</td></tr>
+<tr><td>价值低</td><td>控制投入快速优化</td><td>暂不做</td></tr>
+</tbody></table></div>
+<h3 id="solution-83-降低耦合的方法">8.3 降低耦合的方法</h3>
+<ul><li>首期只服务一个清楚角色。</li><li>只覆盖一种主要输入类型。</li><li>只完成一个完整业务结果。</li><li>文件导入能验证时，先不连接生产系统。</li><li>能人工确认时，先不自动对外执行。</li><li>把跨部门审批留在原流程中。</li><li>为后续扩展预留字段和接口，不提前建设全部能力。</li></ul>
+</div></section>
+<section class="chapter" id="solution-九怎样设计最小可交付业务闭环"><h2><button class="chapter-toggle" aria-expanded="true"><span>九、怎样设计最小可交付业务闭环</span><b>−</b></button></h2><div class="chapter-body">
+<p>最小可交付方案不是展示型 Demo，而是让真实用户完成一次工作的最小系统。</p>
+<blockquote><strong>谁使用 → 什么触发 → 输入什么 → 怎样处理 → 输出什么 → 谁确认 → 写回哪里 → 异常怎么办</strong></blockquote>
+<h3 id="solution-示例-售后工单助手">示例：售后工单助手</h3>
+<ol><li>售后人员收到文本工单。</li><li>系统校验必要字段。</li><li>AI识别问题类型和风险。</li><li>系统检索批准的企业知识。</li><li>AI生成带依据的回复建议。</li><li>售后人员审核、修改或确认。</li><li>处理结果写回工单记录。</li><li>投诉、退款、无资料和低置信度问题转人工。</li></ol>
+<p>必须同时设计主流程、异常流程和人工接管流程。</p>
+<h3 id="solution-完成标准">完成标准</h3>
+<ul><li>真实使用者可以完成一项完整任务。</li><li>输入、输出和责任人明确。</li><li>结果有依据或明确标示不确定。</li><li>高风险和异常可以转人工。</li><li>结果可以保存、回写或追踪。</li><li>可以用约定指标评价效果。</li></ul>
+</div></section>
+<section class="chapter" id="solution-十怎样选择解决方法"><h2><button class="chapter-toggle" aria-expanded="true"><span>十、怎样选择解决方法</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>业务特征</th><th>优先方法</th></tr></thead><tbody>
+<tr><td>判断规则明确固定</td><td>规则、表单或传统自动化</td></tr>
+<tr><td>步骤固定、需要连续处理</td><td>工作流</td></tr>
+<tr><td>依赖企业内部资料</td><td>知识库与检索增强</td></tr>
+<tr><td>需要理解、提取或生成文本</td><td>大模型节点</td></tr>
+<tr><td>需要实时数据或执行动作</td><td>API和系统连接</td></tr>
+<tr><td>路径开放、需要动态选择工具</td><td>受控智能体</td></tr>
+<tr><td>错误代价较高</td><td>人工审核、权限和回滚</td></tr>
+</tbody></table></div>
+<p>技术路线要说明：为何选择、模块职责、数据流转、AI与规则分工、系统连接、人审位置、异常处理、成本限制和扩展方式。</p>
+<p>方案负责人定义业务逻辑，实施负责人评估技术、接口、工作量和周期。未经实施评估，不形成正式承诺。</p>
+</div></section>
+<section class="chapter" id="solution-十一先讲清楚-PoC-到底是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>十一、先讲清楚：PoC 到底是什么</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-111-用普通话解释-PoC">11.1 用普通话解释 PoC</h3>
+<p>PoC 是英文 <strong>Proof of Concept</strong> 的缩写，中文通常叫“概念验证”或“可行性验证”。</p>
+<p>这个名字容易让人困惑，可以直接把它理解成：</p>
+<blockquote><strong>正式投入大量时间和费用之前，先用少量真实材料做一次小实验，验证最关键的事情到底能不能成立。</strong></blockquote>
+<p>例如，客户想做“售后 AI 助手”，现在最大的疑问是：AI能否根据企业资料给出有依据的回复。PoC不需要先做完整客服系统，而是取一批真实脱敏工单和企业资料，测试回复质量，回答“这条路能不能走”。</p>
+<h3 id="solution-112-为什么不能直接开始做正式系统">11.2 为什么不能直接开始做正式系统</h3>
+<p>AI项目常有几类不确定性：</p>
+<ul><li>客户资料可能不足以支持回答。</li><li>历史数据可能太乱或缺少标准答案。</li><li>AI输出可能看起来流畅，但业务上不能使用。</li><li>客户系统可能没有可用接口。</li><li>实际使用者可能不愿采用新的操作方式。</li></ul>
+<p>如果不先验证，团队可能做完页面、账号和接口后，才发现核心能力不成立。PoC的作用是用较低成本提前暴露这种问题。</p>
+<h3 id="solution-113-PoC-与几个常见概念的区别">11.3 PoC 与几个常见概念的区别</h3>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>主要目的</th><th>是否可正式使用</th><th>关注重点</th></tr></thead><tbody>
+<tr><td>演示 Demo</td><td>展示一个想法或效果</td><td>通常不可以</td><td>看起来是否直观</td></tr>
+<tr><td>PoC</td><td>验证关键能力能否成立</td><td>通常不可以</td><td>最大不确定性是否被证明</td></tr>
+<tr><td>最小可交付系统</td><td>让小范围用户完成真实工作</td><td>可以</td><td>业务闭环是否跑通</td></tr>
+<tr><td>试用／试点</td><td>在真实环境观察使用效果</td><td>可以，小范围</td><td>用户是否采用、指标是否改善</td></tr>
+<tr><td>正式系统</td><td>长期稳定支持业务</td><td>可以</td><td>稳定、安全、维护和规模化</td></tr>
+</tbody></table></div>
+<aside class="callout"><strong>最容易混淆的一点</strong><p>演示成功只能说明“可以展示”，PoC通过说明“关键能力在限定条件下成立”，只有完成系统建设、测试和真实试用，才说明“可以交付使用”。</p></aside>
+<h3 id="solution-114-什么情况下需要-PoC">11.4 什么情况下需要 PoC</h3>
+<ul><li>AI识别、分类或生成质量尚不确定。</li><li>企业资料能否支持知识问答尚不确定。</li><li>数据质量和样本数量尚不确定。</li><li>关键接口能否连接尚不确定。</li><li>客户提出的目标值缺少证据。</li><li>正式实施成本较高，走错路线代价较大。</li></ul>
+<p>如果技术和流程都成熟、数据条件清楚、风险很低，可以不单独设PoC阶段，但仍需保留小范围测试。</p>
+<h3 id="solution-115-PoC结束后只能有三种结论">11.5 PoC结束后只能有三种结论</h3>
+<ol><li><strong>通过：</strong>关键能力达到预设标准，可以进入正式方案。</li><li><strong>调整后再验证：</strong>方向有希望，但数据、规则或范围需要调整。</li><li><strong>不通过：</strong>关键假设不成立，停止或更换解决方法。</li></ol>
+<p>PoC不通过不等于项目失败。用小成本证明一条路线不可行，本身就在帮助客户避免更大的错误投入。</p>
+</div></section>
+<section class="chapter" id="solution-十二怎样设计一次有效的-PoC"><h2><button class="chapter-toggle" aria-expanded="true"><span>十二、怎样设计一次有效的 PoC</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-121-先找最大的不确定性">12.1 先找最大的不确定性</h3>
+<p>例如：AI能否识别核心输入；企业资料能否支持回答；输出是否能被员工采用；关键接口是否可连接。</p>
+<p>一次PoC尽量只验证一到两个关键问题，不能借PoC名义建设完整系统。</p>
+<h3 id="solution-122-PoC方案必须写清">12.2 PoC方案必须写清</h3>
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody>
+<tr><td>验证问题</td><td>本次到底要证明什么</td></tr>
+<tr><td>样本</td><td>来源、数量、范围和脱敏方式</td></tr>
+<tr><td>方法</td><td>怎样执行、由谁对照判断</td></tr>
+<tr><td>指标</td><td>使用哪些指标</td></tr>
+<tr><td>通过标准</td><td>达到什么程度继续投入</td></tr>
+<tr><td>时间限制</td><td>何时停止测试</td></tr>
+<tr><td>负责人</td><td>谁执行、谁确认</td></tr>
+<tr><td>风险</td><td>测试可能遗漏什么</td></tr>
+<tr><td>后续结论</td><td>实施、调整后再验或停止</td></tr>
+</tbody></table></div>
+<h3 id="solution-123-示例">12.3 示例</h3>
+<blockquote><strong>验证问题：</strong>AI能否根据批准的售后资料，为常见文本工单生成有依据的回复建议。   <strong>样本：</strong>100条脱敏历史工单，包含常见、困难、无答案和投诉样本。   <strong>方法：</strong>AI生成回复，由两名售后专家独立评审。   <strong>指标：</strong>分类正确、依据正确、建议可用、应转人工未转人工。   <strong>通过标准：</strong>测试前由客户、方案和实施共同确认。   <strong>不包含：</strong>正式页面、生产接口、自动发送和全量知识建设。   <strong>结论：</strong>通过后进入最小可交付系统设计。</blockquote>
+<h3 id="solution-124-防止PoC失真">12.4 防止PoC失真</h3>
+<ul><li>不能只挑容易成功的样本。</li><li>包含正常、困难、无资料和高风险样本。</li><li>测试前确定标准，不能看到结果后再改。</li><li>说明哪些是真实能力，哪些是模拟连接。</li><li>PoC结果不能直接当生产验收结论。</li></ul>
+</div></section>
+<section class="chapter" id="solution-十三怎样明确人AI和系统的边界"><h2><button class="chapter-toggle" aria-expanded="true"><span>十三、怎样明确人、AI和系统的边界</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>参与方</th><th>适合负责</th></tr></thead><tbody>
+<tr><td>AI</td><td>理解、分类、提取、总结、检索和生成建议</td></tr>
+<tr><td>人</td><td>最终审批、高风险处理、责任判断和规则确认</td></tr>
+<tr><td>业务系统</td><td>精确计算、权限、状态、交易、记录和审计</td></tr>
+</tbody></table></div>
+<p>必须转人工的常见情况：输入不完整、没有知识依据、资料冲突、结果无法验证、低置信度，以及投诉、退款、合同、医疗、法律、删除、付款等高风险事项。</p>
+<div class="table-wrap"><table><thead><tr><th>场景</th><th>AI动作</th><th>人工动作</th><th>系统动作</th><th>转人工条件</th><th>责任人</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table></div>
+</div></section>
+<section class="chapter" id="solution-十四怎样写清项目范围"><h2><button class="chapter-toggle" aria-expanded="true"><span>十四、怎样写清项目范围</span><b>−</b></button></h2><div class="chapter-body">
+<p>范围必须包含：业务问题、角色与场景、功能、输入输出、数据系统、排除项、客户配合、待确认项和变更方式。</p>
+<div class="table-wrap"><table><thead><tr><th>本期做</th><th>本期不做</th></tr></thead><tbody>
+<tr><td>文本工单分类</td><td>同时接入语音、图片和全部渠道</td></tr>
+<tr><td>检索批准的售后知识</td><td>使用未审核网络资料回答</td></tr>
+<tr><td>生成回复建议</td><td>无人审核直接对外发送</td></tr>
+<tr><td>高风险工单转人工</td><td>自动退款、赔付或审批</td></tr>
+<tr><td>记录采纳和修改结果</td><td>一次替换整个售后系统</td></tr>
+</tbody></table></div>
+<h3 id="solution-范围变化分类">范围变化分类</h3>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>定义</th><th>处理方式</th></tr></thead><tbody>
+<tr><td>缺陷</td><td>已确认功能没有按方案工作</td><td>实施修复</td></tr>
+<tr><td>效果问题</td><td>结果未达到约定标准</td><td>按测试规则分析</td></tr>
+<tr><td>数据问题</td><td>来源数据缺失、错误或冲突</td><td>客户与方案共同处理</td></tr>
+<tr><td>配置调整</td><td>原范围内的参数、权限或规则调整</td><td>评估工作量后处理</td></tr>
+<tr><td>新增需求</td><td>新角色、新场景、新输入或新能力</td><td>重估范围、费用和周期</td></tr>
+</tbody></table></div>
+<p>任何新增诉求先登记和分类，不能直接进入实施任务。</p>
+</div></section>
+<section class="chapter" id="solution-十五怎样制定验收标准"><h2><button class="chapter-toggle" aria-expanded="true"><span>十五、怎样制定验收标准</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-151-每个指标的九个要素">15.1 每个指标的九个要素</h3>
+<p>指标名称、当前基线、目标值、测试样本、计算方法、数据来源、测试周期、确认人员、未通过的处理方式。</p>
+<h3 id="solution-152-六类验收">15.2 六类验收</h3>
+<div class="table-wrap"><table><thead><tr><th>验收类型</th><th>主要检查</th></tr></thead><tbody>
+<tr><td>功能验收</td><td>约定功能是否完成</td></tr>
+<tr><td>效果验收</td><td>输出质量和业务指标是否达标</td></tr>
+<tr><td>安全验收</td><td>权限、敏感数据和高风险动作是否受控</td></tr>
+<tr><td>稳定性验收</td><td>超时、失败、重试和恢复是否有效</td></tr>
+<tr><td>使用验收</td><td>真实使用者是否能完成任务</td></tr>
+<tr><td>交付物验收</td><td>系统、文档、培训和记录是否齐全</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>指标</th><th>基线</th><th>目标／通过条件</th><th>样本与算法</th><th>证据</th><th>确认人</th></tr></thead><tbody>
+<tr><td>回复准备时间</td><td>待测</td><td>相比基线下降</td><td>同类工单前后对照</td><td>系统日志</td><td>售后负责人</td></tr>
+<tr><td>分类正确率</td><td>待测</td><td>双方约定值</td><td>固定测试集复核</td><td>测试报告</td><td>业务专家</td></tr>
+<tr><td>无依据回答</td><td>待测</td><td>不超过约定阈值</td><td>无资料样本测试</td><td>对话与引用</td><td>方案负责人</td></tr>
+</tbody></table></div>
+<p>避免使用“体验良好”“基本准确”“运行稳定”等无法计算的表述。</p>
+</div></section>
+<section class="chapter" id="solution-十六怎样形成一页式方案"><h2><button class="chapter-toggle" aria-expanded="true"><span>十六、怎样形成一页式方案</span><b>−</b></button></h2><div class="chapter-body">
+<p>一页式方案至少包含：</p>
+<ol><li>客户问题：谁遇到什么问题，造成什么影响。</li><li>首期目标：本阶段改善什么结果。</li><li>目标流程：从输入到输出怎样运行。</li><li>方案组成：数据、知识库、工作流、AI、系统连接和人工审核。</li><li>范围边界：做什么、不做什么。</li><li>客户配合：人员、资料、权限和环境。</li><li>实施阶段：验证、建设、试用和上线。</li><li>验收标准：怎样用证据判断结果。</li><li>风险与假设：当前不确定性和控制措施。</li><li>后续扩展：首期成功后可能进入的下一阶段。</li></ol>
+<p>一页式方案用于对齐，不替代详细实施任务包。</p>
+</div></section>
+<section class="chapter" id="solution-十七怎样形成实施任务包"><h2><button class="chapter-toggle" aria-expanded="true"><span>十七、怎样形成实施任务包</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="solution-171-实施必须收到">17.1 实施必须收到</h3>
+<ul><li>业务问题、目标、当前流程与目标流程。</li><li>使用角色、权限、首期范围与排除项。</li><li>输入输出、字段、数据和知识来源。</li><li>业务规则、页面、接口和部署条件。</li><li>人工审核、转人工和异常处理。</li><li>固定测试集、测试用例和验收指标。</li><li>已知风险、待确认项和客户联系人。</li></ul>
+<h3 id="solution-172-每项任务的写法">17.2 每项任务的写法</h3>
+<blockquote><strong>任务名称＋负责人＋输入＋动作＋输出＋依赖＋完成标准＋检查方式</strong></blockquote>
+<p>示例：</p>
+<blockquote><strong>任务：售后知识清洗</strong>   输入：客户确认的FAQ、产品说明和售后政策。   动作：去重、拆分、补元数据、标记有效期和适用产品。   输出：可导入知识库的结构化资料及问题清单。   完成标准：来源可追溯、冲突已标记、业务负责人确认。   检查方式：抽样复核并运行固定检索测试。</blockquote>
+<h3 id="solution-173-可开工标准">17.3 可开工标准</h3>
+<p>实施能够回答为什么做、给谁用、做哪些内容、输入输出是什么、数据接口从哪里来、异常怎样处理、怎样验收、客户配合什么。仍需大量猜测时，任务包不合格。</p>
+</div></section>
+<section class="chapter" id="solution-十八怎样完成三次关键交接"><h2><button class="chapter-toggle" aria-expanded="true"><span>十八、怎样完成三次关键交接</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>交接</th><th>上游交付</th><th>下游检查</th></tr></thead><tbody>
+<tr><td>商务 → 方案</td><td>商机卡、访谈、流程、证据、样例和商务条件</td><td>问题是否真实，证据是否足够</td></tr>
+<tr><td>方案 → 实施</td><td>目标流程、范围、数据、路线、边界、任务和验收</td><td>能否估算、拆解和开工</td></tr>
+<tr><td>实施 → 方案</td><td>可运行版本、测试、问题和部署说明</td><td>是否符合业务目标和试用条件</td></tr>
+</tbody></table></div>
+<p>每次交接保留项目阶段、材料版本、交出人、接收人、日期、结论和缺项期限。</p>
+</div></section>
+<section class="chapter" id="solution-十九方案负责人的常见错误"><h2><button class="chapter-toggle" aria-expanded="true"><span>十九、方案负责人的常见错误</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>错误</th><th>后果</th><th>正确做法</th></tr></thead><tbody>
+<tr><td>客户说什么就设计什么</td><td>解决错误问题</td><td>回到真实事件和业务目标</td></tr>
+<tr><td>先选技术再找场景</td><td>堆功能</td><td>先判断规则、流程和数据</td></tr>
+<tr><td>首期大而全</td><td>周期长、难验收</td><td>切小而完整的闭环</td></tr>
+<tr><td>只写功能</td><td>理解不一致</td><td>写清角色、流程和输入输出</td></tr>
+<tr><td>只设计正常流程</td><td>异常时停摆</td><td>设计异常和人工接管</td></tr>
+<tr><td>不核实数据接口</td><td>开工后发现做不了</td><td>提前检查样例、权限和接口</td></tr>
+<tr><td>PoC没有通过标准</td><td>无法决策</td><td>测试前确定样本和标准</td></tr>
+<tr><td>把PoC当正式系统</td><td>客户预期错位</td><td>提前讲清验证范围和限制</td></tr>
+<tr><td>不写排除项</td><td>范围不断扩大</td><td>建立不做清单和变更规则</td></tr>
+<tr><td>绕过实施承诺周期</td><td>工作量失真</td><td>由实施正式评估</td></tr>
+</tbody></table></div>
+</div></section>
+<section class="chapter" id="solution-二十新人一页执行流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十、新人一页执行流程</span><b>−</b></button></h2><div class="chapter-body">
+<ol><li><strong>审核需求：</strong>检查负责人、真实事件、流程、痛点、数据和目标。</li><li><strong>还原流程：</strong>跟实际使用者走一遍真实任务。</li><li><strong>定义问题：</strong>把客户愿望翻译为具体业务问题。</li><li><strong>判断场景：</strong>评估价值、数据、实施条件和风险。</li><li><strong>切分首期：</strong>选择高价值、低依赖、可验证的场景。</li><li><strong>设计闭环：</strong>定义输入、处理、输出、人审、回写和异常。</li><li><strong>解释PoC：</strong>让客户和团队先理解这是关键能力小实验。</li><li><strong>完成PoC：</strong>事先确定问题、样本、方法、标准和停止条件。</li><li><strong>完成方案：</strong>形成目标流程、范围、边界和一页式方案。</li><li><strong>制定验收：</strong>明确指标、算法、证据和确认人。</li><li><strong>移交实施：</strong>形成无需猜测即可开工的实施任务包。</li></ol>
+</div></section>
+<section class="chapter" id="solution-二十一方案负责人最终交付物"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十一、方案负责人最终交付物</span><b>−</b></button></h2><div class="chapter-body">
+<ul><li>《需求准入检查表》</li><li>《当前业务流程图》</li><li>《角色与输入输出表》</li><li>《业务问题定义卡》</li><li>《场景价值与可行性判断表》</li><li>《首期项目范围表》</li><li>《PoC说明与方案书》</li><li>《PoC验证报告》</li><li>《目标业务流程图》</li><li>《人—AI—系统边界表》</li><li>《一页式项目方案》</li><li>《验收指标表与测试用例》</li><li>《实施任务包》</li><li>《方案交接记录》</li></ul>
+<aside class="callout"><strong>方案完成的最终判断</strong><p>客户能看懂将解决什么问题、得到什么结果；商务能据此确认范围和商务条件；实施能据此估算、建设和测试；所有人都清楚怎样算成功、什么不在本期范围内。</p></aside>
+</div></section></article>
+<article class="doc-page" data-page="delivery" id="page-delivery"><h1>AI 落地实施交付实战手册</h1>
+<blockquote>适用对象：负责把确认后的 AI 方案建设成可运行、可测试、可使用、可维护系统的实施负责人，以及参与数据、开发、测试、部署和客户支持的成员。</blockquote>
+<p>相关文档：<a href="#" class="doc-link" data-doc="business">AI落地商务与需求挖掘实战手册</a>｜<a href="#" class="doc-link" data-doc="solution">AI落地方案设计实战手册</a>｜<a href="#" class="doc-link" data-doc="roles">企业AI改造项目三类核心角色说明</a>｜<a href="#" class="doc-link" data-doc="relations">商务-方案-实施协作与交互关系图</a></p>
+<section class="chapter" id="delivery-一实施负责人到底负责什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>一、实施负责人到底负责什么</span><b>−</b></button></h2><div class="chapter-body">
+<blockquote><strong>核心任务：按照确认后的方案，把业务需求做成能够真实运行、经过测试、适合使用并可以维护的系统。</strong></blockquote>
+<p>实施负责人最终要回答：</p>
+<ol><li>方案在现有数据、系统和环境下能否实现？</li><li>怎样把项目拆成清楚、可检查的实施任务？</li><li>怎样保证正常流程、异常流程和人工接管都能运行？</li><li>怎样证明交付结果达到了约定标准？</li><li>怎样让客户能够使用、管理和继续维护？</li></ol>
+<h3 id="delivery-功能做出来不等于完成交付">“功能做出来”不等于完成交付</h3>
+<p>一个真正可交付的系统还必须具备：</p>
+<ul><li>真实数据和接口经过测试。</li><li>错误、超时和资料不足时有处理办法。</li><li>高风险动作有人工确认。</li><li>用户权限和数据范围受控。</li><li>处理过程有记录，可以追踪问题。</li><li>有部署、恢复、操作和维护说明。</li><li>客户使用者经过试用并能够完成工作。</li></ul>
+<h3 id="delivery-实施负责人的边界">实施负责人的边界</h3>
+<ul><li>可以决定不改变业务范围的技术实现细节。</li><li>可以对工期、依赖、风险和成本提出专业判断。</li><li>不能私自改变业务目标、范围和验收标准。</li><li>不能把新增需求直接混入当前开发。</li><li>不能用模拟数据冒充真实可用。</li><li>不能绕过授权读取或写入客户数据。</li><li>不能把内部测试通过说成客户已经验收。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-二实施交付的完整流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>二、实施交付的完整流程</span><b>−</b></button></h2><div class="chapter-body">
+<blockquote><strong>接收任务包 → 开工检查 → 技术拆解 → 环境与数据准备 → 分模块建设 → 联调测试 → 业务试用 → 修复与复测 → 灰度上线 → 培训移交 → 运营支持</strong></blockquote>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>核心工作</th><th>阶段产物</th><th>通过标准</th></tr></thead><tbody>
+<tr><td>1. 接收方案</td><td>检查目标、范围和依赖</td><td>开工检查表</td><td>无关键缺项</td></tr>
+<tr><td>2. 技术拆解</td><td>拆模块、任务和责任人</td><td>实施任务清单</td><td>每项任务可执行、可检查</td></tr>
+<tr><td>3. 准备条件</td><td>准备数据、账号、接口和环境</td><td>就绪清单</td><td>关键资源实测可用</td></tr>
+<tr><td>4. 分模块建设</td><td>建数据、知识、流程、AI和页面</td><td>模块版本与记录</td><td>单模块达到完成标准</td></tr>
+<tr><td>5. 集成联调</td><td>跑通端到端业务闭环</td><td>联调版本</td><td>主流程、异常和回写可运行</td></tr>
+<tr><td>6. 系统测试</td><td>功能、效果、安全和恢复测试</td><td>测试报告</td><td>阻断问题清零</td></tr>
+<tr><td>7. 业务试用</td><td>真实用户小范围使用</td><td>试用报告</td><td>用户能用，指标可记录</td></tr>
+<tr><td>8. 上线部署</td><td>灰度发布并监控</td><td>生产版本、回滚说明</td><td>运行稳定，可恢复</td></tr>
+<tr><td>9. 培训移交</td><td>教会客户使用与管理</td><td>操作维护手册</td><td>客户能独立完成关键操作</td></tr>
+<tr><td>10. 运营优化</td><td>根据真实数据持续调整</td><td>运营报告、版本记录</td><td>改动可追溯、指标持续观察</td></tr>
+</tbody></table></div>
+<p>每一阶段只有三种结果：</p>
+<ul><li><strong>通过：</strong>满足标准，进入下一阶段。</li><li><strong>退回补充：</strong>说明缺项、负责人和期限。</li><li><strong>暂停：</strong>关键数据、权限、环境、风险或范围问题未解决。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-三开工前怎样检查方案"><h2><button class="chapter-toggle" aria-expanded="true"><span>三、开工前怎样检查方案</span><b>−</b></button></h2><div class="chapter-body">
+<p>实施人员不能边猜需求边开发。收到实施任务包后，逐项检查：</p>
+<div class="table-wrap"><table><thead><tr><th>检查项</th><th>必须明确的内容</th></tr></thead><tbody>
+<tr><td>业务目标</td><td>解决谁的什么问题，预期改善什么</td></tr>
+<tr><td>项目范围</td><td>本期做什么、不做什么</td></tr>
+<tr><td>业务流程</td><td>从触发到结果怎样运行</td></tr>
+<tr><td>输入输出</td><td>输入格式、字段、示例和合格输出</td></tr>
+<tr><td>业务规则</td><td>正常判断、例外和优先级</td></tr>
+<tr><td>数据知识</td><td>来源、数量、质量、权限和负责人</td></tr>
+<tr><td>系统接口</td><td>读写对象、接口、测试环境和联系人</td></tr>
+<tr><td>人工边界</td><td>谁审核、何时转人工、谁承担责任</td></tr>
+<tr><td>异常处理</td><td>缺数据、失败、超时、重复时怎么办</td></tr>
+<tr><td>验收方式</td><td>指标、测试集、算法、证据和确认人</td></tr>
+<tr><td>客户配合</td><td>人员、账号、资料、时间和环境</td></tr>
+</tbody></table></div>
+<h3 id="delivery-不能直接开工的情况">不能直接开工的情况</h3>
+<ul><li>目标仍是“做一个智能体”等宽泛描述。</li><li>输入、输出或业务规则不清楚。</li><li>没有确认本期不做什么。</li><li>数据是否能使用尚未确认。</li><li>系统接口只有口头说法，没有实测条件。</li><li>高风险动作没有人工审核安排。</li><li>测试样本和验收方式缺失。</li><li>方案工期未经实施评估就已对外承诺。</li></ul>
+<h3 id="delivery-开工结论模板">开工结论模板</h3>
+<blockquote><strong>结论：</strong>可以开工／补充后开工／暂停开工   <strong>已具备：</strong>当前满足的条件。   <strong>缺项：</strong>阻碍实施的内容。   <strong>责任人：</strong>谁负责补充。   <strong>完成时间：</strong>何时再次检查。   <strong>影响：</strong>对范围、成本和周期的影响。</blockquote>
+</div></section>
+<section class="chapter" id="delivery-四怎样拆解实施任务"><h2><button class="chapter-toggle" aria-expanded="true"><span>四、怎样拆解实施任务</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-41-按可独立检查的模块拆分">4.1 按可独立检查的模块拆分</h3>
+<ul><li>数据准备</li><li>知识库建设</li><li>AI能力与提示词</li><li>业务规则</li><li>工作流</li><li>智能体</li><li>系统接口</li><li>页面交互</li><li>权限与账号</li><li>日志与监控</li><li>测试</li><li>部署</li><li>培训与移交</li></ul>
+<h3 id="delivery-42-每个任务必须有八个要素">4.2 每个任务必须有八个要素</h3>
+<blockquote><strong>任务名称＋负责人＋输入＋具体动作＋输出＋依赖＋完成标准＋检查方式</strong></blockquote>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody>
+<tr><td>任务名称</td><td>用具体结果命名，如“完成售后资料清洗”</td></tr>
+<tr><td>负责人</td><td>唯一主责人</td></tr>
+<tr><td>输入</td><td>开工前必须拿到什么</td></tr>
+<tr><td>动作</td><td>实际需要完成哪些步骤</td></tr>
+<tr><td>输出</td><td>最终形成什么文件、配置或功能</td></tr>
+<tr><td>依赖</td><td>依赖谁、什么接口或环境</td></tr>
+<tr><td>完成标准</td><td>达到什么状态才算完成</td></tr>
+<tr><td>检查方式</td><td>谁用什么方法确认</td></tr>
+</tbody></table></div>
+<h3 id="delivery-43-避免错误的任务写法">4.3 避免错误的任务写法</h3>
+<p>不合格：“把知识库做一下。”</p>
+<p>合格：</p>
+<blockquote><strong>任务：售后知识清洗与入库</strong>   输入：客户确认的FAQ、产品说明、售后政策。   动作：去重、拆分、补充来源、产品型号和有效期，标记冲突内容。   输出：可导入资料、问题清单和知识版本记录。   完成标准：来源可追溯，冲突已处理，业务负责人确认。   检查：运行固定检索测试并抽样复核。</blockquote>
+</div></section>
+<section class="chapter" id="delivery-五先讲清楚-什么是环境部署和版本"><h2><button class="chapter-toggle" aria-expanded="true"><span>五、先讲清楚：什么是环境、部署和版本</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-51-环境是什么">5.1 环境是什么</h3>
+<p>可以把“环境”理解为系统运行的一套独立场地，包括程序、配置、账号、数据库和接口。</p>
+<div class="table-wrap"><table><thead><tr><th>环境</th><th>用途</th><th>数据要求</th></tr></thead><tbody>
+<tr><td>开发环境</td><td>实施人员建设和调试</td><td>优先使用模拟或脱敏数据</td></tr>
+<tr><td>测试环境</td><td>完整测试和客户确认</td><td>使用受控的测试数据</td></tr>
+<tr><td>生产环境</td><td>支持客户真实业务</td><td>使用正式数据，严格控制权限</td></tr>
+</tbody></table></div>
+<p>不同环境应尽量隔离，不能在调试时误操作正式数据。</p>
+<h3 id="delivery-52-部署是什么">5.2 部署是什么</h3>
+<p>部署就是把已经完成的系统安装、配置并启动到指定环境，让目标用户能够访问和使用。</p>
+<h3 id="delivery-53-版本是什么">5.3 版本是什么</h3>
+<p>版本是某一时点系统内容和配置的明确快照。每次重要修改都应记录：版本号、日期、修改内容、修改人、测试结果和恢复方式。</p>
+<aside class="callout"><strong>基本规则</strong><p>能说清“哪个版本、部署在哪里、使用哪份数据、由谁修改”，问题发生时才有可能快速定位和恢复。</p></aside>
+</div></section>
+<section class="chapter" id="delivery-六怎样准备数据和知识"><h2><button class="chapter-toggle" aria-expanded="true"><span>六、怎样准备数据和知识</span><b>−</b></button></h2><div class="chapter-body">
+<p>AI系统的效果很大程度取决于输入数据和知识。模型强不代表脏数据会自动变正确。</p>
+<h3 id="delivery-61-数据准备八步">6.1 数据准备八步</h3>
+<ol><li><strong>盘点：</strong>有哪些数据、文档、表格和历史记录。</li><li><strong>确认权限：</strong>谁拥有，允许用于什么范围。</li><li><strong>脱敏：</strong>删除或替换姓名、电话、账号等敏感字段。</li><li><strong>清洗：</strong>修正格式、乱码、空值和明显错误。</li><li><strong>去重：</strong>识别重复记录和重复文档。</li><li><strong>分类：</strong>按业务、产品、时间和权限组织。</li><li><strong>标注：</strong>补充标准答案、标签或处理结果。</li><li><strong>版本化：</strong>记录来源、时间、责任人和变更。</li></ol>
+<h3 id="delivery-62-数据清单模板">6.2 数据清单模板</h3>
+<div class="table-wrap"><table><thead><tr><th>数据名称</th><th>来源</th><th>格式</th><th>数量</th><th>敏感级别</th><th>授权范围</th><th>质量问题</th><th>负责人</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table></div>
+<h3 id="delivery-63-数据就绪标准">6.3 数据就绪标准</h3>
+<ul><li>来源明确且获得授权。</li><li>字段和格式可以读取。</li><li>敏感内容按要求处理。</li><li>核心样本数量足够。</li><li>错误、缺失和冲突已有记录。</li><li>数据能够代表真实业务，而不只是成功样例。</li><li>客户业务负责人确认可用于测试。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-七先讲清楚-知识库是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>七、先讲清楚：知识库是什么</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-71-用普通话解释">7.1 用普通话解释</h3>
+<p>企业 AI 知识库不是一个普通文件夹，也不是把文件上传后就结束。它是一套让 AI 能够从企业批准资料中找到相关内容、给出有依据回答并能追溯来源的机制。</p>
+<blockquote><strong>知识库的价值：让 AI 尽量依据企业自己的知识工作，而不是凭模型记忆猜答案。</strong></blockquote>
+<h3 id="delivery-72-知识库不能自动解决什么">7.2 知识库不能自动解决什么</h3>
+<ul><li>原始资料本身错误或过期。</li><li>多份制度相互冲突。</li><li>业务规则没有写下来。</li><li>实时库存、订单状态等动态数据。</li><li>需要精确计算或执行操作的任务。</li></ul>
+<p>这些问题需要业务确认、系统查询、规则计算或工具调用配合。</p>
+</div></section>
+<section class="chapter" id="delivery-八怎样建设可用的知识库"><h2><button class="chapter-toggle" aria-expanded="true"><span>八、怎样建设可用的知识库</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-81-建设流程">8.1 建设流程</h3>
+<blockquote>资料盘点 → 内容筛选 → 清洗结构化 → 合理切分 → 补充标签 → 设置权限 → 导入索引 → 检索测试 → 回答测试 → 建立更新机制</blockquote>
+<h3 id="delivery-82-每份知识至少记录">8.2 每份知识至少记录</h3>
+<ul><li>标题和内容。</li><li>来源文件。</li><li>适用产品、部门或客户类型。</li><li>生效和失效时间。</li><li>内容负责人。</li><li>权限范围。</li><li>版本号。</li></ul>
+<h3 id="delivery-83-测试三层效果">8.3 测试三层效果</h3>
+<ol><li><strong>找得到：</strong>正确资料能否进入候选结果。</li><li><strong>找得准：</strong>排在前面的是否真正相关。</li><li><strong>答得对：</strong>回答是否忠于资料并带有可追溯依据。</li></ol>
+<h3 id="delivery-84-必测情况">8.4 必测情况</h3>
+<ul><li>有明确答案的问题。</li><li>表达不同但含义相同的问题。</li><li>跨多份资料才能回答的问题。</li><li>没有答案的问题。</li><li>多份资料冲突的问题。</li><li>用户无权查看的问题。</li><li>旧版资料已经失效的问题。</li></ul>
+<h3 id="delivery-85-完成标准">8.5 完成标准</h3>
+<ul><li>核心问题能检索到正确依据。</li><li>答案能够显示或记录来源。</li><li>无依据时不编造，转人工或明确告知。</li><li>权限隔离经过测试。</li><li>内容更新、删除和重新测试有负责人。</li></ul>
+<p>阶段产物：知识目录、清洗记录、元数据说明、权限表、版本记录、检索测试报告、更新SOP。</p>
+</div></section>
+<section class="chapter" id="delivery-九先讲清楚-工作流是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>九、先讲清楚：工作流是什么</span><b>−</b></button></h2><div class="chapter-body">
+<p>工作流可以理解为一条预先设计好的数字流水线：每一步做什么、使用什么数据、满足什么条件走哪条分支，都提前定义清楚。</p>
+<p>例如：</p>
+<blockquote>工单进入 → 检查字段 → 识别类型 → 检索知识 → 生成建议 → 人工确认 → 写回记录</blockquote>
+<p>工作流适合步骤相对固定、需要稳定重复执行的任务。它的价值是过程清楚、容易检查、容易定位错误。</p>
+</div></section>
+<section class="chapter" id="delivery-十怎样搭建-AI-工作流"><h2><button class="chapter-toggle" aria-expanded="true"><span>十、怎样搭建 AI 工作流</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-101-工作流必须包含">10.1 工作流必须包含</h3>
+<ul><li>触发方式。</li><li>输入字段和校验。</li><li>规则判断。</li><li>AI处理节点。</li><li>知识检索。</li><li>外部工具或系统调用。</li><li>人工审核。</li><li>结果输出和回写。</li><li>异常分支。</li><li>超时、重试和停止条件。</li><li>日志记录。</li></ul>
+<h3 id="delivery-102-建设顺序">10.2 建设顺序</h3>
+<ol><li>先用少量样本跑通最短主流程。</li><li>固定每个节点的输入输出。</li><li>加入业务规则和知识依据。</li><li>补齐人工审核和转人工。</li><li>增加缺字段、超时和接口失败分支。</li><li>写入日志并记录每步结果。</li><li>使用固定测试集重复测试。</li><li>再连接正式页面和业务系统。</li></ol>
+<h3 id="delivery-103-节点说明模板">10.3 节点说明模板</h3>
+<div class="table-wrap"><table><thead><tr><th>节点</th><th>输入</th><th>处理</th><th>输出</th><th>失败处理</th><th>日志</th></tr></thead><tbody>
+<tr><td>工单分类</td><td>工单文本</td><td>规则＋模型分类</td><td>类型、置信度</td><td>低置信转人工</td><td>输入、结果、耗时</td></tr>
+</tbody></table></div>
+<h3 id="delivery-104-完成标准">10.4 完成标准</h3>
+<ul><li>主流程端到端跑通。</li><li>每一步输入输出可追踪。</li><li>缺少资料时不生成假答案。</li><li>失败不会无限重试或重复执行。</li><li>高风险结果进入人工审核。</li><li>最终结果能够回写或保存。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-十一先讲清楚-智能体是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>十一、先讲清楚：智能体是什么</span><b>−</b></button></h2><div class="chapter-body">
+<p>智能体通常指能够根据目标和当前情况，自主选择下一步动作或工具的 AI 程序。</p>
+<p>工作流像固定路线的公交车；智能体更像知道目标后自己选择路线的司机。灵活性更高，也更需要权限、步数和停止条件。</p>
+<h3 id="delivery-什么时候才需要智能体">什么时候才需要智能体</h3>
+<ul><li>任务路径无法提前完全固定。</li><li>需要根据上下文选择不同工具。</li><li>需要多步查找、分析和执行。</li><li>每个工具权限都能明确限制。</li><li>出错时可以停止并人工接管。</li></ul>
+<p>步骤固定的任务优先用工作流，不必为了显得先进而使用智能体。</p>
+</div></section>
+<section class="chapter" id="delivery-十二怎样搭建受控智能体"><h2><button class="chapter-toggle" aria-expanded="true"><span>十二、怎样搭建受控智能体</span><b>−</b></button></h2><div class="chapter-body">
+<p>必须定义：</p>
+<ul><li>目标和完成条件。</li><li>可使用的工具。</li><li>每个工具的权限。</li><li>禁止执行的动作。</li><li>最大执行步数和时间。</li><li>需要人工确认的节点。</li><li>失败、循环和无结果时怎样停止。</li><li>操作过程怎样记录。</li></ul>
+<h3 id="delivery-智能体工具权限表">智能体工具权限表</h3>
+<div class="table-wrap"><table><thead><tr><th>工具</th><th>能读取</th><th>能写入</th><th>调用条件</th><th>人工确认</th><th>失败处理</th></tr></thead><tbody>
+<tr><td>订单查询</td><td>指定订单状态</td><td>无</td><td>有合法订单号</td><td>不需要</td><td>查询失败转人工</td></tr>
+</tbody></table></div>
+<h3 id="delivery-高风险禁区">高风险禁区</h3>
+<p>未经明确授权和人工确认，智能体不应自动进行付款、退款、删除、审批、合同确认、对外发布和生产控制等不可逆动作。</p>
+</div></section>
+<section class="chapter" id="delivery-十三先讲清楚-API和系统连接是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>十三、先讲清楚：API和系统连接是什么</span><b>−</b></button></h2><div class="chapter-body">
+<p>API可以理解为两个系统之间约定好的“办事窗口”。一个系统按规定提交信息，另一个系统返回查询结果或执行动作。</p>
+<p>例如，AI需要回答订单是否发货，不能自己猜，需要通过订单系统API查询真实状态。</p>
+<p>系统连接的风险通常高于单独生成文本，因为它可能读取敏感数据或改变业务状态。</p>
+</div></section>
+<section class="chapter" id="delivery-十四怎样连接客户业务系统"><h2><button class="chapter-toggle" aria-expanded="true"><span>十四、怎样连接客户业务系统</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-141-连接前必须确认">14.1 连接前必须确认</h3>
+<ul><li>接口文档和技术联系人。</li><li>测试环境和测试账号。</li><li>允许读取和写入的范围。</li><li>字段含义、格式和必填规则。</li><li>身份验证和权限有效期。</li><li>调用频率、并发和费用限制。</li><li>超时、重试和错误码。</li><li>重复请求如何避免重复执行。</li><li>写入失败如何回滚。</li><li>日志和审计怎样保留。</li></ul>
+<h3 id="delivery-142-什么是重复执行保护">14.2 什么是“重复执行保护”</h3>
+<p>网络失败时系统可能重试。如果第一次实际成功但返回结果丢失，第二次重试可能重复创建订单或重复发送通知。因此必须使用唯一业务编号、状态检查等方式保证同一任务不会被执行两次。</p>
+<h3 id="delivery-143-测试顺序">14.3 测试顺序</h3>
+<blockquote>测试环境只读查询 → 单条测试写入 → 错误输入 → 超时与重试 → 重复请求 → 权限边界 → 批量压力 → 小范围生产灰度</blockquote>
+<h3 id="delivery-144-完成标准">14.4 完成标准</h3>
+<ul><li>接口通过真实测试，不只依据文档判断。</li><li>字段映射获得双方确认。</li><li>最小权限生效。</li><li>超时、重试、重复和回滚经过测试。</li><li>所有写入动作可追踪到操作者和请求。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-十五怎样管理提示词和模型"><h2><button class="chapter-toggle" aria-expanded="true"><span>十五、怎样管理提示词和模型</span><b>−</b></button></h2><div class="chapter-body">
+<p>提示词可以理解为给 AI 的任务说明书。它需要明确任务、依据、步骤、边界和输出格式，而不是一句“你是一个专业助手”。</p>
+<h3 id="delivery-151-提示词应包含">15.1 提示词应包含</h3>
+<ul><li>角色和任务目标。</li><li>允许使用的知识依据。</li><li>输入字段及含义。</li><li>判断步骤和业务规则。</li><li>输出格式。</li><li>必须拒绝或转人工的情况。</li><li>正确示例和错误示例。</li></ul>
+<h3 id="delivery-152-版本管理">15.2 版本管理</h3>
+<p>记录：提示词版本、模型版本、参数、知识版本、修改原因、测试集结果、修改人和上线时间。</p>
+<p>任何模型、提示词、知识或关键规则变化后，都要重新运行固定测试集。</p>
+</div></section>
+<section class="chapter" id="delivery-十六怎样设计人工审核与风险控制"><h2><button class="chapter-toggle" aria-expanded="true"><span>十六、怎样设计人工审核与风险控制</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-161-四种处理结果">16.1 四种处理结果</h3>
+<ol><li><strong>自动通过：</strong>低风险且达到确定条件。</li><li><strong>人工确认：</strong>AI给出建议，由人批准。</li><li><strong>转专业人员：</strong>需要特定经验或权限。</li><li><strong>拒绝执行：</strong>缺少授权、依据或风险过高。</li></ol>
+<h3 id="delivery-162-人工审核要回答">16.2 人工审核要回答</h3>
+<ul><li>谁审核。</li><li>在哪里审核。</li><li>审核哪些内容。</li><li>多久内完成。</li><li>修改结果是否记录。</li><li>拒绝后如何处理。</li><li>审核人不在线怎么办。</li></ul>
+<h3 id="delivery-163-必须人工确认的常见事项">16.3 必须人工确认的常见事项</h3>
+<ul><li>付款、退款和赔付。</li><li>合同、法律和医疗结论。</li><li>人事决定和生产控制。</li><li>删除重要数据。</li><li>对外发布和高影响客户回复。</li><li>涉及敏感信息的传输。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-十七先讲清楚-日志监控和告警是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>十七、先讲清楚：日志、监控和告警是什么</span><b>−</b></button></h2><div class="chapter-body">
+<ul><li><strong>日志：</strong>系统做过什么的详细记录，用于查错和追责。</li><li><strong>监控：</strong>持续观察系统是否正常、速度和成本是否异常。</li><li><strong>告警：</strong>发现重要异常时主动通知负责人。</li></ul>
+<h3 id="delivery-至少记录">至少记录</h3>
+<ul><li>请求时间、使用者和任务编号。</li><li>输入来源和必要字段，不随意记录敏感原文。</li><li>使用的模型、提示词和知识版本。</li><li>每个关键节点结果和耗时。</li><li>人工修改、转人工和最终结果。</li><li>接口错误、重试和恢复过程。</li></ul>
+<h3 id="delivery-重点监控">重点监控</h3>
+<ul><li>成功率和失败率。</li><li>响应时间。</li><li>转人工率。</li><li>无答案和低置信度比例。</li><li>单次调用成本。</li><li>异常增长和接口不可用。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-十八怎样测试-AI-系统"><h2><button class="chapter-toggle" aria-expanded="true"><span>十八、怎样测试 AI 系统</span><b>−</b></button></h2><div class="chapter-body">
+<p>测试不能只看“能不能跑”，需要覆盖七类测试：</p>
+<div class="table-wrap"><table><thead><tr><th>测试类型</th><th>检查内容</th></tr></thead><tbody>
+<tr><td>功能测试</td><td>功能是否按方案执行</td></tr>
+<tr><td>业务测试</td><td>结果是否能被业务人员采用</td></tr>
+<tr><td>AI效果测试</td><td>正确、完整、引用、拒答和一致性</td></tr>
+<tr><td>异常测试</td><td>缺字段、错误格式、无资料、超时和失败</td></tr>
+<tr><td>权限测试</td><td>用户是否只能看到和执行授权内容</td></tr>
+<tr><td>安全测试</td><td>敏感数据、恶意输入和越权调用</td></tr>
+<tr><td>恢复测试</td><td>失败后能否重试、回滚和人工接管</td></tr>
+</tbody></table></div>
+<h3 id="delivery-181-测试用例格式">18.1 测试用例格式</h3>
+<div class="table-wrap"><table><thead><tr><th>用例编号</th><th>场景</th><th>输入</th><th>预期结果</th><th>实际结果</th><th>证据</th><th>结论</th><th>负责人</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table></div>
+<h3 id="delivery-182-问题严重程度">18.2 问题严重程度</h3>
+<ul><li><strong>阻断：</strong>核心流程无法运行、数据破坏或严重越权，必须清零。</li><li><strong>严重：</strong>重要功能错误，无可接受替代方式，上线前解决。</li><li><strong>一般：</strong>影响局部操作，可有明确临时方案。</li><li><strong>建议：</strong>体验优化，可进入后续版本。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-十九怎样建立固定测试集"><h2><button class="chapter-toggle" aria-expanded="true"><span>十九、怎样建立固定测试集</span><b>−</b></button></h2><div class="chapter-body">
+<p>固定测试集是一批长期保留的代表性输入和预期结果。它用于比较每次修改前后的效果，防止修好一个问题却破坏另一个问题。</p>
+<p>测试集至少包括：</p>
+<ul><li>常见正常样本。</li><li>容易混淆的样本。</li><li>资料不足样本。</li><li>错误格式样本。</li><li>高风险样本。</li><li>极端边界样本。</li><li>历史真实错误。</li><li>明确应该转人工的样本。</li></ul>
+<p>每条样本记录来源、预期、评审人和适用版本。不能只保存“模型答得好”的样本。</p>
+</div></section>
+<section class="chapter" id="delivery-二十怎样组织业务试用"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十、怎样组织业务试用</span><b>−</b></button></h2><div class="chapter-body">
+<p>业务试用是让少量真实用户在真实或接近真实的流程中使用系统，观察它是否真正有帮助。</p>
+<h3 id="delivery-201-试用前确认">20.1 试用前确认</h3>
+<ul><li>试用人员和负责人。</li><li>试用业务范围。</li><li>开始和结束时间。</li><li>使用入口和操作说明。</li><li>数据记录和问题反馈方式。</li><li>观察指标和通过标准。</li><li>严重问题的停止条件。</li></ul>
+<h3 id="delivery-202-试用期间记录">20.2 试用期间记录</h3>
+<ul><li>使用次数和成功次数。</li><li>AI结果被直接采纳、修改或拒绝的次数。</li><li>转人工原因。</li><li>错误类型和影响。</li><li>单次处理时间。</li><li>用户意见和操作困难。</li><li>新需求，但与缺陷分开记录。</li></ul>
+<h3 id="delivery-203-试用结论">20.3 试用结论</h3>
+<ul><li>可以上线。</li><li>修复指定问题后上线。</li><li>缩小范围继续试用。</li><li>暂停并回到方案评估。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-二十一怎样区分缺陷效果问题和新增需求"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十一、怎样区分缺陷、效果问题和新增需求</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>定义</th><th>例子</th><th>处理方式</th></tr></thead><tbody>
+<tr><td>程序缺陷</td><td>已确认功能未正常工作</td><td>点击提交没有反应</td><td>实施修复</td></tr>
+<tr><td>效果问题</td><td>AI结果未达约定标准</td><td>分类错误率超标</td><td>按测试规则优化</td></tr>
+<tr><td>数据问题</td><td>来源内容缺失、错误或冲突</td><td>两份政策互相矛盾</td><td>客户和方案确认</td></tr>
+<tr><td>配置问题</td><td>参数、权限或规则配置错误</td><td>普通用户看到管理资料</td><td>修正并复测</td></tr>
+<tr><td>使用问题</td><td>操作或培训不到位</td><td>用户不会选择正确入口</td><td>优化说明和培训</td></tr>
+<tr><td>新增需求</td><td>原范围之外的新能力</td><td>新增语音工单</td><td>交商务和方案重估</td></tr>
+</tbody></table></div>
+<aside class="callout"><strong>变更纪律</strong><p>实施人员收到新诉求后先登记和分类。新增需求不能以“顺手做一下”的方式进入当前版本。</p></aside>
+</div></section>
+<section class="chapter" id="delivery-二十二先讲清楚-灰度上线和回滚是什么"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十二、先讲清楚：灰度上线和回滚是什么</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-221-灰度上线">22.1 灰度上线</h3>
+<p>灰度上线是先让少量用户或少量业务使用新系统，观察稳定后再逐步扩大。它能降低一次性全面上线的风险。</p>
+<h3 id="delivery-222-回滚">22.2 回滚</h3>
+<p>回滚是新版本出现严重问题时，快速恢复到上一个可用版本或原业务流程。</p>
+<p>上线前必须回答：如果失败，怎样停止、怎样恢复、数据怎样处理、谁做决定。</p>
+</div></section>
+<section class="chapter" id="delivery-二十三怎样部署和上线"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十三、怎样部署和上线</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-231-上线检查">23.1 上线检查</h3>
+<ul><li>正式环境和域名可用。</li><li>生产账号和最小权限配置完成。</li><li>正式配置与测试配置分开。</li><li>数据已经备份或有恢复方案。</li><li>正式版本和依赖明确。</li><li>日志、监控和告警已经启用。</li><li>严重问题响应人和联系方式明确。</li><li>灰度范围和上线时间确认。</li><li>回滚步骤已经演练或验证。</li><li>客户业务和技术负责人确认。</li></ul>
+<h3 id="delivery-232-推荐上线顺序">23.2 推荐上线顺序</h3>
+<blockquote>内部测试 → 客户测试环境 → 小范围业务试用 → 生产灰度 → 扩大范围 → 正式上线</blockquote>
+<h3 id="delivery-233-上线后重点观察">23.3 上线后重点观察</h3>
+<ul><li>核心流程成功率。</li><li>错误和超时。</li><li>用户是否正常使用。</li><li>人工审核是否积压。</li><li>数据写入是否正确。</li><li>成本和响应速度是否异常。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-二十四怎样完成培训和移交"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十四、怎样完成培训和移交</span><b>−</b></button></h2><div class="chapter-body">
+<h3 id="delivery-241-客户需要收到">24.1 客户需要收到</h3>
+<ul><li>系统访问和账号说明。</li><li>用户操作手册。</li><li>管理员维护手册。</li><li>权限和数据范围说明。</li><li>常见问题与异常处理。</li><li>知识更新方法。</li><li>已知限制和人工边界。</li><li>版本、部署和恢复说明。</li><li>支持联系人和维护范围。</li></ul>
+<h3 id="delivery-242-培训必须覆盖">24.2 培训必须覆盖</h3>
+<ol><li>正常任务怎样完成。</li><li>AI结果怎样检查和修改。</li><li>什么情况必须转人工。</li><li>出错或无答案时怎么办。</li><li>怎样反馈问题并提供证据。</li><li>管理员怎样更新知识和权限。</li></ol>
+<h3 id="delivery-243-移交完成标准">24.3 移交完成标准</h3>
+<ul><li>客户使用者能独立完成核心任务。</li><li>管理员能完成常见配置和知识更新。</li><li>客户知道系统的能力与限制。</li><li>部署、恢复和支持责任明确。</li><li>所有交付物有版本和接收记录。</li></ul>
+</div></section>
+<section class="chapter" id="delivery-二十五怎样判断实施已经完成"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十五、怎样判断实施已经完成</span><b>−</b></button></h2><div class="chapter-body">
+<p>实施完成必须同时满足：</p>
+<ul><li>约定功能完成。</li><li>主流程端到端跑通。</li><li>异常、超时和失败有处理。</li><li>权限、人工审核和风险控制生效。</li><li>真实数据和接口经过测试。</li><li>固定测试集达到约定标准。</li><li>阻断和严重问题已清零。</li><li>真实业务试用完成。</li><li>部署、监控和回滚可执行。</li><li>操作、维护和培训完成。</li><li>客户已经接收交付物。</li><li>遗留问题有负责人和处理计划。</li></ul>
+<p>代码写完、演示成功、内部测试通过，都不能单独作为完成依据。</p>
+</div></section>
+<section class="chapter" id="delivery-二十六怎样开展上线后的运营"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十六、怎样开展上线后的运营</span><b>−</b></button></h2><div class="chapter-body">
+<p>AI系统不是一次交付后永远不变。业务资料、用户问题和模型能力都会变化，需要持续运营。</p>
+<h3 id="delivery-261-运营工作">26.1 运营工作</h3>
+<ul><li>补充和修正知识。</li><li>分析错误和无答案案例。</li><li>观察人工修改与拒绝原因。</li><li>调整规则、提示词和流程。</li><li>检查模型成本、速度和稳定性。</li><li>更新固定测试集。</li><li>评估新增场景和范围变更。</li></ul>
+<h3 id="delivery-262-运营指标">26.2 运营指标</h3>
+<div class="table-wrap"><table><thead><tr><th>指标</th><th>说明</th></tr></thead><tbody>
+<tr><td>使用率</td><td>目标用户中实际使用比例</td></tr>
+<tr><td>采纳率</td><td>AI结果直接或修改后被采用的比例</td></tr>
+<tr><td>正确率</td><td>经业务评审符合标准的比例</td></tr>
+<tr><td>转人工率</td><td>进入人工处理的比例和原因</td></tr>
+<tr><td>平均处理时间</td><td>从输入到可用结果的时间</td></tr>
+<tr><td>无答案率</td><td>无知识依据或无法完成的比例</td></tr>
+<tr><td>单次成本</td><td>每次任务的模型和系统成本</td></tr>
+<tr><td>稳定性</td><td>成功率、错误率和可用时间</td></tr>
+</tbody></table></div>
+<p>每次优化都要记录版本、原因、测试结果和上线时间。</p>
+</div></section>
+<section class="chapter" id="delivery-二十七实施负责人的常见错误"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十七、实施负责人的常见错误</span><b>−</b></button></h2><div class="chapter-body">
+<div class="table-wrap"><table><thead><tr><th>错误</th><th>后果</th><th>正确做法</th></tr></thead><tbody>
+<tr><td>方案不清就开工</td><td>返工、范围争议</td><td>先做开工检查</td></tr>
+<tr><td>只做正常流程</td><td>异常时停摆</td><td>补齐失败和人工接管</td></tr>
+<tr><td>使用未经清洗的数据</td><td>结果不稳定</td><td>先做数据盘点和确认</td></tr>
+<tr><td>上传文件就算知识库完成</td><td>找不到、答不准</td><td>做清洗、标签和检索测试</td></tr>
+<tr><td>AI无依据仍然回答</td><td>产生幻觉和风险</td><td>拒答或转人工</td></tr>
+<tr><td>步骤固定却使用自主智能体</td><td>难控制、难测试</td><td>优先工作流</td></tr>
+<tr><td>没有固定测试集</td><td>改一处坏一处</td><td>每次变更都回归测试</td></tr>
+<tr><td>用模拟数据代替真实验证</td><td>上线后失效</td><td>用受控真实样本试用</td></tr>
+<tr><td>私自接受新增需求</td><td>工期和范围失控</td><td>登记后重新评估</td></tr>
+<tr><td>测试成功直接全面上线</td><td>风险集中暴露</td><td>先灰度并保留回滚</td></tr>
+<tr><td>只交系统不交文档</td><td>客户无法维护</td><td>完成培训和移交材料</td></tr>
+<tr><td>不记录版本</td><td>问题无法定位</td><td>管理代码、配置、知识和模型版本</td></tr>
+</tbody></table></div>
+</div></section>
+<section class="chapter" id="delivery-二十八新人一页执行流程"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十八、新人一页执行流程</span><b>−</b></button></h2><div class="chapter-body">
+<ol><li><strong>检查方案：</strong>确认目标、范围、数据、接口、边界和验收。</li><li><strong>拆解任务：</strong>每项任务明确负责人、输入、输出和完成标准。</li><li><strong>准备条件：</strong>实测账号、数据、接口和环境。</li><li><strong>处理数据：</strong>授权、脱敏、清洗、分类和版本化。</li><li><strong>搭建主流程：</strong>先完成最短端到端闭环。</li><li><strong>补齐边界：</strong>增加人审、权限、异常、重试和日志。</li><li><strong>模块测试：</strong>分别验证知识、模型、流程和接口。</li><li><strong>系统联调：</strong>使用真实脱敏样本跑完整流程。</li><li><strong>固定测试：</strong>覆盖正常、困难、无资料和高风险样本。</li><li><strong>业务试用：</strong>记录采纳、修改、错误、耗时和转人工。</li><li><strong>问题处理：</strong>区分缺陷、数据、配置、使用和新增需求。</li><li><strong>灰度上线：</strong>小范围发布，观察后逐步扩大。</li><li><strong>培训移交：</strong>教会使用、管理、异常处理和知识更新。</li><li><strong>持续运营：</strong>依据真实指标迭代，保留版本和测试记录。</li></ol>
+</div></section>
+<section class="chapter" id="delivery-二十九实施负责人最终交付物"><h2><button class="chapter-toggle" aria-expanded="true"><span>二十九、实施负责人最终交付物</span><b>−</b></button></h2><div class="chapter-body">
+<ul><li>《实施开工检查表》</li><li>《实施任务清单》</li><li>《数据与环境就绪清单》</li><li>《字段与接口说明》</li><li>《数据授权与脱敏记录》</li><li>《知识库建设与版本记录》</li><li>《工作流节点说明》</li><li>《智能体工具与权限表》（使用智能体时）</li><li>《提示词与模型版本记录》</li><li>《人工审核与异常处理表》</li><li>《固定测试集》</li><li>《功能、效果、安全与恢复测试报告》</li><li>《业务试用报告》</li><li>《问题与变更清单》</li><li>《部署、监控与回滚说明》</li><li>《用户操作手册》</li><li>《管理员维护手册》</li><li>《培训与交付物接收记录》</li><li>《运营指标与版本优化记录》</li></ul>
+<aside class="callout"><strong>实施完成的最终判断</strong><p>系统能够在授权环境中使用真实数据完成约定业务闭环；正常、异常和人工接管均经过测试；客户会使用、会判断、会处理常见问题；系统发生故障时能够定位、停止和恢复；交付结果可以用约定证据验收。</p></aside>
+</div></section></article><div class="empty">当前手册中没有找到相关内容，请更换关键词。</div></div></main>
+<script>
+const nav=[...document.querySelectorAll('.doc-nav')],pages=[...document.querySelectorAll('.doc-page')],sidebar=document.querySelector('.sidebar'),search=document.getElementById('search'),empty=document.querySelector('.empty');
+const collapseAll=document.querySelector('.collapse-all'),pageNav=document.querySelector('.top-page-nav select');
+pages.forEach(page=>page.querySelectorAll('p,blockquote').forEach(node=>{if(node.querySelector('.doc-link'))node.remove()}));
+function updatePageNav(){const page=document.querySelector('.doc-page.active');pageNav.innerHTML='<option value="">本页导航</option>';[...page.querySelectorAll(':scope > .chapter')].forEach(chapter=>{const option=document.createElement('option');option.value=chapter.id;option.textContent=chapter.querySelector('.chapter-toggle span').textContent;pageNav.appendChild(option)});pageNav.value=''}
+function updateCollapseButton(){const page=document.querySelector('.doc-page.active');if(!page)return;const chapters=[...page.querySelectorAll(':scope > .chapter')],allClosed=chapters.length&&chapters.every(c=>c.classList.contains('collapsed'));collapseAll.textContent=allClosed?'全部展开':'全部折叠';collapseAll.dataset.mode=allClosed?'expand':'collapse'}
+function showDoc(key,updateHash=true){nav.forEach(x=>x.classList.toggle('active',x.dataset.doc===key));pages.forEach(x=>x.classList.toggle('active',x.dataset.page===key));search.value='';resetSearch();sidebar.classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});updatePageNav();updateCollapseButton();if(updateHash)history.replaceState(null,'','#'+key)}
+nav.forEach(x=>x.addEventListener('click',()=>showDoc(x.dataset.doc)));document.querySelectorAll('.doc-link').forEach(x=>x.addEventListener('click',e=>{e.preventDefault();showDoc(x.dataset.doc)}));document.querySelector('.menu-btn').addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.querySelectorAll('.chapter-toggle').forEach(btn=>btn.addEventListener('click',()=>{const c=btn.closest('.chapter');c.classList.toggle('collapsed');const open=!c.classList.contains('collapsed');btn.setAttribute('aria-expanded',open);btn.querySelector('b').textContent=open?'−':'+';updateCollapseButton()}));
+collapseAll.addEventListener('click',()=>{const page=document.querySelector('.doc-page.active'),chapters=[...page.querySelectorAll(':scope > .chapter')],shouldExpand=chapters.every(c=>c.classList.contains('collapsed'));chapters.forEach(c=>{c.classList.toggle('collapsed',!shouldExpand);const btn=c.querySelector('.chapter-toggle');btn.setAttribute('aria-expanded',shouldExpand);btn.querySelector('b').textContent=shouldExpand?'−':'+'});updateCollapseButton()});
+pageNav.addEventListener('change',()=>{if(!pageNav.value)return;const chapter=document.getElementById(pageNav.value);chapter.classList.remove('collapsed');const button=chapter.querySelector('.chapter-toggle');button.setAttribute('aria-expanded','true');button.querySelector('b').textContent='−';chapter.scrollIntoView({behavior:'smooth',block:'start'});updateCollapseButton()});
+function resetSearch(){pages.forEach(p=>p.querySelectorAll('.chapter').forEach(c=>{c.style.display='';c.querySelectorAll('mark').forEach(m=>m.replaceWith(m.textContent))}));empty.style.display='none';document.querySelector('.search-status').textContent='输入关键词定位相关章节'}
+search.addEventListener('input',()=>{resetSearch();const q=search.value.trim().toLowerCase(),page=document.querySelector('.doc-page.active');if(!q)return;let count=0;page.querySelectorAll('.chapter').forEach(c=>{const hit=c.textContent.toLowerCase().includes(q);c.style.display=hit?'':'none';if(hit){count++;c.classList.remove('collapsed');c.querySelector('.chapter-toggle').setAttribute('aria-expanded','true');c.querySelector('.chapter-toggle b').textContent='−'}});empty.style.display=count?'none':'block';document.querySelector('.search-status').textContent=count?`找到 ${count} 个相关章节`:'没有找到相关章节'});
+window.addEventListener('scroll',()=>{const d=document.documentElement,max=d.scrollHeight-d.clientHeight;document.querySelector('.progress span').style.width=(max?d.scrollTop/max*100:0)+'%'});
+const initial=location.hash.slice(1);showDoc(nav.some(x=>x.dataset.doc===initial)?initial:'roles',false);
+</script></body></html>
