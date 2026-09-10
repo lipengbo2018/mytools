@@ -95,7 +95,9 @@
       "id": "tool-1781102583639-ta6qzg",
       "name": "飞影数字人",
       "url": "https://hifly.cc/subtitle-remove",
-      "categoryIds": [],
+      "categoryIds": [
+        "cat-1781101140448-hulcrr"
+      ],
       "isFavorite": false
     },
     {
@@ -166,7 +168,9 @@
       "id": "tool-1782096612858-s7a1a0",
       "name": "美图Wink",
       "url": "https://wink.cn/workspace",
-      "categoryIds": [],
+      "categoryIds": [
+        "cat-1781101140448-hulcrr"
+      ],
       "isFavorite": false
     },
     {
@@ -221,13 +225,6 @@
       "isFavorite": false
     },
     {
-      "id": "tool-1782290807855-3v6pi9",
-      "name": "朋友圈变现",
-      "url": "https://my.feishu.cn/docx/Xcdddg1hvod2oUxj6nAc3W8undb",
-      "categoryIds": [],
-      "isFavorite": false
-    },
-    {
       "id": "tool-1782311992423-059jrx",
       "name": "MiniMax Token",
       "url": "https://platform.minimaxi.com/console/usage",
@@ -252,6 +249,74 @@
       "id": "tool-1782698818543-uzturv",
       "name": "抖音账号视频素材",
       "url": "https://uxdj1s2axjv.feishu.cn/wiki/I1fHw1z9AiA90RkR4DMctWrsnne?fromScene=spaceOverview",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1783063317376-pwrv14",
+      "name": "Vidu",
+      "url": "https://www.vidu.cn/claw",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1786270710388-k6oh5d",
+      "name": "公众号工作流",
+      "url": "https://liuqichuangfu.feishu.cn/wiki/WLM2woYUoiczuOknYNMcboDun9e",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1786435394925-t7jizt",
+      "name": "Outlook邮箱",
+      "url": "https://navigator-lxa.mail.com/mail?sid=378e05733d80f148107da50104b8beabaffefbd7cb1e78e11a39e3eee8148f4dcf60454f7c0701752726dd85787fb222",
+      "categoryIds": [],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1787277092728-zytj2a",
+      "name": "FDE",
+      "url": "https://uxdj1s2axjv.feishu.cn/wiki/XOeIw7gqciesJ3kAhqXcaL2dn8b?fromScene=spaceOverview",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1788783451509-xs00ll",
+      "name": "AI产业投资知识库",
+      "url": "file:///F:/Obsidian/MyVault/AI%E4%BA%A7%E4%B8%9A%E9%93%BE%E7%A0%94%E4%B9%A0%E8%90%A5%E7%9F%A5%E8%AF%86%E5%BA%93/04-%E5%85%AC%E5%8F%B8%E7%A0%94%E7%A9%B6/AI%E4%BA%A7%E4%B8%9A%E9%93%BE%E4%BA%A4%E4%BA%92%E6%9F%A5%E8%AF%A2.html",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1788967556849-xoir5h",
+      "name": "FDE知识手册",
+      "url": "https://lipengbo2018.github.io/mytools/fde-team-playbook.html",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1788967613568-7cluy4",
+      "name": "FDE对外介绍",
+      "url": "https://lipengbo2018.github.io/mytools/kaigong.html",
+      "categoryIds": [
+        "cat-1781101173855-h8hhwt"
+      ],
+      "isFavorite": false
+    },
+    {
+      "id": "tool-1789011302380-3rvskf",
+      "name": "投资助手",
+      "url": "http://localhost:3000/",
       "categoryIds": [
         "cat-1781101173855-h8hhwt"
       ],
