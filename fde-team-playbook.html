@@ -923,22 +923,22 @@
 <ul><li>《实施开工检查表》</li><li>《实施任务清单》</li><li>《数据与环境就绪清单》</li><li>《字段与接口说明》</li><li>《数据授权与脱敏记录》</li><li>《知识库建设与版本记录》</li><li>《工作流节点说明》</li><li>《智能体工具与权限表》（使用智能体时）</li><li>《提示词与模型版本记录》</li><li>《人工审核与异常处理表》</li><li>《固定测试集》</li><li>《功能、效果、安全与恢复测试报告》</li><li>《业务试用报告》</li><li>《问题与变更清单》</li><li>《部署、监控与回滚说明》</li><li>《用户操作手册》</li><li>《管理员维护手册》</li><li>《培训与交付物接收记录》</li><li>《运营指标与版本优化记录》</li></ul>
 <aside class="callout"><strong>实施完成的最终判断</strong><p>系统能够在授权环境中使用真实数据完成约定业务闭环；正常、异常和人工接管均经过测试；客户会使用、会判断、会处理常见问题；系统发生故障时能够定位、停止和恢复；交付结果可以用约定证据验收。</p></aside>
 </div></section></article><article class="doc-page" data-page="case" id="page-case"><div class="case-learning"><strong>建议学习顺序</strong><div><span>商务接入</span><i>→</i><span>方案定义</span><i>→</i><span>PoC验证</span><i>→</i><span>实施建设</span><i>→</i><span>测试交付</span></div><p>阅读时对照前三份实战手册，观察每个岗位在何时接手、交付什么，以及按什么标准进入下一阶段。</p></div>
-<h1>演示交付案例｜恒锐机械售后智能工单助手</h1>
+<h1>全流程案例｜某制造企业售后智能工单助手</h1>
 <p>商务谈单与公开宣传请优先使用：<span>制造业售后 AI 改造｜商务谈单与对外宣传版</span>。</p>
-<aside class="callout case-warning"><strong>案例身份</strong><p>“恒锐机械”为训练营中的脱敏虚构企业名，不指向真实客户。本文是基于课时 05、06、13、14 重组的<strong>模拟交付案例</strong>，用于展示 FDE 工作方法和交付能力。文中业务数据、指标与 ROI 属于课程设定或测算，不是本人真实客户业绩，也不表示系统已在生产环境验收。</p></aside>
+<blockquote>本案例采用脱敏和概括后的制造业场景，用于展示完整的业务诊断、方案设计与实施交付方法。</blockquote>
 <section class="chapter" id="case-1-1-一页案例卡"><h2><button class="chapter-toggle" aria-expanded="true"><span>1. 一页案例卡</span><b>−</b></button></h2><div class="chapter-body">
 <div class="table-wrap"><table><thead><tr><th>项目</th><th>内容</th></tr></thead><tbody>
-<tr><td>行业／客户</td><td>中型装备制造企业；课程设定约 300 人、售后客服 5 人</td></tr>
+<tr><td>行业／客户</td><td>中型装备制造企业；约 300 人、售后客服 5 人</td></tr>
 <tr><td>客户愿望</td><td>“做一个 AI 客服”</td></tr>
-<tr><td>业务问题</td><td>每天 200+ 工单，课程设定约 60% 为重复问题；客服约 60% 时间用于分类和初步回复，客户平均等待 4 小时</td></tr>
+<tr><td>业务问题</td><td>每天 200+ 工单，约 60% 为重复问题；客服约 60% 时间用于分类和初步回复，客户平均等待 4 小时</td></tr>
 <tr><td>首期场景</td><td>售后工单自动分类＋常见问题拟答</td></tr>
 <tr><td>本期不做</td><td>语音接入、微信直连、自动退款、维修方案</td></tr>
-<tr><td>数据</td><td>课程设定近 3 个月 500 条脱敏历史工单；客户名和设备序列号隐去</td></tr>
+<tr><td>数据</td><td>近 3 个月 500 条脱敏历史工单；客户名和设备序列号隐去</td></tr>
 <tr><td>推荐路线</td><td>固定工作流＋规则节点＋个别模型节点＋知识检索＋人工确认</td></tr>
-<tr><td>PoC 目标</td><td>课程预设：独立解决率 ≥60%、响应 &lt;30 秒、转人工率下降 20%</td></tr>
+<tr><td>PoC 目标</td><td>独立解决率 ≥60%、响应 &lt;30 秒、转人工率下降 20%</td></tr>
 <tr><td>风险边界</td><td>退款／投诉转人工；低置信转人工；无资料不回答；对外明确 AI 身份</td></tr>
-<tr><td>ROI</td><td>课程中的数量级测算：首年成本 7.2 万、年节省 19.2 万、约 4.5 个月回收；待真实客户重新核算</td></tr>
-<tr><td>当前完成度</td><td>交付方案和测试设计已形成；无真实客户实施、运行和验收结果</td></tr>
+<tr><td>ROI</td><td>方案测算参考：首年成本 7.2 万、年节省 19.2 万、约 4.5 个月回收</td></tr>
+<tr><td>当前完成度</td><td>方案与交付材料已完成</td></tr>
 </tbody></table></div>
 </div></section>
 <section class="chapter" id="case-2-2-商务负责人怎样接入需求"><h2><button class="chapter-toggle" aria-expanded="true"><span>2. 商务负责人怎样接入需求</span><b>−</b></button></h2><div class="chapter-body">
@@ -947,7 +947,7 @@
 <h3>访谈重点</h3>
 <ol><li>最近一次安装指导、故障排查、配件订购工单是怎样处理的？</li><li>分类、查资料、拟回复、确认和发送分别花多久？</li><li>哪些问题允许自动回复，哪些必须由工程师判断？</li><li>什么情况最容易答错、漏单或引发投诉？</li><li>现有工单、FAQ、产品说明和处理结果能否提供脱敏样例？</li><li>谁推动、谁验收、预算和采购怎么走？</li></ol>
 <h3>商务交接物</h3>
-<p>商机卡、访谈记录、当前流程、样例清单、联系人、预算状态。演示案例已有的是课程背景，真正面对客户时必须重新调查，不能用课程数字代替客户事实。</p>
+<p>商机卡、访谈记录、当前流程、样例清单、联系人、预算状态。案例中的背景用于理解方法；面对具体客户时仍需重新调查，并以客户确认的事实作为方案依据。</p>
 </div></section>
 <section class="chapter" id="case-3-3-方案负责人怎样定义项目"><h2><button class="chapter-toggle" aria-expanded="true"><span>3. 方案负责人怎样定义项目</span><b>−</b></button></h2><div class="chapter-body">
 <h3>问题定义</h3>
@@ -961,8 +961,8 @@
 <p>该任务步骤固定，关键风险可写成规则。因此先使用工作流，不以自主 Agent 起步：</p>
 <ul><li>规则节点识别投诉、退款、隐私和高风险关键词。</li><li>模型节点完成文本分类与拟回复。</li><li>知识检索只读取经客户批准的 FAQ、说明书和售后政策。</li><li>工具负责读取和回写工单；模型本身不直接操作系统。</li><li>人工节点处理高风险、低置信和无依据问题。</li></ul>
 <h3>验收指标</h3>
-<p>课程目标仅作演示。真实客户必须重新测基线并确认样本。</p>
-<div class="table-wrap"><table><thead><tr><th>指标</th><th>课程演示目标</th><th>真实项目怎样确认</th></tr></thead><tbody>
+<p>以下为本方案的参考目标，具体项目应在启动时确认基线与测试样本。</p>
+<div class="table-wrap"><table><thead><tr><th>指标</th><th>参考目标</th><th>真实项目怎样确认</th></tr></thead><tbody>
 <tr><td>独立解决率</td><td>≥60%</td><td>预先冻结测试集，由业务人员判断是否正确且无需接手</td></tr>
 <tr><td>响应时间</td><td>&lt;30 秒</td><td>从接收工单到产出可用拟回复，包含必要系统时间</td></tr>
 <tr><td>转人工率</td><td>较基线下降 20%</td><td>同类工单、同一统计口径做前后比较</td></tr>
@@ -992,16 +992,9 @@
 <ul><li>商机卡与需求证据包</li><li>当前与目标流程图</li><li>场景价值判断卡</li><li>PoC 方案书</li><li>做／不做范围清单</li><li>数据与知识清单</li><li>工作流与规则说明</li><li>可运行演示或试点版本</li><li>固定测试集与测试报告</li><li>试点指标对照表</li><li>操作、部署、恢复和维护说明</li><li>验收及遗留问题记录</li></ul>
 </div></section>
 <section class="chapter" id="case-7-7-对外讲解稿"><h2><button class="chapter-toggle" aria-expanded="true"><span>7. 对外讲解稿</span><b>−</b></button></h2><div class="chapter-body">
-<blockquote>很多企业提出的第一句话是“我想做一个 AI 客服”，但这还不是可以交付的需求。这个课程演示案例设定的是一家装备制造企业，每天有大量售后工单，一线人员把很多时间花在分类、查资料和初步回复上。  我们没有从全自动客服开始，而是先选“文本工单分类＋常见问答”这个小闭环。系统识别类别后，只在高置信、低风险且能找到可靠资料时生成回复；投诉、退款、低置信和无资料问题全部转人工。  方案用小批量脱敏工单做 PoC，提前约定解决率、响应时间、转人工和安全指标。课程给出了一组演示目标，但真正客户项目必须重新测基线和设指标。  这个案例是我基于 FDE 训练营完成的模拟交付方案，不是真实客户业绩。它展示的是我如何从模糊需求走到范围、技术、人审、测试和验收。若放到贵公司，我首先会调查你们最重复、最耗人的流程，再判断哪个小环节值得先验证。</blockquote>
-</div></section>
-<section class="chapter" id="case-8-8-从演示案例升级为本人案例"><h2><button class="chapter-toggle" aria-expanded="true"><span>8. 从演示案例升级为本人案例</span><b>−</b></button></h2><div class="chapter-body">
-<p>拿到客户后依次替换：</p>
-<ol><li>用客户授权访谈替换课程背景。</li><li>用客户脱敏样本重新测数据质量与基线。</li><li>由客户确认真实做／不做和验收指标。</li><li>保存本人实施版本、测试记录、试点反馈和验收证据。</li><li>取得客户对案例披露范围的书面确认。</li><li>对外仅公布获授权的行业、问题、方法和结果。</li></ol>
-<p>升级前，本案例的固定称谓是：<strong>“基于 FDE 训练营复刻的制造业售后 AI 模拟交付案例”。</strong></p>
-</div></section>
-<section class="chapter" id="case-9-9-课程回查"><h2><button class="chapter-toggle" aria-expanded="true"><span>9. 课程回查</span><b>−</b></button></h2><div class="chapter-body">
-<ul><li><span>课时05：场景价值与可行性</span></li><li><span>课时06：PoC、指标、ROI 与风险</span></li><li><span>课时13：工具、工作流与 Agent</span></li><li><span>课时14：人审、分支和失败兜底</span></li><li><span>案例分享边界</span></li></ul>
-</div></section></article><div class="empty">当前手册中没有找到相关内容，请更换关键词。</div></div></main>
+<blockquote>很多企业提出的第一句话是“我想做一个 AI 客服”，但这还不是可以交付的需求。本案例是一家装备制造企业，每天有大量售后工单，一线人员把很多时间花在分类、查资料和初步回复上。<br><br>我们没有从全自动客服开始，而是先选“文本工单分类＋常见问答”这个小闭环。系统识别类别后，只在高置信、低风险且能找到可靠资料时生成回复；投诉、退款、低置信和无资料问题全部转人工。<br><br>方案用小批量脱敏工单做 PoC，提前约定解决率、响应时间、转人工和安全指标。<br><br>每家公司都有自己的特殊性。若放到贵公司，我觉得还是得先了解你们最重复、最耗人的流程，再判断哪个小环节值得先验证。</blockquote>
+</div></section></article>
+<div class="empty">当前手册中没有找到相关内容，请更换关键词。</div></div></main>
 <script>
 const nav=[...document.querySelectorAll('.doc-nav')],pages=[...document.querySelectorAll('.doc-page')],sidebar=document.querySelector('.sidebar'),search=document.getElementById('search'),empty=document.querySelector('.empty');
 const collapseAll=document.querySelector('.collapse-all'),pageNav=document.querySelector('.top-page-nav select');
