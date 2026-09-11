@@ -47,6 +47,16 @@
     @media(max-width:900px){.nav-links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.section-head{grid-template-columns:1fr}.pain-grid{grid-template-columns:repeat(2,1fr)}.layer{grid-template-columns:1fr}.layer-items{grid-template-columns:repeat(2,1fr)}.directory-grid{grid-template-columns:repeat(2,1fr)}.flow-track{grid-template-columns:repeat(2,1fr)}.flow-detail{grid-template-columns:1fr}.gates{grid-template-columns:1fr}.gate-arrow{transform:rotate(90deg);text-align:center}.asset-flow{grid-template-columns:1fr 1fr}.asset-card:after{display:none}.account-routing{grid-template-columns:1fr 1fr}.account-routing>div:first-child,.account-routing p{grid-column:1/-1}.roles,.case-board,.final-box{grid-template-columns:1fr}.case-chain{grid-template-columns:1fr 1fr}}
     .mobile-only{display:none}@media(max-width:560px){.wrap{padding:0 16px}.hero{display:flex;flex-direction:column;align-items:stretch;padding-top:50px;gap:35px}.hero h1{font-size:40px;letter-spacing:-.06em;line-height:1.12}.hero-copy{font-size:17px}.system-board{width:calc(100vw - 32px)}.mobile-only{display:block}.pain-grid,.layer-items,.arch-rule,.asset-flow,.case-chain,.directory-grid{grid-template-columns:1fr}.board-flow{grid-template-columns:1fr}.board-proof{grid-template-columns:1fr}.flow-track{grid-template-columns:1fr}.role-row{grid-template-columns:1fr 1fr}.account-routing{grid-template-columns:1fr}.account-routing>div:first-child,.account-routing p{grid-column:auto}.case-result,.footer-inner{display:block}.final-box{padding:28px}.final h2{font-size:34px}}
     @media print{.nav,.hero-actions,.flow-controls{display:none}.reveal{opacity:1;transform:none}body{background:#fff}section{break-inside:avoid;padding:35px 0}.hero{min-height:auto}.workflow-shell,.assets,.final-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+    /* 页面段落采用同一套浅色基调，深色仅保留给局部卡片与结果强调 */
+    .assets{background:#e9eef0;color:var(--ink)}
+    .assets .section-intro{color:var(--muted)}
+    .asset-card{background:var(--card);border-color:var(--line)}
+    .asset-card p{color:var(--muted)}
+    .asset-card strong{color:var(--ink)}
+    .account-routing{background:rgba(255,255,255,.72);border-color:var(--line)}
+    .account-card{background:#fff}
+    .account-card b{color:var(--ink)}
+    .account-card span,.account-routing p{color:var(--muted)}
   </style>
 </head>
 <body>
