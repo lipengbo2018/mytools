@@ -122,7 +122,7 @@ visualSection.className = 'reference-visuals';
 visualSection.innerHTML = `<div class="wrap"><div class="section-head"><div><div class="kicker">SYSTEM MAP</div><h2>系统架构与业务流转</h2></div><p>以下为系统原始架构图与业务流转图。</p></div><div class="image-panel"><img src="时间审计局技术架构总览.png" alt="时间审计局技术架构总览"></div><div class="image-panel"><img src="时间审计局业务流转图.png" alt="时间审计局业务流转图"></div></div>`;
 document.querySelector('footer')?.before(visualSection);
 const visualStyle = document.createElement('style');
-visualStyle.textContent = '.image-panel{margin:24px 0;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(15,39,68,.08)}.image-panel img{display:block;width:100%;height:auto}';
+visualStyle.textContent = '.data{background:var(--paper);color:var(--ink)}.data .section-head p{color:var(--muted)}.image-panel{margin:24px 0;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(15,39,68,.08)}.image-panel img{display:block;width:100%;height:auto}';
 document.head.appendChild(visualStyle);
 </script>
 </body></html>
