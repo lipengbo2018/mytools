@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI + 场景落地实操｜完整课件</title>
+<style>
+  :root{
+    --bg:#f8f7f3; --paper:#fffefb; --ink:#25231f; --muted:#756f64;
+    --line:#e3ded3; --green:#206b5f; --green2:#dfeee9; --red:#b4503c;
+    --orange:#e07b4c; --gold:#d4af37; --dark:#141412; --soft:#f0ebe0;
+    --blue:#2f5d9f; --purple:#7657a6;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#151511;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;}
+  body{overflow:hidden}
+  .deck{height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;padding:18px}
+  .slide{display:none;position:relative;width:min(1280px,calc(100vw - 36px));height:min(720px,calc(100vh - 36px));background:var(--bg);border-radius:22px;box-shadow:0 18px 70px rgba(0,0,0,.38);overflow:hidden;padding:56px 70px 54px;border:1px solid rgba(255,255,255,.15)}
+  .slide.active{display:block}
+  .slide::after{content:"";position:absolute;right:-120px;bottom:-160px;width:460px;height:460px;background:radial-gradient(circle,var(--green2),transparent 65%);opacity:.8;pointer-events:none}
+  .kicker{font-size:17px;color:var(--green);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:62px;line-height:1.08;margin:0 0 22px;color:var(--dark);letter-spacing:-1.6px}
+  h2{font-size:44px;line-height:1.15;margin:0 0 24px;color:var(--dark);letter-spacing:-1px}
+  h3{font-size:28px;margin:0 0 16px;color:var(--dark)}
+  p{font-size:23px;line-height:1.55;margin:10px 0;color:var(--ink)}
+  .sub{font-size:28px;color:var(--muted);line-height:1.45;max-width:980px}
+  .bigquote{font-size:42px;line-height:1.3;font-weight:800;color:var(--dark);max-width:1050px;margin-top:30px}
+  .small{font-size:18px;color:var(--muted);line-height:1.55}
+  .tiny{font-size:14px;color:var(--muted)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:24px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 2px 0 rgba(20,20,18,.04)}
+  .card h3{font-size:25px}.card p,.card li{font-size:19px;line-height:1.5}.card ul{padding-left:20px;margin:8px 0}
+  .tag{display:inline-block;border-radius:999px;padding:5px 12px;background:var(--green2);color:var(--green);font-size:16px;font-weight:700;margin:4px 6px 4px 0}
+  .tag.red{background:#f6dfd8;color:var(--red)}.tag.gold{background:#fff3c7;color:#8a6a00}.tag.blue{background:#e6eefb;color:var(--blue)}.tag.purple{background:#efe7f8;color:var(--purple)}
+  .pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--line);padding:8px 15px;background:#fff;font-size:18px;margin:6px 8px 6px 0}
+  .accent{color:var(--green);font-weight:800}.danger{color:var(--red);font-weight:800}.gold{color:#a77b00;font-weight:800}.muted{color:var(--muted)}
+  .bar{position:absolute;left:70px;right:70px;bottom:28px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:15px;z-index:5}
+  .progress{height:6px;background:#ddd6c9;border-radius:999px;overflow:hidden;width:260px}.progress span{display:block;height:100%;width:0;background:var(--green)}
+  .controls{position:fixed;right:22px;bottom:22px;display:flex;gap:10px;z-index:50}.btn{border:none;border-radius:999px;background:#fff;color:#222;padding:10px 15px;font-size:14px;box-shadow:0 5px 20px rgba(0,0,0,.25);cursor:pointer}.btn:hover{transform:translateY(-1px)}
+  .ghost{background:#25231f;color:#fff}.reveal{display:none}.reveal.show{display:block}.answer{background:#eaf3ef;border-left:5px solid var(--green);padding:18px;border-radius:14px;margin-top:14px}.warn{background:#fff4e8;border-left:5px solid var(--orange);padding:18px;border-radius:14px;margin-top:14px}.fail{background:#f8e7e1;border-left:5px solid var(--red);padding:18px;border-radius:14px;margin-top:14px}
+  .question{font-size:36px;font-weight:900;color:var(--dark);line-height:1.25;margin:25px 0}.choice{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-radius:16px;margin:10px 0;font-size:21px;cursor:pointer}.choice input{transform:scale(1.35);margin-top:7px}.vote-result{font-size:19px;color:var(--green);font-weight:700;margin-top:12px}
+  .flow{display:flex;align-items:stretch;gap:10px;margin:24px 0}.step{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}.step .num{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;background:var(--green);color:#fff;border-radius:50%;font-weight:900;margin-bottom:10px}.step b{display:block;font-size:20px;margin-bottom:6px}.step span{font-size:16px;color:var(--muted)}.arrow{display:flex;align-items:center;font-size:30px;color:var(--green);font-weight:900}
+  .diagram{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px}.stack{display:grid;gap:12px}.layer{border-radius:14px;padding:15px 18px;font-size:20px;background:#fff;border:1px solid var(--line)}.layer strong{display:inline-block;min-width:150px;color:var(--green)}
+  .case-title{font-size:50px;font-weight:900;color:var(--dark)}.case-meta{font-size:22px;color:var(--muted);margin-top:12px}.split{display:grid;grid-template-columns:.88fr 1.12fr;gap:28px;align-items:start}.screen{background:#151511;color:#f6f1e6;border-radius:20px;padding:22px;font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:17px;line-height:1.55;white-space:pre-wrap}
+  .timer{position:absolute;right:70px;top:44px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:800;color:var(--green);z-index:6}.note{position:absolute;right:70px;top:88px;width:310px;background:#fffefb;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 8px 30px rgba(20,20,18,.08);font-size:15px;line-height:1.45;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;font-size:18px}th,td{border:1px solid var(--line);padding:13px 14px;text-align:left;vertical-align:top}th{background:#eaf3ef;color:var(--green);font-weight:900}td{line-height:1.45}
+  .toc a{display:block;text-decoration:none;color:var(--dark);font-size:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin:10px 0}.toc a:hover{border-color:var(--green);color:var(--green)}
+  .cover{background:linear-gradient(135deg,#1d241f 0%,#25231f 45%,#206b5f 100%);color:#fff}.cover h1,.cover h2,.cover p,.cover .sub{color:#fff}.cover::after{background:radial-gradient(circle,rgba(212,175,55,.32),transparent 63%);opacity:1}.cover .kicker{color:#e7d28a}.cover .bar{color:rgba(255,255,255,.7)}
+  .jump-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+  .jump-card{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:18px;padding:22px 16px;text-align:left;cursor:pointer;transition:.18s;min-height:180px;color:var(--ink);box-shadow:0 2px 0 rgba(20,20,18,.04)}
+  .jump-card:hover{transform:translateY(-3px);border-color:var(--green);box-shadow:0 10px 28px rgba(32,107,95,.12)}
+  .jump-card .n{font-size:14px;color:var(--green);font-weight:900;letter-spacing:.08em;margin-bottom:10px}
+  .jump-card h3{font-size:24px;margin:0 0 10px}.jump-card p{font-size:16px;color:var(--muted);margin:0;line-height:1.45}
+  .case-home{position:absolute;right:22px;top:16px;z-index:12;border:1px solid var(--line);background:rgba(255,254,251,.94);color:var(--green);border-radius:999px;padding:9px 14px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 5px 18px rgba(20,20,18,.08)}
+  .case-home:hover{background:#fff}
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+  .timeline .card{position:relative;padding-top:22px}.timeline .year{font-size:16px;color:var(--green);font-weight:900;margin-bottom:8px}.timeline .money{font-size:27px;font-weight:900;color:var(--dark);margin:5px 0}
+  .intro-slide{justify-content:flex-start}
+  .intro-wrap{width:100%;max-width:1080px;margin-top:18px}
+  .intro-title{margin:6px 0 34px;text-align:left}
+  .intro-list{position:relative;display:grid;gap:0;max-width:1040px;margin:0;padding-left:30px}
+  .intro-list::before{content:"";position:absolute;left:8px;top:14px;bottom:14px;width:2px;background:var(--line)}
+  .intro-row{position:relative;display:grid;grid-template-columns:170px minmax(0,1fr);gap:28px;align-items:baseline;padding:18px 0 20px;border-bottom:1px solid var(--line)}
+  .intro-row:last-child{border-bottom:none}
+  .intro-row::before{content:"";position:absolute;left:-28px;top:27px;width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(32,107,95,.10)}
+  .intro-date{font-size:20px;color:var(--green);font-weight:900;white-space:nowrap;letter-spacing:.2px}
+  .intro-event{font-size:24px;line-height:1.45;color:var(--dark);text-align:left}
+  .intro-event b{font-weight:900}
+  .intro-result{display:inline-block;color:var(--muted);font-size:18px;margin-left:14px;font-weight:500}
+  .section{background:#25231f;color:#fff}.section h1,.section h2,.section p,.section .sub{color:#fff}.section .kicker{color:#e7d28a}.section::after{background:radial-gradient(circle,rgba(32,107,95,.5),transparent 65%)}
+  .footnote{font-size:13px;color:var(--muted);position:absolute;left:70px;bottom:28px}.wide{max-width:1100px}.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%}.mt{margin-top:26px}
+  @media(max-width:900px){.intro-row{grid-template-columns:120px 1fr;gap:16px}.intro-event{font-size:20px}.intro-result{display:block;margin:4px 0 0}.intro-title{margin-bottom:22px}.slide{padding:34px 28px;height:calc(100vh - 36px);overflow-y:auto}.bar{left:28px;right:28px}.timer,.note{position:static;margin:8px 0}.row,.row3,.row4,.split{grid-template-columns:1fr}.flow{flex-direction:column}.arrow{justify-content:center;transform:rotate(90deg)}h1{font-size:44px}h2{font-size:34px}.sub{font-size:22px}.question{font-size:30px}p{font-size:20px}.controls{right:12px;bottom:12px}.progress{width:160px}}
+  @media print{body{overflow:auto;background:white}.deck{display:block;height:auto;padding:0}.slide{display:block;page-break-after:always;width:100vw;height:56.25vw;max-height:none;box-shadow:none;border-radius:0;margin:0}.controls{display:none}.reveal{display:block!important}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<section class="slide cover active">
+  <div class="center">
+    <div class="kicker">60分钟线下工作坊式分享</div>
+    <h1>AI + 场景落地实操</h1>
+    <div class="sub">打通从需求到产品化、系统化的任督二脉</div>
+    <p class="mt">不是展示我做了多少工具，而是一起拆：<br><b>需求从哪来，痛点怎么挖，AI怎么实现，为什么要迭代。</b></p>
+  </div>
+  <div class="bar"><span>AI 场景落地实操</span><span>01</span></div>
+</section>
+
+<section class="slide intro-slide">
+  <div class="intro-wrap">
+    <div class="kicker">ABOUT ME</div>
+    <h2 class="intro-title">我的实践经历</h2>
+    <div class="intro-list">
+      <div class="intro-row">
+        <div class="intro-date">2023.06</div>
+        <div class="intro-event"><b>加入破局</b></div>
+      </div>
+      <div class="intro-row">
+        <div class="intro-date">2024.09</div>
+        <div class="intro-event"><b>数字人带货 · 1个月</b><span class="intro-result">赚了 ¥1,700</span></div>
+      </div>
+      <div class="intro-row">
+        <div class="intro-date">2025.04起</div>
+        <div class="intro-event"><b>代写</b><span class="intro-result">做了约3个月，赚了 ¥15,000</span></div>
+      </div>
+      <div class="intro-row">
+        <div class="intro-date">2025.10起</div>
+        <div class="intro-event"><b>AI漫剧 → 工作室</b><span class="intro-result">自己先做2个月，后来和2位破局成员组工作室，最多7人</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="bar"><span></span><span>INTRO</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">开场 · 5 min</div>
+  <h2>今天你们不是来听“AI很厉害”</h2>
+  <p>今天我们只做一件事：</p>
+  <div class="bigquote">把生活和工作里的一个真实“不爽”，一步步拆成可以被 AI 实现的小产品。</div>
+  <div class="row mt">
+    <div class="card"><h3>你会看到</h3><p>我从原始需求、V1、废弃、V2一路迭代的真实过程。</p></div>
+    <div class="card"><h3>你要带走</h3><p>一套自己也能用的：<b>找需求 → 定方案 → AI实现 → 迭代</b> 方法。</p></div>
+  </div>
+  <div class="bar"><span></span><span>02</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">玩法说明</div>
+  <h2>这不是单向演讲，是“产品推理游戏”</h2>
+  <div class="flow">
+    <div class="step"><span class="num">1</span><b>先抛场景</b><span>只讲原始痛点，不公布产品</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="num">2</span><b>你们判断</b><span>这是不是一个真需求？</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="num">3</span><b>你们设计</b><span>如果你做，会怎么实现？</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="num">4</span><b>我公布答案</b><span>V1、技术选型、失败点、V2</span></div>
+  </div>
+  <div class="answer"><p><b>核心原则：</b>每个案例都按“需求—痛点—实现—迭代—系统化”走完整流程。</p></div>
+  <div class="bar"><span></span><span>03</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">自我介绍 · 3 min</div>
+  <h2>我最近主要做了两类东西</h2>
+  <div class="row">
+    <div class="card">
+      <h3>一类是：记录与管理工具</h3>
+      <p><span class="tag">网页收藏夹</span><span class="tag">随手记</span><span class="tag">时间审计局</span><span class="tag">金钱口袋</span><span class="tag">老鼠赛跑</span></p>
+      <p class="small">这些不是为了炫技，而是源于每天真实发生的麻烦。</p>
+    </div>
+    <div class="card">
+      <h3>另一类是：知识与生产系统</h3>
+      <p><span class="tag blue">产业链投资知识库</span><span class="tag blue">FDE知识库</span><span class="tag purple">内容工厂</span></p>
+      <p class="small">把课程、方法、案例、文章生产，逐步变成可调用的系统。</p>
+    </div>
+  </div>
+  <div class="bigquote" style="font-size:34px">我的变化不是“会了很多工具”，而是开始用 AI 给自己造工具。</div>
+  <div class="bar"><span></span><span>04</span></div>
+</section>
+
+<section class="slide section">
+  <div class="center">
+    <div class="kicker">PART 1</div>
+    <h1>先从需求池开始</h1>
+    <div class="sub">不要先看产品名，先看这些“烦人的场景”。</div>
+  </div>
+  <div class="bar"><span></span><span>05</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 5 min</div>
+  <div class="kicker">需求池</div>
+  <h2>下面哪些是真需求？你对哪个最感兴趣？</h2>
+  <div class="row">
+    <div>
+      <label class="choice"><input type="checkbox" data-vote="A">A｜换浏览器/换电脑，网页收藏全散了</label>
+      <label class="choice"><input type="checkbox" data-vote="B">B｜好文章、截图、聊天记录收藏后再也找不到</label>
+      <label class="choice"><input type="checkbox" data-vote="C">C｜事情很多很乱，但任务一个个录入太麻烦</label>
+      <label class="choice"><input type="checkbox" data-vote="D">D｜想知道钱在哪个口袋、余额为什么变了</label>
+    </div>
+    <div>
+      <label class="choice"><input type="checkbox" data-vote="E">E｜想知道自己有没有逐渐跳出老鼠赛跑</label>
+      <label class="choice"><input type="checkbox" data-vote="F">F｜想稳定运营公众号，但内容生产链路断</label>
+      <label class="choice"><input type="checkbox" data-vote="G">G｜报了很多课，但课程知识没有真正变成自己的</label>
+      <label class="choice"><input type="checkbox" data-vote="H">H｜公司/领域知识很多，想直接生成官网、海报、培训手册</label>
+    </div>
+  </div>
+  <button class="btn ghost" onclick="showVotes()">显示现场选择</button>
+  <div id="voteResult" class="vote-result"></div>
+  <div class="bar"><span>建议：每人选 2 个</span><span>06</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">判断框架</div>
+  <h2>什么叫“真需求”？</h2>
+  <div class="row4">
+    <div class="card"><h3>高频</h3><p>是不是反复出现？不是一年一次的偶发麻烦。</p></div>
+    <div class="card"><h3>真痛</h3><p>不解决会不会持续烦、持续浪费时间或注意力？</p></div>
+    <div class="card"><h3>现有方案差</h3><p>市面上有工具，为什么我还是不用？卡点在哪里？</p></div>
+    <div class="card"><h3>行为真实</h3><p>做出来以后，我自己会不会真的每天/每周打开？</p></div>
+  </div>
+  <div class="bigquote" style="font-size:34px">“我觉得有个软件这样挺好”通常不是需求；<br>“这件事已经烦我很久了”往往才是需求。</div>
+  <div class="bar"><span></span><span>07</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">统一拆解法</div>
+  <h2>每个案例都按七步走</h2>
+  <div class="flow" style="gap:8px">
+    <div class="step"><span class="num">1</span><b>场景</b><span>事情怎么发生</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">2</span><b>痛点</b><span>哪一步最烦</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">3</span><b>判需求</b><span>值不值得做</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">4</span><b>想方案</b><span>你会怎么做</span></div>
+  </div>
+  <div class="flow" style="gap:8px">
+    <div class="step"><span class="num">5</span><b>V1实现</b><span>AI + 工具选型</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">6</span><b>真实使用</b><span>哪里不好用</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">7</span><b>V2/系统化</b><span>把真痛点补上</span></div>
+  </div>
+  <div class="bar"><span></span><span>08</span></div>
+</section>
+
+<section class="slide" id="caseOverview">
+  <div class="kicker">案例总览 · 现场选讲</div>
+  <h2>5个案例，一套“需求 → 实现 → 迭代”的方法</h2>
+  <p class="small">前3个可以根据现场偏好挑着讲；内容工厂和知识库建议固定保留。点击卡片直接跳转。</p>
+  <div class="jump-grid">
+    <button class="jump-card" onclick="goToId('case1')"><div class="n">CASE 01</div><h3>网页收藏夹</h3><p>从跨浏览器收藏痛点，到最小MVP。</p></button>
+    <button class="jump-card" onclick="goToId('case2')"><div class="n">CASE 02</div><h3>时间审计局</h3><p>从“任务太乱”挖到“录入成本太高”。</p></button>
+    <button class="jump-card" onclick="goToId('case3')"><div class="n">CASE 03</div><h3>金钱口袋 / 老鼠赛跑</h3><p>同样是钱，为什么要拆成两个产品。</p></button>
+    <button class="jump-card" onclick="goToId('case4')"><div class="n">CASE 04</div><h3>内容工厂</h3><p>从AI写文章，到完整内容生产系统。</p></button>
+    <button class="jump-card" onclick="goToId('case5')"><div class="n">CASE 05</div><h3>从报课到知识库</h3><p>把课程变成可检索、可执行、可产品化的系统。</p></button>
+  </div>
+  <div class="bar"><span>讲完任一案例，可点右上角“案例总览”返回</span><span>CASE MAP</span></div>
+</section>
+
+<section class="slide section" id="case1">
+  <div class="center">
+    <div class="kicker">CASE 1 · 选讲</div>
+    <h1>网页收藏夹</h1>
+    <div class="sub">教会大家：怎样从一个小痛点做出第一个 MVP。</div>
+  </div>
+  <div class="bar"><span></span><span>09</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 2 min</div>
+  <div class="kicker">案例1｜先不公布答案</div>
+  <h2>场景：收藏夹为什么不跟着我走？</h2>
+  <p>我会用不同浏览器、不同电脑。Chrome 收藏一点，Edge 收藏一点，换电脑又一套。</p>
+  <div class="question">这是一个真需求吗？如果是，真正的痛点是什么？</div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布我的判断</button>
+  <div class="reveal answer"><p><b>我的判断：</b>是真需求，但不是“我要一个更漂亮的收藏夹”。真正痛点是：收藏应该跟着“我”走，而不是跟着某个浏览器走。</p></div>
+  <div class="bar"><span></span><span>10</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 2 min</div>
+  <div class="kicker">案例1｜让观众先想方案</div>
+  <h2>如果你来实现，会怎么做？</h2>
+  <div class="row">
+    <div class="card"><h3>请先别急着说“做软件”</h3><p>先想：这个需求有没有现成替代方案？浏览器同步、Notion、Raindrop、微信收藏、网盘，为什么不够？</p></div>
+    <div class="card"><h3>再想最小版本</h3><p>第一版需要什么？保存 URL、标题、标签、搜索、跨设备同步。其他高级功能先不要。</p></div>
+  </div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布我的实现路径</button>
+  <div class="reveal answer"><p><b>实现：</b>把需求讲清楚 → 让 AI 梳理 MVP → 设计数据结构 → 生成页面 → AI Coding 实现 → 自己试用。重点不是我会开发，而是需求足够清楚后，AI 可以临时充当产品经理 + 程序员。</p></div>
+  <div class="bar"><span></span><span>11</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例1｜复盘</div>
+  <h2>网页收藏夹这个案例真正教什么？</h2>
+  <div class="bigquote" style="font-size:38px">AI 让“小痛点 → 能用的 MVP”成本极低。</div>
+  <div class="row mt">
+    <div class="card"><h3>不要一上来做大系统</h3><p>先做能解决核心痛点的最小版本。</p></div>
+    <div class="card"><h3>产品从自己的高频不爽开始</h3><p>需求不一定宏大，但必须真实。</p></div>
+  </div>
+  <div class="bar"><span></span><span>12</span></div>
+</section>
+
+<section class="slide section" id="case2">
+  <div class="center">
+    <div class="kicker">CASE 2 · 选讲</div>
+    <h1>时间审计局</h1>
+    <div class="sub">原始需求：事情很多很乱，但我不想一个个录任务。</div>
+  </div>
+  <div class="bar"><span></span><span>13</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 3 min</div>
+  <div class="kicker">案例2｜抛痛点</div>
+  <h2>“我要一个任务管理工具”是真需求吗？</h2>
+  <p>我同时做很多事情，经常管理混乱。市面上任务工具很多，但我还是用不好。</p>
+  <div class="question">如果是你，你会继续做一个新的任务管理软件吗？</div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布V1结果</button>
+  <div class="reveal fail"><p><b>我的V1：</b>做了任务列表、分类、优先级、时间、项目管理。但真用后发现：每个任务还是要我自己一个个录进去，所以我自己也不想用。</p></div>
+  <div class="bar"><span></span><span>14</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例2｜反转</div>
+  <h2>真正的问题不是“没有任务管理”</h2>
+  <div class="row">
+    <div class="card"><h3>表面需求</h3><p>我要一个更好用的任务管理工具。</p></div>
+    <div class="card"><h3>真实需求</h3><p>任务来自聊天、临时想法和工作沟通，我希望尽量少操作，它们就能进入系统。</p></div>
+  </div>
+  <div class="answer"><p><b>产品教训：</b>如果一个产品做完后你还是不想用，可能不是 UI 问题，而是你一开始就定义错了痛点。</p></div>
+  <div class="bar"><span></span><span>15</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例2｜V2 技术选型</div>
+  <h2>时间审计局：从“任务列表”到“两端协同”</h2>
+  <div class="split">
+    <div class="card">
+      <h3>产品形态</h3>
+      <p><span class="tag blue">WorkBuddy端</span>负责规划、对话式录入、改期、复盘。</p>
+      <p><span class="tag gold">小程序端</span>负责白天执行、计时、完成状态。</p>
+      <p><span class="tag">微信云开发</span>作为中间桥。</p>
+    </div>
+    <div class="diagram">
+      <div class="stack">
+        <div class="layer"><strong>WorkBuddy</strong>对话式任务后台：录入、查询、改期、周复盘</div>
+        <div class="layer"><strong>云端文档</strong>唯一数据源：避免删除复活、同步混乱</div>
+        <div class="layer"><strong>KitBox小程序</strong>执行现场：逾期/进行中/已推迟/完成 + 计时器</div>
+      </div>
+    </div>
+  </div>
+  <div class="bar"><span></span><span>16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例2｜实现细节怎么讲给非技术听众</div>
+  <h2>技术选型不是起点，是需求的结果</h2>
+  <table>
+    <tr><th>需求</th><th>对应选型</th><th>为什么</th></tr>
+    <tr><td>我想用嘴说任务</td><td>WorkBuddy 专家 + 资料库</td><td>把手动录入变成对话式维护</td></tr>
+    <tr><td>白天手机要执行</td><td>微信小程序 KitBox</td><td>随身、轻量、方便计时和标完成</td></tr>
+    <tr><td>跨端数据别乱</td><td>云端唯一数据源 + 单向主干同步</td><td>牺牲一点自动化，换稳定可预期</td></tr>
+    <tr><td>晚上要复盘</td><td>WorkBuddy端回写/整理</td><td>把执行结果重新沉淀到任务系统</td></tr>
+  </table>
+  <div class="bar"><span></span><span>17</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例2｜可互动问题</div>
+  <h2>这里可以停下来问现场</h2>
+  <div class="question">如果让手机和电脑自动双向同步，会不会更好？</div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布我的选择</button>
+  <div class="reveal warn"><p><b>我的选择：</b>没有一上来追求全自动双向同步，而是采用“WorkBuddy → 云端 → 小程序”的单向主干。原因是任务系统最怕同步语义不清，宁愿先稳定，再逐步增强。</p></div>
+  <div class="bar"><span></span><span>18</span></div>
+</section>
+
+<section class="slide section" id="case3">
+  <div class="center">
+    <div class="kicker">CASE 3 · 选讲</div>
+    <h1>金钱口袋 / 老鼠赛跑</h1>
+    <div class="sub">同样是“钱”，一个解决事实记录，一个解决结构判断。</div>
+  </div>
+  <div class="bar"><span></span><span>19</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 2 min</div>
+  <div class="kicker">案例3｜先抛需求</div>
+  <h2>“记账”到底解决什么问题？</h2>
+  <div class="row">
+    <div class="card"><h3>场景A</h3><p>钱分散在支付宝、微信、银行卡。记过账，但不知道现在真实余额，也解释不了余额为什么变了。</p></div>
+    <div class="card"><h3>场景B</h3><p>工资涨了，但支出和负债也涨了。我想知道自己到底有没有越来越自由。</p></div>
+  </div>
+  <div class="question">这两个需求是同一个产品能解决的吗？</div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布答案</button>
+  <div class="reveal answer"><p><b>不是。</b>金钱口袋解决“钱在哪、怎么变”；老鼠赛跑解决“收入结构是否摆脱工资依赖”。</p></div>
+  <div class="bar"><span></span><span>20</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例3｜金钱口袋</div>
+  <h2>金钱口袋：先保证余额可信</h2>
+  <div class="flow">
+    <div class="step"><span class="num">1</span><b>流水</b><span>收入/支出记录到口袋</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">2</span><b>余额</b><span>支付宝/微信/银行卡增量更新</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">3</span><b>转账</b><span>一出一入，总资产不重复</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">4</span><b>盘点</b><span>实际余额校正系统余额</span></div>
+  </div>
+  <div class="answer"><p><b>核心产品判断：</b>普通记账只记流水不够，真正要建立的是“每笔收支 → 对应口袋余额 → 月度汇总 → 实际盘点校正”的可信链路。</p></div>
+  <div class="bar"><span></span><span>21</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例3｜老鼠赛跑</div>
+  <h2>老鼠赛跑：不是记流水，而是看结构</h2>
+  <div class="bigquote" style="font-size:40px">财务自由度 = 被动收入 ÷ 总支出</div>
+  <div class="row mt">
+    <div class="card"><h3>资产</h3><p>往你口袋里塞钱的东西，自动联动被动收入。</p></div>
+    <div class="card"><h3>负债</h3><p>从你口袋里掏钱的东西，自动联动月供支出。</p></div>
+  </div>
+  <p class="small">这个产品不是证券估值工具，也不预测投资收益；它只帮助我持续观察：我离“被动收入覆盖总支出”还有多远。</p>
+  <div class="bar"><span></span><span>22</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例3｜复盘</div>
+  <h2>同一个领域，也可能有两种完全不同的需求</h2>
+  <table>
+    <tr><th>产品</th><th>表面看</th><th>真正解决</th><th>设计原则</th></tr>
+    <tr><td>金钱口袋</td><td>记账</td><td>余额可信、能解释变化</td><td>口袋为体，流水为用，盘点和转账校正</td></tr>
+    <tr><td>老鼠赛跑</td><td>财务看板</td><td>被动收入能否覆盖支出</td><td>资产/负债必须和现金流联动</td></tr>
+  </table>
+  <div class="answer"><p><b>案例教训：</b>不要按“行业名”做产品，要按“用户真正要做的判断”拆产品。</p></div>
+  <div class="bar"><span></span><span>23</span></div>
+</section>
+
+<section class="slide section" id="case4">
+  <div class="center">
+    <div class="kicker">CASE 4 · 固定案例</div>
+    <h1>内容工厂</h1>
+    <div class="sub">不是让 AI 写一篇，而是让一个系统交付结果。</div>
+  </div>
+  <div class="bar"><span></span><span>24</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 3 min</div>
+  <div class="kicker">案例4｜抛痛点</div>
+  <h2>“让AI写公众号文章”是真需求吗？</h2>
+  <p>我想稳定运营公众号。第一反应很容易是：让 AI 帮我写文章。</p>
+  <div class="question">如果你设计一套AI公众号系统，会包含哪些步骤？</div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布V1为什么不够</button>
+  <div class="reveal fail"><p><b>V1问题：</b>素材链路断、知识链路断、手工搬运多、上下文不稳定、文章质量忽高忽低。问题不是“AI不会写”，而是没有生产线。</p></div>
+  <div class="bar"><span></span><span>25</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例4｜内容工厂的核心答案</div>
+  <h2>从“提示词协作”升级为“组织协作”</h2>
+  <div class="diagram">
+    <div class="stack">
+      <div class="layer"><strong>治理层</strong>真源管理、权限审批、质量门禁、存储规范</div>
+      <div class="layer"><strong>组织层</strong>AI CEO、内容主编、研究员、写作员、核查员、质检员、复盘员</div>
+      <div class="layer"><strong>能力层</strong>选题研究、写作改编、配图排版、草稿发布</div>
+      <div class="layer"><strong>资产层</strong>参考资料、单篇素材库、长期知识库、任务记录</div>
+      <div class="layer"><strong>交付层</strong>正式文章、公众号草稿、交付导航、结果复盘</div>
+    </div>
+  </div>
+  <p class="small">一句目标进入后，研究、创作、核查、交付和复盘由“角色责任”推进，而不是一条大提示词硬扛到底。</p>
+  <div class="bar"><span></span><span>26</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例4｜任务流转</div>
+  <h2>一篇文章怎样穿过生产线？</h2>
+  <div class="flow">
+    <div class="step"><span class="num">1</span><b>目标</b><span>明确账号、主题、边界</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">2</span><b>研究</b><span>找资料、核验事实</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">3</span><b>创作</b><span>正文、标题、配图</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">4</span><b>门禁</b><span>事实核查 + 独立质检</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">5</span><b>交付</b><span>草稿、回执、资产沉淀</span></div>
+  </div>
+  <div class="warn"><p><b>两个质量门禁：</b>事实核查不通过，回到研究/创作；独立质检不通过，返工后重新核查。写作者不能同时给自己打分。</p></div>
+  <div class="bar"><span></span><span>27</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例4｜资产沉淀</div>
+  <h2>任务做完，经验不能消失</h2>
+  <div class="row4">
+    <div class="card"><h3>原</h3><p>参考资料：原话是什么？</p></div>
+    <div class="card"><h3>证</h3><p>单篇素材：这篇凭什么写？</p></div>
+    <div class="card"><h3>知</h3><p>知识库：以后怎么复用？</p></div>
+    <div class="card"><h3>果</h3><p>成品仓库：最终交付在哪里？</p></div>
+  </div>
+  <div class="bigquote" style="font-size:34px">真正的内容工厂，不是自动生成文字，而是每次交付都留下可追溯、可复用的内容资产。</div>
+  <div class="bar"><span></span><span>28</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例4｜可互动问题</div>
+  <h2>这里可以让观众做一次判断</h2>
+  <div class="question">内容工厂里，哪个角色最不能省？</div>
+  <div class="row3">
+    <div class="card"><h3>A｜写作员</h3><p>没有正文，当然没法交付。</p></div>
+    <div class="card"><h3>B｜事实核查员</h3><p>没有事实边界，文章可能越流畅越危险。</p></div>
+    <div class="card"><h3>C｜质检员</h3><p>没有独立验收，任务只是“生成过”。</p></div>
+  </div>
+  <button class="btn ghost" onclick="toggleReveal(this)">我的答案</button>
+  <div class="reveal answer"><p><b>我的答案：</b>复杂任务里，事实核查和独立质检最不能省。因为内容生产最大风险不是写不出来，而是写得很顺但事实错、口吻错、交付错。</p></div>
+  <div class="bar"><span></span><span>29</span></div>
+</section>
+
+<section class="slide section" id="case5">
+  <div class="center">
+    <div class="kicker">CASE 5 · 固定案例</div>
+    <h1>从报课到个人知识库</h1>
+    <div class="sub">我报了很多课，怎么把它真正变成自己的东西？</div>
+  </div>
+  <div class="bar"><span></span><span>30</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 3 min</div>
+  <div class="kicker">案例5｜抛痛点</div>
+  <h2>课程结束以后，知识到底去哪了？</h2>
+  <div class="row">
+    <div class="card"><h3>常见状态</h3><p>视频在平台，讲义在网盘，截图在手机，聊天在微信，笔记在别的App。</p></div>
+    <div class="card"><h3>真正问题</h3><p>听课时觉得懂了，但要用的时候找不到、想不起、无法按老师方法做事。</p></div>
+  </div>
+  <div class="question">把所有资料扔进一个文件夹，就叫知识库吗？</div>
+  <button class="btn ghost" onclick="toggleReveal(this)">公布我的判断</button>
+  <div class="reveal answer"><p><b>不是。</b>那只是资料库。知识库要能支持检索、复习、纠错、重组、实践和输出。</p></div>
+  <div class="bar"><span></span><span>31</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例5｜我的第一套：产业链投资知识库</div>
+  <h2>我想学价值投资，不是想收藏课程资料</h2>
+  <div class="split">
+    <div class="card"><h3>原始需求</h3><p>我想真正学会老师的投资方法，以后能用于分析新行业、新公司、新问题。</p></div>
+    <div class="card"><h3>核心痛点</h3><p>普通 AI 可以分析公司，但它默认按自己的框架说，不一定按老师的方法论执行。</p></div>
+  </div>
+  <div class="flow">
+    <div class="step"><span class="num">1</span><b>课程资料</b><span>截图/回放/逐字稿/作业</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">2</span><b>证据层</b><span>来源记录、边界、纠错</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">3</span><b>结构化笔记</b><span>从时间顺序到知识结构</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">4</span><b>方法工具</b><span>三问框架 + 公司六问</span></div>
+  </div>
+  <div class="bar"><span></span><span>32</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例5｜知识库不是摘要</div>
+  <h2>产业链投资知识库最终长出了什么？</h2>
+  <div class="row">
+    <div class="card">
+      <h3>从课程到框架</h3>
+      <p>课程原始资料 → 可追溯证据 → 结构化课程笔记 → 跨课程知识框架 → 作业实践 → 公司与产业研究。</p>
+    </div>
+    <div class="card">
+      <h3>从框架到研究</h3>
+      <p>统一AI算力产业链、三问框架、公司六问、322条公司主数据、真实公司作业和后续筛选研究。</p>
+    </div>
+  </div>
+  <div class="answer"><p><b>关键变化：</b>课程不再是“我听过的内容”，而变成可以调用、验证、修正、继续生长的认知系统。</p></div>
+  <div class="bar"><span></span><span>33</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例5｜我的第二套：FDE知识库</div>
+  <h2>同样的方法，迁移到FDE课程</h2>
+  <div class="row">
+    <div class="card"><h3>第一步：搬回本地</h3><p>课程手册、课时正文、作业、PDF、部署包、直播长图、图片素材，进入本地Obsidian。</p></div>
+    <div class="card"><h3>第二步：分层处理</h3><p>原始层保真，加工层做速查、项目流程、工作包、岗位手册和案例库。</p></div>
+  </div>
+  <div class="warn"><p><b>这个案例的价值：</b>不是“让AI替我上课”，而是我负责方向、纠偏和输出，AI负责保存、检索、归纳、重组和生成。</p></div>
+  <div class="bar"><span></span><span>34</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例5｜从知识库到成果</div>
+  <h2>FDE知识库后来直接产出了什么？</h2>
+  <div class="row3">
+    <div class="card"><h3>公司官网</h3><p>把内部课程语言转成客户听得懂的服务表达。</p></div>
+    <div class="card"><h3>培训手册</h3><p>把三岗位、协作关系、案例和流程整理成团队可学习材料。</p></div>
+    <div class="card"><h3>产品海报</h3><p>把复杂服务压缩成适合微信传播的一眼价值表达。</p></div>
+  </div>
+  <div class="bigquote" style="font-size:34px">知识库不是终点，它是很多 Skill、Agent 和 AI 产品共同使用的底层资产。</div>
+  <div class="bar"><span></span><span>35</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">案例5｜讲清楚三个概念</div>
+  <h2>知识库、Skill、Agent到底怎么区分？</h2>
+  <table>
+    <tr><th>概念</th><th>一句话解释</th><th>你的案例</th></tr>
+    <tr><td>知识库</td><td>告诉AI“应该知道什么”</td><td>老师课程、FDE方法、案例、项目资料</td></tr>
+    <tr><td>Skill</td><td>告诉AI“应该怎么做”</td><td>产业链分析方法、公众号写作规则、FDE交付流程</td></tr>
+    <tr><td>Agent</td><td>让AI“自己把多步任务做完”</td><td>投资助手、内容工厂、销售/培训/方案Agent</td></tr>
+  </table>
+  <div class="answer"><p>所以不是为了讲概念而讲概念，而是：真实问题一步步把你逼到了知识库、Skill和Agent。</p></div>
+  <div class="bar"><span></span><span>36</span></div>
+</section>
+
+<section class="slide section">
+  <div class="center">
+    <div class="kicker">方法论回收</div>
+    <h1>从案例到可复制方法</h1>
+    <div class="sub">现在再总结，观众才不是被灌输，而是已经跟你走过几轮推理。</div>
+  </div>
+  <div class="bar"><span></span><span>37</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">核心方法</div>
+  <h2>AI 需求落地六步法</h2>
+  <div class="flow">
+    <div class="step"><span class="num">1</span><b>找场景</b><span>我每天哪里很麻烦？</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">2</span><b>挖痛点</b><span>真正不愿意做哪一步？</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">3</span><b>判需求</b><span>高频、真痛、现有方案差、行为真实</span></div>
+  </div>
+  <div class="flow">
+    <div class="step"><span class="num">4</span><b>画工作流</b><span>信息从哪来，流向哪里？</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">5</span><b>做MVP</b><span>先解决最核心一件事</span></div><div class="arrow">→</div>
+    <div class="step"><span class="num">6</span><b>真用迭代</b><span>V1是用来发现真需求的</span></div>
+  </div>
+  <div class="bar"><span></span><span>38</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">统一系统图</div>
+  <h2>我的几个产品，其实最后连成了一套系统</h2>
+  <div class="diagram">
+    <div class="stack">
+      <div class="layer"><strong>捕捉入口</strong>网页收藏夹 / 随手记 / 任务入口 / 财务记录</div>
+      <div class="layer"><strong>可信数据</strong>本地存储、云端快照、来源记录、余额校正、证据边界</div>
+      <div class="layer"><strong>知识沉淀</strong>产业链投资知识库 / FDE知识库 / 内容资产库</div>
+      <div class="layer"><strong>标准方法</strong>投资分析Skill / 写作Skill / FDE交付Skill</div>
+      <div class="layer"><strong>自动执行</strong>内容工厂 / 投资助手 / 任务复盘 / 后续Agent</div>
+      <div class="layer"><strong>产品化</strong>小程序工具、官网、海报、培训手册、公众号内容</div>
+    </div>
+  </div>
+  <div class="bar"><span></span><span>39</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">技术选型怎么讲</div>
+  <h2>不要从技术出发，要从需求倒推技术</h2>
+  <table>
+    <tr><th>我需要什么</th><th>才选择什么</th></tr>
+    <tr><td>随手、轻量、手机能用</td><td>微信小程序 / KitBox</td></tr>
+    <tr><td>不依赖网络也能记</td><td>本地 storage 优先</td></tr>
+    <tr><td>跨端任务不丢</td><td>WorkBuddy + 微信云开发同步</td></tr>
+    <tr><td>让AI长期认识我的资料</td><td>Obsidian / 知识库 / 来源索引</td></tr>
+    <tr><td>让AI稳定按我的方法做</td><td>Skill</td></tr>
+    <tr><td>让AI完成多步任务</td><td>Agent / 内容工厂组织结构</td></tr>
+    <tr><td>现成软件满足不了</td><td>AI Coding快速做MVP和V2</td></tr>
+  </table>
+  <div class="bar"><span></span><span>40</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">最重要的反直觉</div>
+  <h2>AI不是让你第一次就做对</h2>
+  <div class="bigquote">AI真正降低的是试错成本。</div>
+  <div class="row mt">
+    <div class="card"><h3>以前</h3><p>有想法，但不会开发；找人太贵，沟通太慢，所以大部分想法停在脑子里。</p></div>
+    <div class="card"><h3>现在</h3><p>当天做V1，真实使用，发现问题，第二天重构。产品能力来自更快地接近真实需求。</p></div>
+  </div>
+  <div class="bar"><span></span><span>41</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">可直接现场使用的提示词</div>
+  <h2>把一个“不爽”交给 AI 的模板</h2>
+  <div class="screen">我现在有一个真实场景：
+【这里描述每天/每周反复发生的事】
+
+我现在的处理方式是：
+【现在怎么做，用了哪些工具】
+
+最烦的是：
+【哪一步最费时间/最容易忘/最不想做】
+
+请你不要直接写代码，先帮我完成：
+1. 判断这是不是一个真需求
+2. 挖出真正痛点，不要停留在表面功能
+3. 画出完整工作流
+4. 设计一个最小可用版本 MVP
+5. 给出技术选型，说明为什么这样选
+6. 列出 V1 验收标准和后续可能迭代点</div>
+  <div class="bar"><span></span><span>42</span></div>
+</section>
+
+<section class="slide section">
+  <div class="center">
+    <div class="kicker">最后10分钟</div>
+    <h1>现场实操</h1>
+    <div class="sub">找一个真实痛点，一起把它拆成产品方案。</div>
+  </div>
+  <div class="bar"><span></span><span>43</span></div>
+</section>
+
+<section class="slide">
+  <div class="timer">互动 7–10 min</div>
+  <div class="kicker">现场实操流程</div>
+  <h2>不要问“你想做什么软件”</h2>
+  <div class="bigquote" style="font-size:38px">问：最近一周，有哪件事至少让你烦过三次？</div>
+  <div class="row mt">
+    <div class="card"><h3>现场追问</h3><ul><li>这个事情从哪里发生？</li><li>现在怎么处理？</li><li>哪一步最烦？</li><li>如果解决了，你希望结果是什么？</li></ul></div>
+    <div class="card"><h3>现场输出</h3><ul><li>真需求判断</li><li>完整工作流</li><li>MVP功能</li><li>AI能做什么</li><li>是否需要编程</li><li>技术选型</li></ul></div>
+  </div>
+  <div class="bar"><span></span><span>44</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">现场实操白板</div>
+  <h2>把观众需求填进这张表</h2>
+  <table>
+    <tr><th>问题</th><th>现场填写</th></tr>
+    <tr><td>原始场景</td><td>谁在什么时候遇到什么麻烦？</td></tr>
+    <tr><td>当前做法</td><td>现在靠什么工具/人工动作解决？</td></tr>
+    <tr><td>真正痛点</td><td>最烦、最慢、最容易错的是哪一步？</td></tr>
+    <tr><td>真需求判断</td><td>高频？真痛？现有方案差？做完真用？</td></tr>
+    <tr><td>MVP</td><td>第一版只解决哪一件事？</td></tr>
+    <tr><td>技术选型</td><td>前端/数据/AI/知识库/Skill/Agent/AI Coding怎么配？</td></tr>
+  </table>
+  <div class="bar"><span></span><span>45</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">备用：快速案例池</div>
+  <h2>如果时间有余，可以快速带过这些</h2>
+  <div class="row3">
+    <div class="card"><h3>随手记</h3><p>真正需求不是“什么都能存”，而是信息能低成本进入知识系统。</p></div>
+    <div class="card"><h3>网页收藏夹</h3><p>收藏应该跟着人走，而不是跟着浏览器走。</p></div>
+    <div class="card"><h3>金钱口袋</h3><p>普通记账不够，余额必须能被流水解释。</p></div>
+    <div class="card"><h3>老鼠赛跑</h3><p>看账户余额不够，要看被动收入覆盖支出的比例。</p></div>
+    <div class="card"><h3>内容工厂</h3><p>AI写作不是写一篇，而是建立内容生产线。</p></div>
+    <div class="card"><h3>知识库</h3><p>报课不是收藏课程，而是让课程变成能被调用的方法。</p></div>
+  </div>
+  <div class="bar"><span></span><span>46</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">收束</div>
+  <h2>今天真正想让大家带走的三句话</h2>
+  <div class="row3">
+    <div class="card"><h3>1</h3><p>不要问“AI还能做什么”，先问“我每天哪里已经烦到习惯了”。</p></div>
+    <div class="card"><h3>2</h3><p>不要急着做功能，先把真实场景和工作流拆清楚。</p></div>
+    <div class="card"><h3>3</h3><p>V1不是终点，V1是用来帮你发现真正需求的。</p></div>
+  </div>
+  <div class="bar"><span></span><span>47</span></div>
+</section>
+
+<section class="slide cover">
+  <div class="center">
+    <div class="kicker">THE END</div>
+    <h1>从一个“不爽”开始</h1>
+    <div class="sub">找到真实需求，然后和 AI 一起把它做出来。</div>
+    <p class="mt">下一步：请每个人写下一个自己最近一周反复遇到的麻烦。</p>
+  </div>
+  <div class="bar"><span></span><span>48</span></div>
+</section>
+
+</div>
+
+<div class="controls">
+  <button class="btn" onclick="prevSlide()">← 上一页</button>
+  <button class="btn ghost" onclick="nextSlide()">下一页 →</button>
+  <button class="btn" onclick="toggleFullscreen()">全屏</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let current=0;
+function update(){
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.querySelectorAll('.progress span').forEach(el=>el.style.width=((current+1)/slides.length*100)+'%');
+  location.hash = 's' + (current+1);
+}
+function nextSlide(){ if(current<slides.length-1){current++; update();} }
+function prevSlide(){ if(current>0){current--; update();} }
+function goToId(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const idx=slides.indexOf(el);
+  if(idx>=0){current=idx;update();}
+}
+function addCaseHomeButtons(){
+  const start=slides.indexOf(document.getElementById('case1'));
+  const end=slides.findIndex(s=>s.querySelector('.kicker')?.textContent.includes('方法论回收'));
+  slides.forEach((s,i)=>{
+    if(i>=start && (end<0 || i<end) && s.id!=='caseOverview' && !s.querySelector('.case-home')){
+      const b=document.createElement('button');
+      b.className='case-home';
+      b.textContent='↩ 案例总览';
+      b.onclick=()=>goToId('caseOverview');
+      s.appendChild(b);
+    }
+  });
+}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();nextSlide()}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prevSlide()}
+});
+function toggleReveal(btn){
+  const r=btn.parentElement.querySelector('.reveal');
+  if(r){r.classList.toggle('show'); btn.textContent=r.classList.contains('show')?'收起答案':'公布答案';}
+}
+function showVotes(){
+  const checked=[...document.querySelectorAll('[data-vote]:checked')].map(x=>x.dataset.vote);
+  const map={A:'网页收藏夹',B:'随手记',C:'时间审计局',D:'金钱口袋',E:'老鼠赛跑',F:'内容工厂',G:'课程知识库',H:'FDE知识库'};
+  document.getElementById('voteResult').textContent=checked.length?('现场选择：'+checked.map(x=>x+'｜'+map[x]).join('；')):'还没有选择';
+}
+function toggleFullscreen(){
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen?.()}else{document.exitFullscreen?.()}
+}
+if(location.hash){
+  const n=parseInt(location.hash.replace('#s',''),10);
+  if(n>=1&&n<=slides.length){current=n-1;}
+}
+addCaseHomeButtons();
+update();
+</script>
+</body>
+</html>

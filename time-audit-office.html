@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="时间审计局：WorkBuddy、微信云开发与 KitBox 小程序的时间管理系统产品说明。">
+<title>时间审计局｜产品系统说明</title>
+<style>
+:root{--ink:#10243d;--muted:#64748b;--paper:#f4f1ea;--card:#fffdf8;--line:#d9d5cc;--blue:#176b87;--deep:#123653;--green:#16866f;--orange:#ed8b38;--red:#c75555;--purple:#74529b;--shadow:0 18px 50px rgba(16,36,61,.11)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.7 "Microsoft YaHei","PingFang SC",system-ui,sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button{font:inherit}.wrap{max-width:1180px;margin:auto;padding:0 24px}
+.nav{position:sticky;top:0;z-index:10;background:rgba(244,241,234,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(16,36,61,.1)}.nav-in{max-width:1180px;margin:auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;font-weight:900}.mark{width:35px;height:35px;display:grid;place-items:center;background:var(--ink);color:#fff;border-radius:10px}.links{display:flex;gap:22px;color:var(--muted);font-size:13px}.links a:hover{color:var(--blue)}
+.hero{padding:84px 0 70px;display:grid;grid-template-columns:1.03fr .97fr;gap:58px;align-items:center}.eyebrow,.kicker{font-size:12px;letter-spacing:.13em;font-weight:900;color:var(--blue)}.eyebrow:before{content:"";display:inline-block;width:28px;height:3px;background:var(--orange);vertical-align:middle;margin-right:9px;border-radius:4px}.hero h1{font-size:clamp(42px,6vw,76px);line-height:1.08;letter-spacing:-.06em;margin:18px 0 22px;overflow-wrap:anywhere}.accent{color:var(--blue)}.lead{font-size:19px;color:var(--muted);max-width:650px}.lead strong{color:var(--ink)}.meta{margin-top:22px;color:var(--muted);font-size:12px}.hero-board{padding:26px;border-radius:30px;background:var(--ink);color:#fff;box-shadow:var(--shadow)}.board-kicker{font-size:13px;color:#b4dce5;margin-bottom:18px}.board-row{padding:17px 18px;border:1px solid rgba(255,255,255,.13);border-radius:16px;background:rgba(255,255,255,.08);margin-bottom:12px}.board-row small{display:block;color:#f4ba70;font-weight:900;margin-bottom:3px}.board-row.green{background:rgba(22,134,111,.25)}.board-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:13px 0}.board-flow div{padding:12px 5px;border-radius:10px;text-align:center;background:#174762;font-size:12px}.board-flow div:first-child{background:var(--orange);color:var(--ink);font-weight:900}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.metric{padding:12px;text-align:center;border-radius:10px;background:rgba(255,255,255,.08);font-size:11px;color:#b9cad7}.metric b{display:block;color:#fff;font-size:21px}
+section{padding:86px 0}.section-head{display:grid;grid-template-columns:.85fr 1.15fr;gap:55px;margin-bottom:35px}.section-head h2{font-size:clamp(31px,4vw,52px);line-height:1.16;letter-spacing:-.045em;margin:9px 0}.section-head p{font-size:18px;color:var(--muted);align-self:end}.pain-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.pain{padding:21px;border:1px solid var(--line);border-radius:17px;background:var(--card);min-height:180px}.pain span{color:var(--red);font-size:12px;font-weight:900}.pain h3{font-size:17px;line-height:1.35;margin:15px 0 8px}.pain p{font-size:13px;color:var(--muted);margin:0}.claim{margin-top:18px;padding:23px 27px;border-radius:18px;background:var(--deep);color:#fff;display:flex;justify-content:space-between;gap:20px}.claim span{color:#b9d8df}
+.architecture{background:#e7eef0;border-top:1px solid #d2dfe2;border-bottom:1px solid #d2dfe2}.layers{display:grid;gap:11px}.layer{display:grid;grid-template-columns:178px 1fr;gap:12px}.layer-label{padding:19px;border-radius:15px;background:var(--ink);color:#fff}.layer-label small{display:block;color:#a9d5df;font-size:11px}.layer-label b{font-size:18px}.layer-items{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.arch-card{padding:16px;border:1px solid #cad9dd;background:var(--card);border-radius:15px}.arch-card b{display:block;font-size:14px;margin-bottom:4px}.arch-card span{font-size:12px;color:var(--muted)}.layer:nth-child(2) .layer-label{background:var(--blue)}.layer:nth-child(3) .layer-label{background:var(--green)}.layer:nth-child(4) .layer-label{background:#a5672f}.directory{margin-top:22px;padding:22px;border-radius:18px;background:rgba(255,255,255,.75);border:1px solid #cfdcdf}.directory h3{margin:5px 0 16px}.dir-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.dir-grid div{padding:12px;background:#fff;border-radius:10px;border:1px solid #dce5e5}.dir-grid b{display:block;font-size:12px}.dir-grid code{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+.workflow-shell{padding:30px;border-radius:27px;background:var(--ink);color:#fff;box-shadow:var(--shadow)}.workflow-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.workflow-head h3{margin:0;font-size:25px}.tabs{display:flex;gap:7px;flex-wrap:wrap}.tabs button{cursor:pointer;border:1px solid rgba(255,255,255,.18);background:transparent;color:#b8cad7;border-radius:50%;width:31px;height:31px}.tabs button.active{background:var(--orange);border-color:var(--orange);color:var(--ink);font-weight:900}.track{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}.step{min-height:130px;padding:15px 11px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid transparent;color:#fff;cursor:pointer;text-align:left}.step.active{background:#fff;color:var(--ink);transform:translateY(-4px)}.step small{color:#84b6c7;font-size:11px}.step.active small{color:var(--muted)}.step b{display:block;margin-top:18px;font-size:14px;line-height:1.35}.detail{margin-top:15px;padding:18px;border-radius:14px;background:rgba(255,255,255,.08);display:grid;grid-template-columns:130px 1fr 1fr 1.5fr;gap:17px}.detail small{display:block;color:#91aab9;font-size:11px}.detail b{font-size:13px}.detail .selected{color:#f5ba70;font-weight:900}
+.gates{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:13px;align-items:center;margin-top:28px}.gate{padding:21px;border:1px solid var(--line);background:var(--card);border-radius:18px}.gate-tag{display:inline-block;padding:4px 8px;border-radius:5px;background:var(--green);color:#fff;font-size:11px;font-weight:900}.gate h3{margin:13px 0 7px}.gate p{margin:0;color:var(--muted);font-size:13px}.gate .back{display:block;margin-top:12px;color:var(--red);font-size:12px;font-weight:900}.arrow{color:var(--orange);font-size:28px}
+.data{background:var(--deep);color:#fff}.data .section-head p{color:#b9cad7}.data-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.data-card{padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.07)}.data-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;background:var(--orange);color:var(--ink);font-weight:900}.data-card h3{margin:16px 0 7px}.data-card p{font-size:13px;color:#b9cad7}.data-card strong{font-size:12px;color:#fff}.note{margin-top:19px;padding:16px 19px;border-radius:13px;background:rgba(255,255,255,.08);color:#d4e2e8;font-size:13px}
+.commands{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.command{padding:23px;border-radius:19px;border:1px solid var(--line);background:var(--card)}.command .no{font-size:12px;color:var(--orange);font-weight:900}.command h3{margin:14px 0 8px}.command p{font-size:13px;color:var(--muted)}.command code{display:block;padding:10px;background:#eef2f3;border-radius:8px;font-size:12px;overflow-wrap:anywhere;margin-top:12px}.command.blue{border-top:5px solid var(--blue)}.command.green{border-top:5px solid var(--green)}.command.purple{border-top:5px solid var(--purple)}
+.day{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.day-card{padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--card);position:relative}.day-card:not(:last-child):after{content:"→";position:absolute;right:-21px;top:42%;font-size:25px;color:var(--orange);z-index:2}.day-card b{display:block;color:var(--blue);margin-bottom:8px}.day-card p{margin:0;font-size:13px;color:var(--muted)}
+.safety{background:#f0e8da}.safety-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.safety-list{padding:24px;border-radius:19px;background:var(--card);border:1px solid #dfd3bf}.safety-list h3{margin:0 0 13px}.safety-list li{margin:8px 0}.decision{padding:25px;border-radius:19px;background:var(--orange);color:var(--ink)}.decision h3{margin:0 0 12px}.decision p{font-size:17px;font-weight:800}.footer{padding:30px 0;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.footer-in{display:flex;justify-content:space-between;gap:20px}
+@media(max-width:900px){.links{display:none}.hero{grid-template-columns:1fr}.section-head{grid-template-columns:1fr}.pain-grid{grid-template-columns:repeat(2,1fr)}.layer{grid-template-columns:1fr}.layer-items{grid-template-columns:repeat(2,1fr)}.dir-grid{grid-template-columns:repeat(2,1fr)}.track{grid-template-columns:repeat(2,1fr)}.detail{grid-template-columns:1fr}.gates{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.data-grid{grid-template-columns:repeat(2,1fr)}.commands{grid-template-columns:1fr}.safety-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{padding:0 16px}.hero{padding:54px 0}.hero h1{font-size:43px}.lead{font-size:17px}.board-flow{grid-template-columns:1fr}.pain-grid,.layer-items,.dir-grid,.data-grid,.day{grid-template-columns:1fr}.arch-card{padding:14px}.track{grid-template-columns:1fr}.day-card:not(:last-child):after{content:"↓";right:auto;top:auto;bottom:-25px;left:50%}.footer-in{display:block}.footer-in span{display:block;margin:4px 0}}
+@media print{.nav{display:none}.hero{min-height:auto;padding:25px 0}.workflow-shell,.data,.claim,.decision{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid;padding:35px 0}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-in"><a class="brand" href="#top"><span class="mark">⏱</span>时间审计局</a><div class="links"><a href="#architecture">技术架构</a><a href="#workflow">任务流转</a><a href="#commands">同步口令</a><a href="#day">日常打法</a><a href="#safety">安全闸</a></div></div></nav>
+<main id="top">
+<div class="wrap"><section class="hero"><div><div class="eyebrow">个人时间管理系统 · 产品案例</div><h1>让每个任务，<br>都有<span class="accent">可追踪的去处</span></h1><p class="lead">时间审计局解决的是一个很实际的问题：<strong>在电脑前，可以用对话管理、查看、更新和复盘任务；离开电脑后，也能用手机随时记录和查看，回到电脑再通过人工回写，把手机上的变化同步回来。</strong></p><p class="meta">架构版本 V6.3 · 云端同步 · 敏感 ID 已脱敏 · 文档日期 2026-09-11</p></div><div class="hero-board"><div class="board-kicker">TIME AUDIT OFFICE · SYSTEM VIEW</div><div class="board-row"><small>电脑端</small>WorkBuddy：用对话录入、管理、查询和复盘任务</div><div class="board-flow"><div>电脑管理</div><div>同步</div><div>手机记录</div><div>再同步</div></div><div class="board-row green"><small>同步中枢</small>微信云开发：通过云端对齐同一份任务快照</div><div class="board-row"><small>手机端</small>KitBox：随时查看、记录进度、计时和标记完成</div><div class="metrics"><div class="metric"><b>2</b>使用端</div><div class="metric"><b>1</b>同步中枢</div><div class="metric"><b>随时</b>记录查看</div></div></div></section></div>
+
+<section><div class="wrap"><div class="section-head"><div><div class="kicker">01 · WHY</div><h2>它解决的不是“记事”，而是跨端失控。</h2></div><p>当任务在对话、资料库、手机和云端之间流动时，真正难的是：谁是准的、怎么同步、错了怎么回退、今天的改动会不会明天消失。</p></div><div class="pain-grid"><div class="pain"><span>01 / 数据分散</span><h3>规划在一个地方，执行在另一个地方</h3><p>任务有了，但上下文、截止日期和实际工时分散在不同端。</p></div><div class="pain"><span>02 / 口径不一</span><h3>“待办”和“进行中”各说各话</h3><p>如果状态、逾期规则和字段含义不统一，跨端统计就会打架。</p></div><div class="pain"><span>03 / 同步不安全</span><h3>一次空快照，就可能覆盖整份数据</h3><p>同步前必须识别“未完成数为 0”到底是正常，还是读取失败。</p></div><div class="pain"><span>04 / 改动丢失</span><h3>手机做完了，晚上却没有回写</h3><p>手机端白天改动只留本地，需要明确的回写通道才能形成闭环。</p></div></div><div class="claim"><strong>产品的核心判断：云端负责“唯一”，手机负责“现场”，人工负责“授权与回写”。</strong><span>简单的单向主干，配合可控的人工支线</span></div></div></section>
+
+<section class="architecture" id="architecture"><div class="wrap"><div class="section-head"><div><div class="kicker">02 · ARCHITECTURE</div><h2>三层系统，<br>一个数据中枢</h2></div><p>不是双向自由合并，而是把职责切开：WorkBuddy 负责规划，小程序负责执行，云端快照负责让两端对上同一份数据。</p></div><div class="layers"><div class="layer"><div class="layer-label"><small>LAYER 01</small><b>规划与账本</b></div><div class="layer-items"><div class="arch-card"><b>任务总表</b><span>项目、状态、优先级、计划日期、工时、外部 ID</span></div><div class="arch-card"><b>项目档案</b><span>记录项目级定义与上下文</span></div><div class="arch-card"><b>使用手册</b><span>同步口令与系统规则的唯一真源</span></div><div class="arch-card"><b>对话式操作</b><span>录入、改期、取消、查询和复盘</span></div></div></div><div class="layer"><div class="layer-label"><small>LAYER 02</small><b>云端唯一数据源</b></div><div class="layer-items"><div class="arch-card"><b>timeaudit_user_data</b><span>每个用户一份快照，_id 对应 openid</span></div><div class="arch-card"><b>推送写入</b><span>服务端 HTTP API + push2wxcloud</span></div><div class="arch-card"><b>只读下载</b><span>syncTimeAudit 云函数返回快照</span></div><div class="arch-card"><b>稳定锚点</b><span>外部 ID / sync_id / record_id 三向绑定</span></div></div></div><div class="layer"><div class="layer-label"><small>LAYER 03</small><b>执行现场</b></div><div class="layer-items"><div class="arch-card"><b>四类视图</b><span>逾期 / 进行中 / 已推迟 / 已完成</span></div><div class="arch-card"><b>底层四态</b><span>进行中 / 已完成 / 已推迟 / 已取消</span></div><div class="arch-card"><b>下载云端</b><span>整份覆盖本地，不上传本地数据</span></div><div class="arch-card"><b>JSON 导出</b><span>需要回写时由人工触发</span></div></div></div></div><div class="directory"><div class="kicker">从概念到落盘</div><h3>系统组件在代码与资料中的对应位置</h3><div class="dir-grid"><div><b>小程序页面</b><code>pages/timeaudit/</code></div><div><b>本地存储</b><code>timeaudit_goals_v6</code></div><div><b>同步工具</b><code>tools/sync/</code></div><div><b>云函数</b><code>syncTimeAudit</code></div><div><b>规则手册</b><code>docs/ · 资料库</code></div></div></div></div></section>
+
+<section id="workflow"><div class="wrap"><div class="section-head"><div><div class="kicker">03 · WORKFLOW</div><h2>一条主干，<br>一条人工回写支线</h2></div><p>点击步骤查看它由谁负责、交付什么。主干保持简单，手机改动回到 WorkBuddy 时才进入人工确认。</p></div><div class="workflow-shell"><div class="workflow-head"><h3>时间审计局 · 任务流转</h3><div class="tabs" id="tabs"></div></div><div class="track" id="track"></div><div class="detail" id="detail" aria-live="polite"></div></div><div class="gates"><div class="gate"><span class="gate-tag">主干</span><h3>推送到小程序</h3><p>WorkBuddy 筛出未完成任务，b2a 转换后整份覆盖云端。</p><span class="back">空快照 / 读表失败 → 立即终止</span></div><div class="arrow">→</div><div class="gate"><span class="gate-tag">现场</span><h3>下载云端执行</h3><p>手机调用云函数，只读下载；本地完成、计时和标记不会自动上传。</p><span class="back">忘记回写 → 明天仍以 WorkBuddy 为准</span></div><div class="arrow">→</div><div class="gate"><span class="gate-tag" style="background:var(--orange);color:var(--ink)">人工支线</span><h3>从小程序拉回</h3><p>口令二做全字段合并，口令三按 ID 只更新状态，均需人工触发并回读验证。</p><span class="back">未匹配绝不新建，绝不删记录</span></div></div></div></section>
+
+<section class="data" id="commands"><div class="wrap"><div class="section-head"><div><div class="kicker">04 · COMMANDS</div><h2>三条口令，<br>对应三种动作</h2></div><p>把复杂的脚本与数据处理，压缩成可记忆、可审计的自然语言入口。</p></div><div class="commands"><div class="command blue"><div class="no">口令一 · 推送</div><h3>“同步到小程序”</h3><p>筛选进行中 + 已推迟 → b2a 转换 → 服务端写入 → 回读核对。</p><code>WorkBuddy → 云端快照 → 手机下载</code></div><div class="command green"><div class="no">口令二 · 合并</div><h3>“从小程序同步”</h3><p>拉取全部任务，生成全字段合并计划：新增插入，有值覆盖，空值保留。</p><code>手机云端 → a2b → WorkBuddy 资料库</code></div><div class="command purple"><div class="no">口令三 · 喂 JSON</div><h3>直接发一份 JSON</h3><p>按 ID 匹配，只更新状态，必要时补实际完成时间；未匹配跳过。</p><code>JSON → ID 匹配 → 状态回写</code></div></div><div class="note"><b>统一口径：</b>4 态状态机 = 进行中 / 已完成 / 已推迟 / 已取消；逾期是跨状态标签，截止当天不算逾期，次日起才算。</div></div></section>
+
+<section id="day"><div class="wrap"><div class="section-head"><div><div class="kicker">05 · DAILY LOOP</div><h2>一天怎么用？<br>四个动作形成闭环</h2></div><p>系统不要求你一直维护数据，只在关键节点做一次明确动作：早上推、出门下、白天做、晚上回。</p></div><div class="day"><div class="day-card"><b>早上 · 推</b><p>对 WorkBuddy 说“同步到小程序”，把未完成任务推到云端。</p></div><div class="day-card"><b>出门前 · 下</b><p>打开 KitBox，点“下载云端”，整份快照落到手机。</p></div><div class="day-card"><b>白天 · 做</b><p>在手机计时、标完成、调整任务；改动只留本地。</p></div><div class="day-card"><b>晚上 · 回</b><p>在 WorkBuddy 更新状态，或用口令二 / JSON 做人工回写。</p></div></div></div></section>
+
+<section class="safety" id="safety"><div class="wrap"><div class="section-head"><div><div class="kicker">06 · SAFETY</div><h2>真正的产品力，<br>藏在不允许发生的事里</h2></div><p>时间系统最怕“看起来同步成功，实际上数据被覆盖”。因此安全闸不是附加功能，而是主流程的一部分。</p></div><div class="safety-grid"><div class="safety-list"><h3>内置安全闸</h3><ul><li>口令一未完成数为 0 或读表失败：立即终止，绝不用空快照覆盖云端。</li><li>口令一属于覆盖写，方向不明时先确认。</li><li>口令二 / 三只动允许字段，绝不删记录，未匹配绝不新建。</li><li>删除只在 WorkBuddy 端执行；手机端删除重新下载后会按云端数据恢复，系统不使用墓碑机制。</li><li>所有同步必须回读验证，不只看写入返回码。</li><li>手机“下载云端”只读，不上传任何本地数据；当前微信账号必须匹配运行时 openid，否则提示没有当前账号数据。</li><li>空结束时间视为长期待办；旧名“待办”统一归并为“进行中”。</li></ul></div><div class="decision"><h3>最终边界</h3><p>云端负责唯一，手机负责现场，人工负责授权与回写。</p><p>同步靠 ID，不靠猜标题；结果靠回读，不靠“应该成功”。</p></div></div></div></section>
+</main>
+<footer class="footer"><div class="wrap footer-in"><span>时间审计局 · 产品系统说明</span><span>V6.3 · 云端唯一数据源 · 敏感 ID 已脱敏</span></div></footer>
+<script>
+const steps=[
+{t:'WorkBuddy 录入',r:'规划端',o:'任务总表记录',d:'对话式新增、改期、取消、查询和复盘，任务先落到规划端账本。'},
+{t:'筛未完成任务',r:'口令一',o:'推送前快照',d:'只筛选进行中与已推迟；未完成数为 0 或读表失败就终止。'},
+{t:'b2a 转换写入',r:'PC 工具链',o:'云端新快照',d:'服务端 API 写入 timeaudit_user_data，整份覆盖云端文档。'},
+{t:'手机下载',r:'KitBox 小程序',o:'本地任务副本',d:'syncTimeAudit 只读返回，手机用当前运行时 openid 获取自己的快照。'},
+{t:'白天执行',r:'执行现场',o:'计时与状态改动',d:'任务计时、完成标记和调整都发生在本地，不会自动上传。'},
+{t:'人工回写',r:'口令二 / 三',o:'字段变更计划',d:'全字段合并或按 ID 更新状态；未匹配跳过，不删记录，不自动新建。'},
+{t:'回读验证',r:'安全闸',o:'同步结果确认',d:'读取写入后的结果，确认数据真的落地，而不是只相信返回码。'},
+{t:'次日复用',r:'闭环',o:'最新任务快照',d:'第二天再次从 WorkBuddy 推送，形成稳定的规划—执行—回写循环。'}
+];
+const tabs=document.getElementById('tabs'),track=document.getElementById('track'),detail=document.getElementById('detail');
+function render(i=0){tabs.innerHTML=steps.map((s,n)=>`<button class="${n===i?'active':''}" data-i="${n}">${n+1}</button>`).join('');track.innerHTML=steps.map((s,n)=>`<button class="step ${n===i?'active':''}" data-i="${n}"><small>STEP ${String(n+1).padStart(2,'0')} · ${s.r}</small><b>${s.t}</b></button>`).join('');const s=steps[i];detail.innerHTML=`<div class="selected">${s.t}</div><div><small>责任入口</small><b>${s.r}</b></div><div><small>本步交付物</small><b>${s.o}</b></div><div><small>动作说明</small><b>${s.d}</b></div>`;document.querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>render(+x.dataset.i))}render();
+</script>
+<script>
+const replacements = new Map([
+  ['个人时间管理系统 · 产品案例', '个人任务管理系统 · 产品案例'],
+  ['都有可追踪的去处', ''],
+  ['让每个任务，', '随时随地记录管理查看任务'],
+  ['都有<span class="accent">可追踪的去处</span>', ''],
+  ['时间审计局解决的是一个很实际的问题：', '时间审计局解决的是一个很实际的问题：'],
+  ['在电脑前，可以用对话管理、查看、更新和复盘任务；离开电脑后，也能用手机随时记录和查看，回到电脑再通过人工回写，把手机上的变化同步回来。', '电脑端可以用 AI 对话快速管理、查看、更新和复盘任务；电脑关机或不在身边时，手机端也能独立记录、查看和更新，双端再按需要方便同步。'],
+  ['它解决的不是“记事”，而是跨端失控。', '它要解决的，是任务工具太麻烦，最后根本用不起来。'],
+  ['当任务在对话、资料库、手机和云端之间流动时，真正难的是：谁是准的、怎么同步、错了怎么回退、今天的改动会不会明天消失。', '很多任务工具不是功能不够，而是记录和管理成本太高，打开就嫌麻烦，最后自然坚持不下去。AI 让电脑端可以通过对话快速建立和管理任务，但如果离开电脑就无法继续使用，便利性仍然不完整。'],
+  ['规划在一个地方，执行在另一个地方', '传统工具太麻烦，最后用不起来'],
+  ['任务有了，但上下文、截止日期和实际工时分散在不同端。', '字段太多、入口太重、维护太累，结果是任务还没开始管理，工具先被放弃。'],
+  ['“待办”和“进行中”各说各话', 'AI 好用，但不能只依赖电脑'],
+  ['如果状态、逾期规则和字段含义不统一，跨端统计就会打架。', '电脑端适合高效管理，手机端也必须能独立使用；两端同步后，状态和字段仍然保持一致。'],
+  ['手机做完了，晚上却没有回写', '换了设备，任务也不能断'],
+  ['手机端白天改动只留本地，需要明确的回写通道才能形成闭环。', '人在外面可以直接用手机记录和更新，回到电脑后再按需要同步，不因为设备切换而丢掉上下文。'],
+  ['不是双向自由合并，而是把职责切开：WorkBuddy 负责规划，小程序负责执行，云端快照负责让两端对上同一份数据。', '电脑端和手机端都可以独立录入、查看、更新与复盘；云端提供跨设备同步能力，让你在不同场景下继续接着做。'],
+  ['一个数据中枢', '两个完整入口'],
+  ['云端唯一数据源', '跨设备同步中枢'],
+  ['执行现场', '手机独立使用端'],
+  ['一条主干，<br>一条人工回写支线', '两个入口，<br>按场景自由切换'],
+  ['主干保持简单，手机改动回到 WorkBuddy 时才进入人工确认。', '电脑和手机都能独立完成日常操作，需要跨端继续工作时再同步最新数据。'],
+  ['手机调用云函数，只读下载；本地完成、计时和标记不会自动上传。', '手机可以独立查看、记录、计时和更新；需要与电脑对齐时，再按需同步数据。'],
+  ['忘记回写 → 明天仍以 WorkBuddy 为准', '还未同步 → 任一端都可继续使用，再按需对齐'],
+  ['人工支线', '同步与合并'],
+  ['均需人工触发并回读验证。', '按需要触发同步，并通过回读确认结果。'],
+  ['一天怎么用？<br>四个动作形成闭环', '一天怎么用？<br>电脑手机随时切换'],
+  ['系统不要求你一直维护数据，只在关键节点做一次明确动作：早上推、出门下、白天做、晚上回。', '系统不要求你一直维护数据：在电脑旁就用对话处理，离开电脑就用手机记录或查看，回到任一端再按需要同步。'],
+  ['白天 · 做', '白天 · 随手记'],
+  ['在手机计时、标完成、调整任务；改动只留本地。', '在手机查看任务、记录新事项、计时、标记完成或调整内容；需要时再同步到另一端。'],
+  ['晚上 · 回', '需要时 · 同步'],
+  ['在 WorkBuddy 更新状态，或用口令二 / JSON 做人工回写。', '在电脑或手机任一端继续管理；需要跨端对齐时，执行对应同步操作。'],
+  ['云端唯一数据源 · 敏感 ID 已脱敏', '跨设备同步 · 敏感 ID 已脱敏'],
+  ['它解决的不是“记事”，而是跨端失控。', '它要解决的，是任务工具太麻烦，最后根本用不起来。'],
+  ['当任务在电脑和手机之间切换时，真正重要的不是把人锁在某一个端，而是让两个端都能独立工作，并在需要时方便地对齐数据。', '很多任务工具不是功能不够，而是记录和管理成本太高，打开就嫌麻烦，最后自然坚持不下去。AI让电脑端可以通过对话快速建立和管理任务，但如果离开电脑就无法继续使用，便利性仍然不完整。'],
+  ['数据分散', '传统工具太麻烦'],
+  ['规划、记录和复盘难以接续', '最后用不起来'],
+  ['任务有了，但上下文、截止日期和实际工时容易分散在不同端。', '字段太多、入口太重、维护太累，结果是任务还没开始管理，工具先被放弃。'],
+  ['入口受限', 'AI好用，但不能只依赖电脑'],
+  ['人在电脑旁和离开电脑后，都要能操作', '电脑端高效，手机端也要随时可用'],
+  ['电脑适合对话式管理，手机适合随手记录；任何一端都不应成为“只能查看”的终点。', 'AI专家让电脑端的录入、查询和复盘变得很方便，但电脑关机或不在身边时，手机仍要能独立记录和查看。'],
+  ['想到就记，查到就做', '双端独立，数据方便同步'],
+  ['不确定下一步时，也能随时找到任务', '电脑和手机都能单独完成操作，需要时再把两端的数据方便地同步起来。'],
+  ['产品的核心判断：云端负责“唯一”，手机负责“现场”，人工负责“授权与回写”。', '产品的核心判断：电脑和手机都是完整入口，人在什么场景，就用什么设备；云端同步只是让两端更方便地保持一致。'],
+  ['简单的单向主干，配合可控的人工支线', '自由切换，不被单一设备绑住'],
+  ['云端负责唯一，手机负责现场，人工负责授权与回写。', '电脑和手机都能独立操作；云端同步负责把不同设备上的任务变化对齐起来。'],
+  ['删除只在 WorkBuddy 端执行；手机端删除重新下载后会按云端数据恢复，系统不使用墓碑机制。', '删除和修改按系统规则执行；跨端同步前保留安全校验，避免误删或空数据覆盖。'],
+  ['下载云端', '同步最新数据'],
+  ['整份覆盖本地，不上传本地数据', '按需获取最新任务，继续在手机端独立使用'],
+  ['需要回写时由人工触发', '需要跨端对齐时按需触发同步']
+]);
+const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+let node;
+while (node = walker.nextNode()) for (const [from, to] of replacements) if (node.nodeValue.includes(from)) node.nodeValue = node.nodeValue.replace(from, to);
+document.querySelector('h1 .accent')?.remove();
+document.querySelectorAll('h1').forEach(h => [...h.childNodes].forEach(n => { if (n.nodeType === 3 && n.nodeValue.trim() === '都有') n.remove(); }));
+document.querySelector('#architecture')?.remove();
+document.querySelector('#workflow')?.remove();
+document.querySelector('#safety')?.remove();
+const oldCommands = document.querySelector('#commands');
+if (oldCommands) {
+  oldCommands.innerHTML = `<div class="wrap"><div class="section-head"><div><div class="kicker">同步入口</div><h2>三条实际口令</h2></div><p>电脑端通过专家对话管理任务，手机端随时记录和查看，按需要同步两端数据。</p></div><div class="image-panel"><img src="时间审计局三条口令.png" alt="时间审计局三条实际口令：今天要做什么、同步到小程序、从小程序同步"></div></div>`;
+}
+const visualSection = document.createElement('section');
+visualSection.className = 'reference-visuals';
+visualSection.innerHTML = `<div class="wrap"><div class="section-head"><div><div class="kicker">SYSTEM MAP</div><h2>系统架构与业务流转</h2></div><p>以下为系统原始架构图与业务流转图。</p></div><div class="image-panel"><img src="时间审计局技术架构总览.png" alt="时间审计局技术架构总览"></div><div class="image-panel"><img src="时间审计局业务流转图.png" alt="时间审计局业务流转图"></div></div>`;
+document.querySelector('footer')?.before(visualSection);
+const visualStyle = document.createElement('style');
+visualStyle.textContent = '.image-panel{margin:24px 0;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(15,39,68,.08)}.image-panel img{display:block;width:100%;height:auto}';
+document.head.appendChild(visualStyle);
+</script>
+</body></html>
