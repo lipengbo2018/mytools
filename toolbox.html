@@ -727,6 +727,144 @@
       background: #102238;
     }
 
+    .theme-toggle {
+      min-width: 132px;
+      white-space: nowrap;
+    }
+
+    body.theme-classic {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --panel-solid: #ffffff;
+      --text: #222831;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #ff5722;
+      --primary-dark: #e64a19;
+      --gold: #ff5722;
+      --danger: #dc2626;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.10);
+      background: #f6f7f9;
+    }
+
+    .theme-classic .sidebar {
+      background: #ffffff;
+      backdrop-filter: none;
+    }
+
+    .theme-classic .brand-mark {
+      color: #ffffff;
+      background: var(--primary);
+      box-shadow: none;
+    }
+
+    .theme-classic .nav-btn:hover,
+    .theme-classic .side-category-btn:hover {
+      background: #f3f4f6;
+    }
+
+    .theme-classic .nav-btn.active,
+    .theme-classic .side-category-btn.active {
+      color: var(--primary);
+      background: #fff0eb;
+      box-shadow: none;
+    }
+
+    .theme-classic .search,
+    .theme-classic .btn,
+    .theme-classic .chip,
+    .theme-classic .field input,
+    .theme-classic .field select,
+    .theme-classic .category-row,
+    .theme-classic .dialog {
+      color: var(--text);
+      background: #ffffff;
+    }
+
+    .theme-classic .btn:hover,
+    .theme-classic .chip:hover {
+      color: var(--text);
+      border-color: #cbd5e1;
+      background: #f9fafb;
+    }
+
+    .theme-classic .btn.primary {
+      color: #ffffff;
+      background: #c83c10;
+      border-color: #c83c10;
+      box-shadow: 0 3px 10px rgba(200, 60, 16, 0.16);
+    }
+
+    .theme-classic .btn.primary:hover {
+      color: #ffffff;
+      background: #ab300a;
+      border-color: #ab300a;
+      box-shadow: 0 4px 12px rgba(200, 60, 16, 0.22);
+    }
+
+    .btn {
+      transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+    }
+
+    .btn.danger,
+    .btn.danger:hover,
+    .theme-classic .btn.danger,
+    .theme-classic .btn.danger:hover {
+      color: var(--danger);
+    }
+
+    .theme-classic .chip.active {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: #fff0eb;
+    }
+
+    .theme-classic .card {
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      backdrop-filter: none;
+    }
+
+    .theme-classic .card::before {
+      display: none;
+    }
+
+    .theme-classic .card:hover {
+      border-color: var(--line);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .theme-classic .tag {
+      color: var(--muted);
+      background: #f3f4f6;
+      border-color: transparent;
+    }
+
+    .theme-classic .empty {
+      border-color: #cbd5e1;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .theme-classic .modal {
+      background: rgba(17, 24, 39, 0.48);
+      backdrop-filter: none;
+    }
+
+    .theme-classic .toast {
+      color: #ffffff;
+      border-color: transparent;
+      background: #111827;
+    }
+
     @media (max-width: 820px) {
       .sidebar {
         background: rgba(7, 17, 31, 0.96);
@@ -743,7 +881,7 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-classic">
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
@@ -779,6 +917,7 @@
           <h1 id="view-title">首页</h1>
           <p id="view-description">按分类筛选工具站。</p>
         </div>
+        <button class="btn theme-toggle" id="theme-toggle" type="button" aria-pressed="false">切换经典浅色</button>
       </section>
 
       <section class="toolbar">
@@ -844,6 +983,7 @@
 
   <script>
     const STORAGE_KEY = "mytools-config-v1";
+    const THEME_KEY = "mytools-theme-v1";
     const DEFAULT_CONFIG_URL = "mytools.default.json";
     const DEFAULT_CONFIG_VERSION = 3;
 
@@ -852,6 +992,32 @@
     let activeCategoryId = "all";
     let draggedToolId = "";
     let suppressCardOpenAfterDrag = false;
+
+    function applyTheme(theme) {
+      const isClassic = theme === "classic";
+      document.body.classList.toggle("theme-classic", isClassic);
+      const button = document.getElementById("theme-toggle");
+      if (button) {
+        button.textContent = isClassic ? "切换深色新版" : "切换经典浅色";
+        button.setAttribute("aria-pressed", String(isClassic));
+      }
+    }
+
+    function loadTheme() {
+      try {
+        return localStorage.getItem(THEME_KEY) || "classic";
+      } catch {
+        return "classic";
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = document.body.classList.contains("theme-classic") ? "modern" : "classic";
+      applyTheme(nextTheme);
+      try {
+        localStorage.setItem(THEME_KEY, nextTheme);
+      } catch {}
+    }
 
     const elements = {
       navButtons: document.querySelectorAll(".nav-btn"),
@@ -1549,6 +1715,7 @@
       });
       document.getElementById("export-btn").addEventListener("click", exportConfig);
       document.getElementById("sync-default-btn").addEventListener("click", syncDefaultConfig);
+      document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
       document.getElementById("import-btn").addEventListener("click", () => elements.importFile.click());
       elements.importFile.addEventListener("change", () => importConfig(elements.importFile.files[0]));
       elements.toolForm.addEventListener("submit", saveTool);
@@ -1571,6 +1738,7 @@
     }
 
     async function initApp() {
+      applyTheme(loadTheme());
       state = await loadState();
       bindEvents();
       render();

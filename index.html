@@ -16,14 +16,14 @@
     header p { max-width:720px; margin:0; color:var(--muted); font-size:17px; }
     .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; padding-bottom:72px; }
     .card { position:relative; min-height:200px; padding:25px; overflow:hidden; border:1px solid var(--line); border-radius:20px; background:var(--panel); color:inherit; text-decoration:none; transition:transform .2s ease,border-color .2s ease,background .2s ease; backdrop-filter:blur(14px); }
-    .card:first-child { grid-column:1 / -1; min-height:220px; }
+    .card:last-child { grid-column:1 / -1; min-height:220px; }
     .card:hover { transform:translateY(-4px); border-color:rgba(72,215,233,.6); background:rgba(20,42,67,.94); }
     .card::after { content:"↗"; position:absolute; right:22px; top:17px; color:var(--cyan); font-size:24px; }
     .number { color:var(--gold); font-size:12px; font-weight:800; letter-spacing:.12em; }
     h2 { margin:34px 0 6px; font-size:24px; line-height:1.25; }
     .card p { margin:0; padding-right:30px; color:var(--muted); }
     footer { padding:24px 0 36px; border-top:1px solid var(--line); color:#70869b; font-size:12px; }
-    @media (max-width:680px) { .wrap{width:min(100% - 24px,1100px)} header{padding:52px 0 30px} header p{font-size:15px} .grid{grid-template-columns:1fr;gap:14px} .card:first-child{grid-column:auto} .card{min-height:180px;padding:21px} }
+    @media (max-width:680px) { .wrap{width:min(100% - 24px,1100px)} header{padding:52px 0 30px} header p{font-size:15px} .grid{grid-template-columns:1fr;gap:14px} .card:last-child{grid-column:auto} .card{min-height:180px;padding:21px} }
   </style>
 </head>
 <body>
