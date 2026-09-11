@@ -15,12 +15,12 @@ MyTools 是一个单页个人工具站导航，用来集中收藏和管理日常
 
 ## 文件说明
 
-- `mytools.html`：独立运行的工具站导航页面。
+- `toolbox.html`：独立运行的工具站导航页面。
 - `mytools.default.json`：页面首次启动时使用的默认配置。
 - `mytools_readme.md`：详细需求文档。
 
 ## 使用方式
 
-直接用浏览器打开 `mytools.html`，或使用任意静态文件服务器托管当前目录。
+直接用浏览器打开 `toolbox.html`，或使用任意静态文件服务器托管当前目录。
 
 页面会把用户修改保存到浏览器 `localStorage`。如果需要更新仓库里的默认数据，可以在页面中点击“导出配置”，再用导出的文件覆盖 `mytools.default.json`。
