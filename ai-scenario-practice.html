@@ -46,6 +46,7 @@
   table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;font-size:18px}th,td{border:1px solid var(--line);padding:13px 14px;text-align:left;vertical-align:top}th{background:#eaf3ef;color:var(--green);font-weight:900}td{line-height:1.45}
   .toc a{display:block;text-decoration:none;color:var(--dark);font-size:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin:10px 0}.toc a:hover{border-color:var(--green);color:var(--green)}
   .cover{background:linear-gradient(135deg,#1d241f 0%,#25231f 45%,#206b5f 100%);color:#fff}.cover h1,.cover h2,.cover p,.cover .sub{color:#fff}.cover::after{background:radial-gradient(circle,rgba(212,175,55,.32),transparent 63%);opacity:1}.cover .kicker{color:#e7d28a}.cover .bar{color:rgba(255,255,255,.7)}
+  .cover-image{padding:0;background:#1c211e}.cover-image::after{display:none}.cover-image img{display:block;width:100%;height:100%;object-fit:cover}
   .jump-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
   .jump-card{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:18px;padding:22px 16px;text-align:left;cursor:pointer;transition:.18s;min-height:180px;color:var(--ink);box-shadow:0 2px 0 rgba(20,20,18,.04)}
   .jump-card:hover{transform:translateY(-3px);border-color:var(--green);box-shadow:0 10px 28px rgba(32,107,95,.12)}
@@ -76,14 +77,8 @@
 <body>
 <div class="deck" id="deck">
 
-<section class="slide cover active">
-  <div class="center">
-    <div class="kicker">60分钟线下工作坊式分享</div>
-    <h1>AI + 场景落地实操</h1>
-    <div class="sub">打通从需求到产品化、系统化的任督二脉</div>
-    <p class="mt">不是展示我做了多少工具，而是一起拆：<br><b>需求从哪来，痛点怎么挖，AI怎么实现，为什么要迭代。</b></p>
-  </div>
-  <div class="bar"><span>AI 场景落地实操</span><span>01</span></div>
+<section class="slide cover-image active">
+  <img src="ai-scenario-cover.png" alt="AI + 场景落地实操课程封面">
 </section>
 
 <section class="slide intro-slide">
