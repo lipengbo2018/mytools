@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>从信息到资产｜AI 个人知识库实战课</title>
+<style>
+  :root{
+    --bg:#0d1b2a;
+    --bg2:#14283a;
+    --panel:#152c3f;
+    --panel2:#183447;
+    --text:#f6f9fc;
+    --muted:#aebdca;
+    --line:rgba(255,255,255,.10);
+    --blue:#3c6e9e;
+    --cyan:#22a699;
+    --green:#22a699;
+    --amber:#3c6e9e;
+    --red:#7b8794;
+    --white:#ffffff;
+    --ink:#10233d;
+    --paper:#f3f7f9;
+    --shadow:0 28px 80px rgba(0,0,0,.25);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a121b;color:var(--text);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,sans-serif}
+  body{display:flex;align-items:center;justify-content:center}
+  .deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--bg)}
+  .slide{position:absolute;inset:0;display:none;padding:5.2vh 6.4vw 6.2vh;background:
+      radial-gradient(circle at 83% 10%, rgba(60,110,158,.10), transparent 30%),
+      radial-gradient(circle at 10% 86%, rgba(34,166,153,.08), transparent 28%),
+      linear-gradient(135deg,var(--bg),var(--bg2));
+      overflow:hidden}
+  .slide.active{display:block;animation:fade .28s ease-out}
+  @keyframes fade{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+  .slide.light{color:var(--ink);background:
+      radial-gradient(circle at 92% 8%, rgba(60,110,158,.045), transparent 30%),
+      radial-gradient(circle at 8% 92%, rgba(34,166,153,.035), transparent 26%),
+      linear-gradient(180deg,#f7f9fb 0%,#f1f5f7 100%)}
+  .slide.section{background:
+      radial-gradient(circle at 78% 28%, rgba(34,166,153,.12), transparent 27%),
+      radial-gradient(circle at 24% 76%, rgba(60,110,158,.13), transparent 32%),
+      linear-gradient(145deg,#0c1926,#102536 55%,#123246)}
+  .eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-size:clamp(13px,1.05vw,20px);font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+  .eyebrow .dot{width:8px;height:8px;border-radius:999px;background:currentColor;box-shadow:0 0 0 6px rgba(34,166,153,.08)}
+  h1,h2,h3,p{margin:0}
+  h1{font-size:clamp(48px,5.3vw,88px);line-height:1.08;letter-spacing:-.045em}
+  h2{font-size:clamp(34px,3.5vw,62px);line-height:1.12;letter-spacing:-.03em}
+  h3{font-size:clamp(21px,1.75vw,32px);line-height:1.22}
+  p,.body{font-size:clamp(17px,1.35vw,26px);line-height:1.65}
+  .muted{color:var(--muted)} .light .muted{color:#6b7a90}
+  .accent{color:var(--cyan)} .blue{color:var(--blue)} .amber{color:var(--amber)} .green{color:var(--green)}
+  .titlebar{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3.2vh}
+  .titlebar .kicker{font-size:clamp(12px,.9vw,17px);font-weight:800;color:var(--cyan);letter-spacing:.12em;margin-bottom:.9vh}
+  .titlebar .meta{font-size:clamp(12px,.85vw,16px);color:var(--muted);white-space:nowrap}
+  .light .titlebar .meta{color:#728197}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.2vw}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25vw}
+  .card{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:24px;padding:2.1vw;box-shadow:0 16px 42px rgba(0,0,0,.12)}
+  .light .card{background:#ffffff;border-color:#dfe7ec;box-shadow:0 10px 28px rgba(20,49,73,.055)}
+  .card.compact{padding:1.55vw}
+  .card .num{font-size:clamp(36px,3vw,54px);font-weight:900;color:var(--blue);line-height:1}
+  .card .label{font-size:clamp(20px,1.55vw,29px);font-weight:850;margin:.8vh 0 .8vh}
+  .card .desc{font-size:clamp(15px,1.08vw,21px);line-height:1.55;color:var(--muted)}
+  .light .card .desc{color:#65758b}
+  .pill{display:inline-flex;align-items:center;gap:.5em;padding:.42em .8em;border-radius:999px;border:1px solid rgba(60,110,158,.20);background:rgba(60,110,158,.07);color:#95c8ff;font-size:clamp(12px,.9vw,17px);font-weight:800}
+  .light .pill{color:#315f89;background:#edf3f8;border-color:#d8e3eb}
+  .pill.teal{color:#84f1e8;background:rgba(34,166,153,.08);border-color:rgba(34,166,153,.20)}
+  .light .pill.teal{color:#137c73;background:#edf8f6;border-color:#d2ebe7}
+  .quote{border-left:5px solid var(--cyan);padding:1.4vh 0 1.4vh 1.6vw;font-size:clamp(25px,2.2vw,42px);font-weight:800;line-height:1.45}
+  .light .quote{color:#17314f}
+  .footer{position:absolute;left:6.4vw;right:6.4vw;bottom:2.1vh;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.48);font-size:clamp(10px,.72vw,14px);letter-spacing:.03em}
+  .light .footer{color:#8794a6}
+  .brand{font-weight:800;color:rgba(255,255,255,.75)} .light .brand{color:#53627a}
+  .topline{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--cyan));opacity:.8}
+  .progress{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.07);z-index:30}
+  .progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .25s ease}
+  .navhint{position:absolute;right:1.6vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:25;opacity:.28}
+  .navhint button{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.18);color:#fff;cursor:pointer}
+  .navhint:hover{opacity:.95}
+  .hero{display:grid;grid-template-columns:1.35fr .65fr;align-items:center;gap:5vw;height:100%}
+  .hero .subtitle{margin-top:2.4vh;max-width:920px;font-size:clamp(20px,1.65vw,32px);line-height:1.6;color:#c8d5e7}
+  .hero .speaker{margin-top:4.4vh;display:flex;gap:1rem;align-items:center;color:#d8e6f8;font-size:clamp(16px,1.08vw,21px);font-weight:700}
+  .hero-art{position:relative;height:64vh;display:flex;align-items:center;justify-content:center}
+  .orbit{position:absolute;border:1px solid rgba(60,110,158,.14);border-radius:50%}
+  .orbit.o1{width:38vw;height:38vw;max-width:560px;max-height:560px}
+  .orbit.o2{width:29vw;height:29vw;max-width:430px;max-height:430px;border-color:rgba(34,166,153,.18)}
+  .orbit.o3{width:20vw;height:20vw;max-width:300px;max-height:300px;border-color:rgba(255,255,255,.12)}
+  .core{position:relative;width:min(15vw,220px);height:min(15vw,220px);border-radius:36px;background:linear-gradient(145deg,rgba(77,163,255,.22),rgba(55,213,200,.12));border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;box-shadow:0 0 90px rgba(60,110,158,.14)}
+  .core svg{width:54%;height:54%}
+  .float-tag{position:absolute;padding:.7em 1em;border-radius:14px;background:rgba(8,22,41,.88);border:1px solid rgba(255,255,255,.12);font-size:clamp(12px,.9vw,17px);font-weight:750;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+  .ft1{top:13%;right:2%}.ft2{bottom:18%;right:3%}.ft3{left:-1%;bottom:25%}.ft4{top:22%;left:0}
+  .journey{display:grid;grid-template-columns:.85fr 1.15fr;gap:3.5vw;height:78vh;align-items:stretch}
+  .profilebox{border-radius:32px;padding:3vw;background:linear-gradient(155deg,#0d2440,#0b1c32);border:1px solid rgba(255,255,255,.10);display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow)}
+  .avatar{width:min(10vw,150px);height:min(10vw,150px);border-radius:30px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:clamp(42px,4vw,68px);font-weight:900;color:white;margin-bottom:2.5vh}
+  .profilebox .name{font-size:clamp(34px,3vw,54px);font-weight:900}.profilebox .role{font-size:clamp(16px,1.15vw,21px);color:#b6c7db;margin-top:.7vh;line-height:1.6}
+  .chips{display:flex;flex-wrap:wrap;gap:.6vw;margin-top:2.3vh}.chips span{padding:.45em .7em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:10px;color:#c8d5e7;font-size:clamp(12px,.88vw,16px)}
+  .timeline{display:grid;grid-template-rows:repeat(4,1fr);gap:1.2vh}
+  .trow{display:grid;grid-template-columns:88px 1fr;gap:1.2vw;align-items:center;border-radius:24px;padding:1.45vw 1.8vw;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}
+  .trow .year{font-size:clamp(18px,1.3vw,24px);font-weight:900;color:var(--cyan);text-align:center}
+  .trow .ttl{font-size:clamp(20px,1.55vw,28px);font-weight:850;margin-bottom:.4vh}.trow .txt{font-size:clamp(14px,1vw,19px);color:#aebfd3;line-height:1.5}
+  .flow{display:flex;align-items:center;justify-content:space-between;gap:.6vw;margin-top:4vh}
+  .flow .step{flex:1;min-width:0;text-align:center;padding:1.8vw 1vw;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+  .flow .step b{display:block;font-size:clamp(17px,1.28vw,24px);margin-top:.8vh}.flow .step small{font-size:clamp(12px,.82vw,16px);color:var(--muted)}
+  .arrow{font-size:clamp(22px,2vw,38px);color:#607b9d}
+  .icon{width:48px;height:48px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;background:rgba(60,110,158,.09);border:1px solid rgba(60,110,158,.14);color:var(--blue);font-size:24px}
+  .light .icon{background:#edf3f8;border-color:#d9e5ed}
+  .icon.teal{color:var(--cyan);background:rgba(34,166,153,.08);border-color:rgba(34,166,153,.15)}
+  .light .icon.teal{background:#edf8f6;border-color:#d2ebe7}
+  .checklist{display:grid;gap:1.05vh}
+  .check{display:flex;gap:1vw;align-items:flex-start;padding:1vh 0;font-size:clamp(16px,1.18vw,22px);line-height:1.5}.check i{font-style:normal;color:var(--cyan);font-weight:900;font-size:1.1em}
+  .light .check{color:#31465f}
+  .split-title{display:grid;grid-template-columns:1fr .95fr;gap:4vw;align-items:center;height:78vh}
+  .section-no{font-size:clamp(100px,12vw,220px);font-weight:950;line-height:.8;letter-spacing:-.07em;color:rgba(60,110,158,.11)}
+  .section-title{font-size:clamp(52px,5.8vw,100px);font-weight:930;line-height:1.02;letter-spacing:-.05em}.section-sub{margin-top:2vh;max-width:780px;color:#b7c9dc;font-size:clamp(19px,1.5vw,29px);line-height:1.6}
+  .exercise{border:1px solid rgba(34,166,153,.18);background:rgba(34,166,153,.065);border-radius:24px;padding:1.6vw 2vw}
+  .light .exercise{border-color:#cfe5e2;background:#eef7f6}
+  .exercise .tag{font-size:clamp(12px,.84vw,16px);font-weight:900;color:var(--cyan);letter-spacing:.08em}.light .exercise .tag{color:#157c73}
+  .exercise .task{margin-top:.6vh;font-size:clamp(19px,1.45vw,28px);font-weight:850;line-height:1.5}.light .exercise .task{color:#17314f}
+  .tree{font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;white-space:pre;line-height:1.65;font-size:clamp(15px,1.07vw,20px);padding:2vw;border-radius:22px;background:#081827;border:1px solid rgba(255,255,255,.09);color:#d2e6f5}
+  .light .tree{background:#0d1b2b;color:#e5f4ff}
+  .big-number{font-size:clamp(90px,10vw,170px);font-weight:950;line-height:.85;color:rgba(60,110,158,.10);position:absolute;right:5vw;top:8vh}
+  .matrix{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1vw}.mitem{padding:1.4vw;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.mitem strong{display:block;font-size:clamp(18px,1.35vw,25px);margin-bottom:.4vh}.mitem span{font-size:clamp(14px,.98vw,19px);color:var(--muted);line-height:1.45}
+  .light .mitem{background:#fff;border-color:#dfe7ec}.light .mitem span{color:#687a91}
+  .cycle{display:grid;grid-template-columns:repeat(7,1fr);align-items:center;gap:.6vw;margin-top:4.5vh}.cycle .node{min-height:128px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);padding:1.1vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.cycle .node b{font-size:clamp(15px,1.1vw,21px);margin-top:.6vh}.cycle .node small{font-size:clamp(11px,.78vw,15px);color:var(--muted)}.cycle .arr{color:#5f7b9b;text-align:center;font-size:26px}
+  .light .cycle .node{background:#fff;border-color:#dfe7ec}
+  .callout{border-radius:26px;padding:2vw 2.4vw;background:linear-gradient(135deg,rgba(60,110,158,.09),rgba(55,213,200,.07));border:1px solid rgba(60,110,158,.16)}
+  .light .callout{background:#eef6f5;border-color:#d3e7e4}
+  .callout strong{font-size:clamp(24px,1.9vw,36px);line-height:1.45}.callout p{margin-top:.8vh;color:var(--muted)}.light .callout p{color:#64758b}
+  .prompt{height:55vh;overflow:auto;background:#071623;border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:1.7vw 2vw;font-family:ui-monospace,Consolas,monospace;font-size:clamp(13px,.9vw,17px);line-height:1.65;color:#d4e3f2;white-space:pre-wrap}
+  .light .prompt{background:#0e1b2a;color:#e8f3ff}
+  .endcenter{height:78vh;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column}.endcenter h2{max-width:1080px}.endcenter p{margin-top:2vh;max-width:900px;color:#b9c8d9}
+  .notes{position:absolute;right:2vw;bottom:7vh;width:min(44vw,720px);max-height:32vh;overflow:auto;border-radius:20px;background:rgba(3,10,18,.94);border:1px solid rgba(255,255,255,.12);padding:1.2vw 1.5vw;color:#dce7f5;font-size:14px;line-height:1.6;display:none;z-index:50;box-shadow:var(--shadow)}
+  .notes.show{display:block}
+  .overview{position:fixed;inset:0;background:#0a121b;z-index:80;display:none;overflow:auto;padding:2vh 2vw}.overview.show{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2vw;align-content:start}.thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:#122334;padding:1.2vw;cursor:pointer;overflow:hidden}.thumb:hover{outline:2px solid var(--cyan)}.thumb .tn{font-size:11px;color:#6f8baa}.thumb .tt{font-size:18px;font-weight:850;margin-top:.5vh}.thumb .ts{font-size:12px;color:#9fb2c8;margin-top:.6vh}
+
+  .cover-partner{position:absolute;left:2.2vw;top:2.0vh;z-index:12;width:min(22vw,360px);height:auto;opacity:.98;filter:drop-shadow(0 4px 18px rgba(0,0,0,.12));border-radius:8px}
+  .slide#s1 .hero{padding-top:3.2vh}
+  .pager{position:absolute;right:1.45vw;bottom:1.15vh;z-index:60;display:flex;align-items:center;gap:.36rem;padding:.42rem .62rem;border-radius:12px;background:rgba(3,10,18,.78);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);box-shadow:0 8px 26px rgba(0,0,0,.18);font-size:clamp(11px,.76vw,15px);font-weight:800;color:#dbe8f6}
+  .pager .page-label{opacity:.62;font-weight:700}
+  .pager input{width:3.25em;padding:.25em .3em;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(255,255,255,.08);color:#fff;font:inherit;text-align:center;outline:none;appearance:textfield;-moz-appearance:textfield}
+  .pager input::-webkit-outer-spin-button,.pager input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .pager input:focus{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(55,213,200,.12)}
+  .pager .slash{opacity:.45}
+  .pager .jump-hint{font-size:.86em;opacity:.42;margin-left:.1rem}
+  .footer>span:last-child{visibility:hidden}
+  .need-filter{display:grid;grid-template-columns:1fr 1fr;gap:1.8vw;margin-top:3.1vh}
+  .need-card{border-radius:26px;padding:2.1vw 2.3vw;border:1px solid #e4eaf3;background:#fff;box-shadow:0 14px 38px rgba(31,55,90,.07)}
+  .need-card.true{border-color:#d7e3ec;background:linear-gradient(145deg,#f5f8fb,#ffffff)}
+  .need-card.easy{border-color:#d2e8e5;background:linear-gradient(145deg,#f0f8f7,#ffffff)}
+  .need-card .need-head{display:flex;align-items:center;gap:.8vw;margin-bottom:1.2vh}
+  .need-card .badge{width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900}
+  .need-card.true .badge{background:#eaf1f7;color:#315f89}
+  .need-card.easy .badge{background:#e7f5f3;color:#157c73}
+  .need-card h3{font-size:clamp(26px,2vw,38px)}
+  .need-list{display:grid;gap:1.05vh;margin-top:1.4vh}
+  .need-item{display:flex;align-items:flex-start;gap:.8vw;padding:.72vh 0;font-size:clamp(18px,1.35vw,25px);font-weight:760;color:#31465f;line-height:1.45}
+  .need-item b{color:#10223a}
+  .need-dot{width:10px;height:10px;border-radius:999px;flex:none;margin-top:.45em}
+  .true .need-dot{background:#557fa3}
+  .easy .need-dot{background:#22a699}
+  .pick-rule{margin-top:2.1vh;border-radius:22px;padding:1.5vw 2vw;background:#edf5f4;border:1px solid #d2e6e3;display:flex;align-items:center;justify-content:space-between;gap:2vw}
+  .pick-rule strong{font-size:clamp(22px,1.7vw,32px);color:#17314f}
+  .pick-rule span{font-size:clamp(14px,1vw,19px);color:#64758b}
+
+  /* Unified content-slide visual language: white cards + blue-gray / teal accents. */
+  .light .flow .step{background:#fff;border-color:#dfe7ec;box-shadow:0 8px 24px rgba(20,49,73,.045)}
+  .light .flow .step small{color:#6d7f90}
+  .light .arrow{color:#8ca0b2}
+  .light .chips span{background:#fff;border-color:#dfe7ec;color:#52677a}
+  .light .matrix .mitem{box-shadow:0 6px 20px rgba(20,49,73,.035)}
+  .light .big-number{color:rgba(60,110,158,.09)}
+  .light .eyebrow{color:#198f85}
+  .light .check i{color:#198f85}
+
+  @media(max-width:900px){
+    .slide{padding:4vh 5vw 6vh}.hero,.journey,.split-title,.grid2,.need-filter{grid-template-columns:1fr}.hero-art{display:none}.cover-partner{width:min(48vw,320px);left:3vw;top:1.5vh}.pager{right:2vw;bottom:1vh}.journey{height:auto}.profilebox{display:none}.grid3{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.cycle{grid-template-columns:1fr 24px 1fr}.cycle .arr:nth-of-type(n+3){display:none}.navhint{display:none}
+  }
+  @media print{
+    html,body{overflow:visible;background:#fff}.deck{height:auto;overflow:visible}.slide{position:relative;display:block!important;width:100vw;height:56.25vw;page-break-after:always}.navhint,.progress,.notes,.overview,.pager{display:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="progress"><span id="progressBar"></span></div>
+  <div class="navhint"><button id="prevBtn" aria-label="上一页">↑</button><button id="nextBtn" aria-label="下一页">↓</button></div>
+  <div class="pager" id="pager" title="输入页码并按回车跳转"><span class="page-label">页</span><input id="pageJump" type="number" min="1" step="1" inputmode="numeric" aria-label="跳转到页码"><span class="slash">/</span><span id="pageTotal">35</span><span class="jump-hint">↵</span></div>
+
+  <!-- 1 封面 -->
+  <section class="slide active" id="s1" data-title="从信息到资产" data-sub="AI 个人知识库实战课">
+    <div class="topline"></div>
+    <img class="cover-partner" src="data:image/png;base64,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" alt="国家对外文化贸易基地（杭州） 中国（良渚）数字文化社区">
+    <div class="hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> 开工智能 · 线下实操课</div>
+        <h1 style="margin-top:2.1vh">从信息到资产<br><span class="accent">AI 个人知识库实战课</span></h1>
+        <p class="subtitle">把文档、链接、图片、视频、语音、微信消息，变成<strong style="color:#fff">找得到、用得上、持续更新</strong>的个人知识系统。</p>
+        <div class="speaker"><span class="pill teal">120 MIN · HANDS-ON</span><span>李老师otw · 开工智能</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit o3"></div>
+        <div class="core">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 32c0-6.6 5.4-12 12-12h36c6.6 0 12 5.4 12 12v36c0 6.6-5.4 12-12 12H32c-6.6 0-12-5.4-12-12V32Z" stroke="#77c3ff" stroke-width="5"/><path d="M31 40h38M31 51h29M31 62h22" stroke="#83efe5" stroke-width="5" stroke-linecap="round"/><circle cx="72" cy="65" r="8" fill="#4da3ff"/></svg>
+        </div>
+        <div class="float-tag ft1">文档 · 链接 · 图片</div><div class="float-tag ft2">微信消息 · 语音</div><div class="float-tag ft3">Obsidian</div><div class="float-tag ft4">AI 可调用</div>
+      </div>
+    </div>
+    <div class="footer"><span class="brand">开工智能｜让 AI 开工，真正进入业务</span><span>01</span></div>
+    <aside class="notes">开场不要先讲工具。先让大家知道：今天不是来学 Obsidian 按钮，而是把自己平时散落的信息，变成以后真的能用的知识资产。</aside>
+  </section>
+
+  <!-- 2 个人经历 -->
+  <section class="slide" id="s2" data-title="我的 AI 实践路径" data-sub="从数据研发到真实场景落地">
+    <div class="titlebar"><div><div class="kicker">ABOUT ME</div><h2>我的 AI 实践路径</h2></div><div class="meta">从“做数据系统”到“用 AI 解决真实问题”</div></div>
+    <div class="journey">
+      <div class="profilebox">
+        <div>
+          <div class="avatar">李</div>
+          <div class="name">李老师otw</div>
+          <div class="role">10 年数据研发<br>数仓与大数据主理人 · AI 场景实践者</div>
+          <div class="chips"><span>AI 编程</span><span>知识库</span><span>工作流</span><span>Agent</span><span>产品化</span></div>
+        </div>
+        <div class="quote" style="font-size:clamp(18px,1.5vw,28px)">先解决自己的真实问题，<br>再把方法做成别人也能用的系统。</div>
+      </div>
+      <div class="timeline">
+        <div class="trow"><div class="year">01</div><div><div class="ttl">10 年数据研发</div><div class="txt">长期深耕数据仓库与大数据建设，负责从数据体系、工程流程到业务数据应用的落地。</div></div></div>
+        <div class="trow"><div class="year">02</div><div><div class="ttl">AI 从“聊天”进入日常工作</div><div class="txt">从效率、知识管理、时间管理、投资研究、内容生产等自己的高频问题开始实践。</div></div></div>
+        <div class="trow"><div class="year">03</div><div><div class="ttl">做出一批自己的 AI 产品</div><div class="txt">随手记、时间审计局、网页收藏夹、投资研究知识库、内容工厂……</div></div></div>
+        <div class="trow"><div class="year">04</div><div><div class="ttl">把经验沉淀成“开工智能”</div><div class="txt">从真实痛点出发，用知识、工作流、Agent 和 AI 编程，让 AI 真正进入业务。</div></div></div>
+      </div>
+    </div>
+    <div class="footer"><span class="brand">开工智能</span><span>02</span></div>
+    <aside class="notes">这一页只讲“我为什么有资格带大家做这件事”，不要讲履历细节。重点是：我也是从自己的真实问题开始，而不是从工具教程开始。</aside>
+  </section>
+
+  <!-- 3 今日目标 -->
+  <section class="slide light" id="s3" data-title="今天我们要完成什么" data-sub="不是听懂，而是做出来">
+    <div class="titlebar"><div><div class="kicker">TODAY'S GOAL</div><h2>今天不是“听懂”<br>而是<span class="blue">现场跑通一条闭环</span></h2></div><div class="meta">120 分钟 · 带领式实操</div></div>
+    <div class="flow">
+      <div class="step"><span class="icon">①</span><b>工具可用</b><small>安装并验证</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon teal">②</span><b>信息进来</b><small>真实素材采集</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon">③</span><b>需求明确</b><small>先解决一个问题</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon teal">④</span><b>结构搭好</b><small>目录服务使用</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon">⑤</span><b>开始使用</b><small>查找 / 产出 / 改进</small></div>
+    </div>
+    <div class="callout" style="margin-top:4vh"><strong>最终结果：你会拥有一套“能持续进入、能被找到、能被复用、能继续更新”的个人知识系统。</strong></div>
+    <div class="footer"><span class="brand">课程目标</span><span>03</span></div>
+  </section>
+
+  <!-- 4 全流程 -->
+  <section class="slide light" id="s4" data-title="整堂课的路线" data-sub="8 个环节">
+    <div class="titlebar"><div><div class="kicker">COURSE MAP</div><h2>整堂课的路线</h2></div><div class="meta">先跑通，再优化</div></div>
+    <div class="grid4" style="margin-top:3vh">
+      <div class="card compact"><div class="num">01</div><div class="label">安装工具</div><div class="desc">随手记 + 微信聊天提取分析</div></div>
+      <div class="card compact"><div class="num">02</div><div class="label">打通采集</div><div class="desc">按自己的需要采集真实内容</div></div>
+      <div class="card compact"><div class="num">03</div><div class="label">处理聊天</div><div class="desc">批量转交 / 历史聊天检索分析</div></div>
+      <div class="card compact"><div class="num">04</div><div class="label">识别需求</div><div class="desc">说清楚谁用、何时用、解决什么</div></div>
+      <div class="card compact"><div class="num">05</div><div class="label">设计结构</div><div class="desc">目录是为了以后能找到、能理解</div></div>
+      <div class="card compact"><div class="num">06</div><div class="label">建设内容</div><div class="desc">保留来源，再加工成可复用知识</div></div>
+      <div class="card compact"><div class="num">07</div><div class="label">日常更新</div><div class="desc">新增 / 更新 / 纠错 / 归档</div></div>
+      <div class="card compact"><div class="num">08</div><div class="label">真正使用</div><div class="desc">完成一次真实任务并发现缺口</div></div>
+    </div>
+    <div class="footer"><span class="brand">课程地图</span><span>04</span></div>
+  </section>
+
+  <!-- 5 课前准备 -->
+  <section class="slide light" id="s5" data-title="课前已经准备好什么" data-sub="课堂不浪费时间">
+    <div class="titlebar"><div><div class="kicker">BEFORE CLASS</div><h2>这些基础环境，<span class="blue">课前完成</span></h2></div><div class="meta">课堂第一步只安装两个课程工具</div></div>
+    <div class="grid2" style="margin-top:2vh">
+      <div class="card"><h3>学员提前准备</h3><div class="checklist" style="margin-top:1.4vh">
+        <div class="check"><i>✓</i><span>Obsidian 桌面版可正常打开</span></div><div class="check"><i>✓</i><span>Codex 或 WorkBuddy 已安装登录</span></div><div class="check"><i>✓</i><span>微信电脑端可正常使用</span></div><div class="check"><i>✓</i><span>准备一个本地 Vault 文件夹</span></div><div class="check"><i>✓</i><span>准备几份真实资料 + 一段可处理聊天记录</span></div>
+      </div></div>
+      <div class="card"><h3>课堂现场安装</h3><div style="margin-top:2vh" class="grid2"><div class="mitem"><span class="icon">🗂</span><strong style="margin-top:1vh">随手记插件</strong><span>把任意来源内容同步进本地 Obsidian</span></div><div class="mitem"><span class="icon teal">💬</span><strong style="margin-top:1vh">微信聊天提取分析</strong><span>对历史聊天做检索、提取和分析</span></div></div><div class="exercise" style="margin-top:2vh"><div class="tag">课堂原则</div><div class="task">安装环节严格限时。个别机器出问题，切备用方案，不拖慢整班。</div></div></div>
+    </div>
+    <div class="footer"><span class="brand">准备环境</span><span>05</span></div>
+  </section>
+
+  <!-- 6 section -->
+  <section class="slide section" id="s6" data-title="01 工具与信息采集" data-sub="先让信息进来">
+    <div class="split-title"><div><div class="section-no">01</div></div><div><div class="eyebrow"><span class="dot"></span> PART ONE</div><div class="section-title" style="margin-top:2vh">先让<br><span class="accent">信息进来</span></div><p class="section-sub">工具不是目的。第一步只是打通“我看到的信息，能方便进入自己的本地知识库”。</p></div></div>
+    <div class="footer"><span class="brand">工具与信息采集</span><span>06</span></div>
+  </section>
+
+  <!-- 7 三种入口 -->
+  <section class="slide light" id="s7" data-title="三种信息入口" data-sub="各有不同用途">
+    <div class="titlebar"><div><div class="kicker">3 ENTRANCES</div><h2>三种入口，解决三类问题</h2></div><div class="meta">不要混在一起理解</div></div>
+    <div class="grid3" style="margin-top:3vh">
+      <div class="card"><span class="icon">📥</span><h3 style="margin-top:1.2vh">随手记</h3><p class="muted" style="margin-top:.8vh">任意来源内容的日常采集入口。</p><div class="pill" style="margin-top:2vh">文档 / 链接 / 图片 / 视频 / 语音 / 微信消息</div></div>
+      <div class="card"><span class="icon teal">📤</span><h3 style="margin-top:1.2vh">WorkBuddy 批量转交</h3><p class="muted" style="margin-top:.8vh">我已经知道要处理哪一段微信聊天。</p><div class="pill teal" style="margin-top:2vh">人工选中 → 批量转交 → 继续处理</div></div>
+      <div class="card"><span class="icon">🔎</span><h3 style="margin-top:1.2vh">微信聊天提取分析</h3><p class="muted" style="margin-top:.8vh">从大量历史聊天中检索、定位、分析。</p><div class="pill" style="margin-top:2vh">时间 / 联系人 / 群聊 / 关键词</div></div>
+    </div>
+    <div class="callout" style="margin-top:3.5vh"><strong>记住：<span class="blue">“能读取到” ≠ “应该进入知识库”。</span></strong><p>采集、分析、知识沉淀，是三个不同动作。</p></div>
+    <div class="footer"><span class="brand">三种信息入口</span><span>07</span></div>
+  </section>
+
+  <!-- 8 随手记 -->
+  <section class="slide light" id="s8" data-title="随手记是什么" data-sub="统一采集入口">
+    <div class="titlebar"><div><div class="kicker">SUISHOUJI</div><h2>随手记，不是“微信同步插件”</h2></div><div class="meta">它是你的统一采集入口</div></div>
+    <div class="grid2" style="align-items:center;margin-top:1.5vh">
+      <div>
+        <div class="quote">把任意来源的内容，同步进你本地 Obsidian 知识库。</div>
+        <div class="grid3" style="margin-top:3vh;gap:1vw">
+          <div class="mitem"><strong>文档</strong><span>PDF / Word / 文件</span></div><div class="mitem"><strong>链接</strong><span>网页 / 文章 / 页面</span></div><div class="mitem"><strong>图片</strong><span>截图 / 照片 / 图表</span></div><div class="mitem"><strong>视频</strong><span>视频文件 / 链接</span></div><div class="mitem"><strong>语音</strong><span>灵感 / 记录 / 口述</span></div><div class="mitem"><strong>微信消息</strong><span>聊天中产生的信息</span></div>
+        </div>
+      </div>
+      <div class="card" style="padding:2.3vw"><div class="eyebrow"><span class="dot"></span> 核心边界</div><h3 style="margin-top:1.4vh;font-size:clamp(28px,2.1vw,40px)">采集成功，<span class="accent">不等于形成知识</span></h3><p class="muted" style="margin-top:1.4vh">随手记默认把内容送进“原始素材层”。后续再判断：整理、加工、更新已有知识、归档，还是删除。</p><div class="tree" style="margin-top:2vh">任意来源
+   ↓
+随手记
+   ↓
+10-原始素材
+   ↓
+整理 / 加工 / 归档 / 删除</div></div>
+    </div>
+    <div class="footer"><span class="brand">统一采集入口</span><span>08</span></div>
+  </section>
+
+  <!-- 9 现场安装 -->
+  <section class="slide light" id="s9" data-title="实操 1：现场安装" data-sub="两个工具">
+    <div class="titlebar"><div><div class="kicker">HANDS-ON 01</div><h2>现场实操：安装并完成最小验证</h2></div><div class="meta">不要陷入复杂排错</div></div>
+    <div class="grid2">
+      <div class="card"><span class="pill">A · 随手记</span><div class="checklist" style="margin-top:2vh"><div class="check"><i>1</i><span>打开自己的 Obsidian Vault</span></div><div class="check"><i>2</i><span>安装并启用插件</span></div><div class="check"><i>3</i><span>设置原始素材落地目录</span></div><div class="check"><i>4</i><span>完成必要绑定 / 配置</span></div><div class="check"><i>5</i><span>发送一条测试内容，确认落库</span></div></div></div>
+      <div class="card"><span class="pill teal">B · 微信聊天提取分析</span><div class="checklist" style="margin-top:2vh"><div class="check"><i>1</i><span>工具能正常启动</span></div><div class="check"><i>2</i><span>识别脱敏数据或本人有权使用的数据</span></div><div class="check"><i>3</i><span>按一个简单条件完成检索</span></div><div class="check"><i>4</i><span>结果保留原始消息依据</span></div></div><div class="exercise" style="margin-top:2vh"><div class="tag">边界</div><div class="task">只处理本人有权使用的资料与聊天；敏感信息先脱敏。</div></div></div>
+    </div>
+    <div class="footer"><span class="brand">实操 01</span><span>09</span></div>
+  </section>
+
+  <!-- 10 采集练习 -->
+  <section class="slide light" id="s10" data-title="实操 2：采集自己的真实内容" data-sub="按需要选择来源">
+    <div class="titlebar"><div><div class="kicker">HANDS-ON 02</div><h2>从你自己的真实内容开始</h2></div><div class="meta">来源由使用场景决定</div></div>
+    <div class="grid2" style="align-items:center">
+      <div><div class="quote">不要为了“测试格式”而测试。<br><span class="accent">你平时真正会保存什么，就采集什么。</span></div><div class="chips" style="margin-top:3vh"><span>文字 / 微信消息</span><span>网页 / 链接</span><span>图片 / 截图</span><span>文档</span><span>语音</span><span>视频</span><span>其他真实素材</span></div></div>
+      <div class="exercise"><div class="tag">现场任务 · 5 MIN</div><div class="task" style="font-size:clamp(27px,2.1vw,40px)">选一条你真正想保存的内容 → 用随手记送进 Obsidian → 在原始素材层找到它。</div><p class="muted" style="margin-top:1.2vh">成功标准：能找到内容，并尽可能保留来源、时间、附件或原始链接。</p></div>
+    </div>
+    <div class="footer"><span class="brand">实操 02</span><span>10</span></div>
+  </section>
+
+  <!-- 11 微信聊天 -->
+  <section class="slide light" id="s11" data-title="微信聊天怎么处理" data-sub="两条路径">
+    <div class="titlebar"><div><div class="kicker">WECHAT</div><h2>微信聊天：两条处理路径</h2></div><div class="meta">临时一段 vs 大量历史</div></div>
+    <div class="grid2" style="margin-top:2vh">
+      <div class="card"><div class="pill">路径 A</div><h3 style="margin-top:1.2vh">WorkBuddy 批量转交</h3><p class="muted" style="margin-top:.7vh">适合：我已经知道要处理哪一段聊天。</p><div class="flow" style="margin-top:2.4vh"><div class="step"><b>多选消息</b></div><div class="arrow">→</div><div class="step"><b>转交</b></div><div class="arrow">→</div><div class="step"><b>继续处理</b></div></div></div>
+      <div class="card"><div class="pill teal">路径 B</div><h3 style="margin-top:1.2vh">历史聊天提取与分析</h3><p class="muted" style="margin-top:.7vh">适合：信息明明聊过，但已经很难找到。</p><div class="matrix" style="margin-top:2.4vh"><div class="mitem"><strong>按时间</strong><span>指定日期 / 时间段</span></div><div class="mitem"><strong>按对象</strong><span>联系人 / 群聊</span></div><div class="mitem"><strong>按关键词</strong><span>合作 / 报价 / 项目…</span></div><div class="mitem"><strong>保留依据</strong><span>回到原始聊天</span></div></div></div>
+    </div>
+    <div class="exercise" style="margin-top:2.5vh"><div class="tag">演示问题</div><div class="task">“请从指定时间范围的微信聊天中，提取与‘合作’相关的原始对话，按日期和聊天对象整理，并保留原始消息依据。”</div></div>
+    <div class="footer"><span class="brand">微信聊天处理</span><span>11</span></div>
+  </section>
+
+  <!-- 12 section -->
+  <section class="slide section" id="s12" data-title="02 先想清楚为什么建" data-sub="知识库从问题出发">
+    <div class="split-title"><div><div class="section-no">02</div></div><div><div class="eyebrow"><span class="dot"></span> PART TWO</div><div class="section-title" style="margin-top:2vh">先想清楚<br><span class="accent">为什么建</span></div><p class="section-sub">最容易失败的知识库，是“什么都想放”。先选一个真实、高频、值得解决的问题。</p></div></div>
+    <div class="footer"><span class="brand">需求先于目录</span><span>12</span></div>
+  </section>
+
+  <!-- 13 需求卡 -->
+  <section class="slide light" id="s13" data-title="我的知识库需求卡" data-sub="9 个问题">
+    <div class="titlebar"><div><div class="kicker">NEED CARD</div><h2>先回答 9 个问题，再建库</h2></div><div class="meta">需求卡 · 现场填写</div></div>
+    <div class="grid3" style="margin-top:1vh">
+      <div class="card compact"><div class="num">01</div><div class="label">我是谁？</div><div class="desc">职业、业务、主要工作</div></div>
+      <div class="card compact"><div class="num">02</div><div class="label">我反复处理什么？</div><div class="desc">查资料 / 写方案 / 回复 / 研究…</div></div>
+      <div class="card compact"><div class="num">03</div><div class="label">最痛的一个问题？</div><div class="desc">找不到 / 找得慢 / 版本乱 / 重复做</div></div>
+      <div class="card compact"><div class="num">04</div><div class="label">谁会使用？</div><div class="desc">自己 / 同事 / 客户 / 学员 / 团队</div></div>
+      <div class="card compact"><div class="num">05</div><div class="label">什么时候使用？</div><div class="desc">面对客户 / 做方案 / 复盘 / 遇到问题</div></div>
+      <div class="card compact"><div class="num">06</div><div class="label">需要哪些资料？</div><div class="desc">只列完成这个任务真正需要的</div></div>
+      <div class="card compact"><div class="num">07</div><div class="label">最后想得到什么？</div><div class="desc">答案 / 方案 / 决策 / 培训 / 方法</div></div>
+      <div class="card compact"><div class="num">08</div><div class="label">怎样算有效？</div><div class="desc">用可验证的结果描述</div></div>
+      <div class="card compact"><div class="num">09</div><div class="label">哪些暂时不做？</div><div class="desc">先划清范围与敏感边界</div></div>
+    </div>
+    <div class="footer"><span class="brand">需求卡</span><span>13</span></div>
+  </section>
+
+  <!-- 14 好坏案例 -->
+  <section class="slide light" id="s14" data-title="什么是好需求" data-sub="销售个人知识库案例">
+    <div class="titlebar"><div><div class="kicker">GOOD VS BAD</div><h2>好需求：能说清楚“什么时候会用”</h2></div><div class="meta">别从“我的全部人生知识库”开始</div></div>
+    <div class="grid2" style="margin-top:2vh">
+      <div class="card" style="border-color:#d2e6e3"><span class="pill teal">✓ 好案例</span><h3 style="margin-top:1.4vh">销售个人知识库</h3><div class="checklist" style="margin-top:1.3vh"><div class="check"><i>•</i><span><b>目标：</b>快速回答客户问题并生成方案素材</span></div><div class="check"><i>•</i><span><b>场景：</b>客户问案例、产品能力、周期、价格</span></div><div class="check"><i>•</i><span><b>资料：</b>产品、案例、FAQ、报价规则、方案模板</span></div><div class="check"><i>•</i><span><b>结果：</b>案例检索页 + 回复模板</span></div><div class="check"><i>•</i><span><b>标准：</b>5 分钟内找到依据，价格与周期人工确认</span></div></div></div>
+      <div class="card" style="border-color:#dfe7ec"><span class="pill" style="color:#68798a;border-color:#dfe7ec;background:#f2f5f7">× 反例</span><h3 style="margin-top:1.4vh">“我的全部人生知识库”</h3><div class="checklist" style="margin-top:1.3vh"><div class="check"><i style="color:#7b8794">×</i><span>范围过大</span></div><div class="check"><i style="color:#7b8794">×</i><span>不知道先收集什么</span></div><div class="check"><i style="color:#7b8794">×</i><span>目录容易变成随意堆放</span></div><div class="check"><i style="color:#7b8794">×</i><span>很难判断是否真的有用</span></div></div></div>
+    </div>
+    <div class="footer"><span class="brand">先选一个问题</span><span>14</span></div>
+  </section>
+
+  <!-- 15 现场需求 -->
+  <section class="slide light" id="s15" data-title="实操 3：选出值得先做的问题" data-sub="真需求 × 易实现">
+    <div class="big-number">15</div>
+    <div class="titlebar"><div><div class="kicker">HANDS-ON 03</div><h2>现在，选一个<span class="blue">最值得先做</span>的问题</h2></div><div class="meta">不要凭感觉选，用两个筛子判断</div></div>
+    <div class="need-filter">
+      <div class="need-card true">
+        <div class="need-head"><div class="badge">真</div><div><h3>真需求</h3><p class="muted" style="font-size:clamp(14px,1vw,19px)">这个问题值不值得解决？</p></div></div>
+        <div class="need-list">
+          <div class="need-item"><span class="need-dot"></span><span><b>痛感最强</b>：不解决就一直难受、拖慢工作</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>发生频率最高</b>：反复出现，不是偶发问题</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>业务价值最大</b>：解决后能明显省时间、提质量或创造价值</span></div>
+        </div>
+      </div>
+      <div class="need-card easy">
+        <div class="need-head"><div class="badge">易</div><div><h3>易实现</h3><p class="muted" style="font-size:clamp(14px,1vw,19px)">这个问题适不适合先用 AI 做？</p></div></div>
+        <div class="need-list">
+          <div class="need-item"><span class="need-dot"></span><span><b>规则最清晰</b>：输入、判断、输出相对明确</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>资料最完善</b>：已有足够资料、案例或历史记录</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>AI 最擅长</b>：检索、整理、生成、分类、提取等能力能直接发挥</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="pick-rule">
+      <div><strong>优先选择：真需求高 + 易实现高</strong><br><span>先做一个能快速跑通、能看到价值的小场景，再逐步扩大。</span></div>
+      <div class="pill teal" style="white-space:nowrap">现场任务 · 10–15 MIN</div>
+    </div>
+    <div class="footer"><span class="brand">实操 03</span><span>15</span></div>
+    <aside class="notes">让学员先列 2–3 个候选问题，再用“真需求 / 易实现”两个维度筛。不要追求宏大，先选一个真实、常发生、资料够、AI 容易发挥的小场景。</aside>
+  </section>
+
+  <!-- 16 section -->
+  <section class="slide section" id="s16" data-title="03 设计能用的结构" data-sub="目录为使用服务">
+    <div class="split-title"><div><div class="section-no">03</div></div><div><div class="eyebrow"><span class="dot"></span> PART THREE</div><div class="section-title" style="margin-top:2vh">设计<br><span class="accent">能用的结构</span></div><p class="section-sub">目录不是为了“看起来整齐”。它的任务是让你以后找得到、看得懂、知道来源、知道是否有效。</p></div></div>
+    <div class="footer"><span class="brand">结构设计</span><span>16</span></div>
+  </section>
+
+  <!-- 17 七层目录 -->
+  <section class="slide light" id="s17" data-title="推荐的 7 层目录结构" data-sub="从入口到归档">
+    <div class="titlebar"><div><div class="kicker">7 LAYERS</div><h2>一套简单、可扩展的目录骨架</h2></div><div class="meta">不要求照抄，可按场景调整</div></div>
+    <div class="grid2" style="align-items:center">
+      <div class="tree">我的知识库/
+├── 00-入口与说明
+├── 10-原始素材
+├── 20-知识内容
+├── 30-方法与规则
+├── 40-项目与过程
+├── 50-输出成果
+└── 90-归档</div>
+      <div class="checklist">
+        <div class="check"><i>00</i><span><b>入口与说明：</b>首页、索引、规则、使用说明</span></div><div class="check"><i>10</i><span><b>原始素材：</b>证据、原文、附件、来源</span></div><div class="check"><i>20</i><span><b>知识内容：</b>FAQ、产品知识、案例、概念</span></div><div class="check"><i>30</i><span><b>方法与规则：</b>SOP、方法、检查表、模板</span></div><div class="check"><i>40</i><span><b>项目与过程：</b>会议、任务、决策、复盘</span></div><div class="check"><i>50</i><span><b>输出成果：</b>方案、报告、课程、成品</span></div><div class="check"><i>90</i><span><b>归档：</b>过期、重复、历史版本</span></div>
+      </div>
+    </div>
+    <div class="footer"><span class="brand">目录骨架</span><span>17</span></div>
+  </section>
+
+  <!-- 18 结构标准 -->
+  <section class="slide light" id="s18" data-title="目录设计的 6 个标准" data-sub="是否真的能用">
+    <div class="titlebar"><div><div class="kicker">STRUCTURE TEST</div><h2>目录设计，不看“整齐”<br>看这 6 件事</h2></div></div>
+    <div class="grid3" style="margin-top:2vh">
+      <div class="card compact"><span class="icon">🔍</span><div class="label">找得到</div><div class="desc">需要时能快速定位</div></div>
+      <div class="card compact"><span class="icon teal">👀</span><div class="label">看得懂</div><div class="desc">第一次打开也知道是什么</div></div>
+      <div class="card compact"><span class="icon">🔗</span><div class="label">知道来源</div><div class="desc">加工内容能回到原始依据</div></div>
+      <div class="card compact"><span class="icon teal">🧭</span><div class="label">知道是否有效</div><div class="desc">版本、状态、更新时间清楚</div></div>
+      <div class="card compact"><span class="icon">♻</span><div class="label">能持续更新</div><div class="desc">新内容进得来，旧内容退得出</div></div>
+      <div class="card compact"><span class="icon teal">🤖</span><div class="label">AI 能稳定调用</div><div class="desc">结构清晰、来源可靠、边界明确</div></div>
+    </div>
+    <div class="footer"><span class="brand">结构标准</span><span>18</span></div>
+  </section>
+
+  <!-- 19 目录练习 -->
+  <section class="slide light" id="s19" data-title="实操 4：设计自己的目录" data-sub="先写，再检查">
+    <div class="titlebar"><div><div class="kicker">HANDS-ON 04</div><h2>先写出你直觉中的目录，再做 6 个检查</h2></div></div>
+    <div class="grid2">
+      <div class="exercise"><div class="tag">现场任务 · 10–15 MIN</div><div class="task">围绕刚才那一个真实使用场景，画出你的第一版目录。</div><p class="muted" style="margin-top:1vh">不要追求“最终版”，只要能支持你马上开始放第一批资料。</p></div>
+      <div class="card"><div class="checklist"><div class="check"><i>?</i><span>每个目录是否对应一个使用问题？</span></div><div class="check"><i>?</i><span>原始资料和加工知识是否区分？</span></div><div class="check"><i>?</i><span>有没有待处理入口？</span></div><div class="check"><i>?</i><span>有没有归档位置？</span></div><div class="check"><i>?</i><span>能否看出当前是否有效？</span></div><div class="check"><i>?</i><span>别人第一次打开，知道从哪里开始吗？</span></div></div></div>
+    </div>
+    <div class="footer"><span class="brand">实操 04</span><span>19</span></div>
+  </section>
+
+  <!-- 20 section -->
+  <section class="slide section" id="s20" data-title="04 建设第一批知识" data-sub="从真实资料开始">
+    <div class="split-title"><div><div class="section-no">04</div></div><div><div class="eyebrow"><span class="dot"></span> PART FOUR</div><div class="section-title" style="margin-top:2vh">开始建设<br><span class="accent">第一批知识</span></div><p class="section-sub">不追求一次导入几百个文件。优先处理那些能解决你刚才那个高频问题的资料。</p></div></div>
+    <div class="footer"><span class="brand">第一批内容</span><span>20</span></div>
+  </section>
+
+  <!-- 21 搜集顺序 -->
+  <section class="slide light" id="s21" data-title="资料怎么搜集" data-sub="先高频，再历史">
+    <div class="titlebar"><div><div class="kicker">SOURCE PRIORITY</div><h2>资料搜集顺序：<span class="blue">先解决高频问题</span></h2></div></div>
+    <div class="flow" style="margin-top:7vh">
+      <div class="step"><span class="icon">1</span><b>高频问题所需资料</b><small>先解决眼前真实工作</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon teal">2</span><b>能证明结论的原始资料</b><small>保留来源和证据</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon">3</span><b>案例 / 流程 / 模板</b><small>补充可复用内容</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon teal">4</span><b>低频与历史资料</b><small>最后再处理</small></div>
+    </div>
+    <div class="callout" style="margin-top:5vh"><strong>少一点，但真正会用，比一次塞进去几百份文件更重要。</strong></div>
+    <div class="footer"><span class="brand">资料优先级</span><span>21</span></div>
+  </section>
+
+  <!-- 22 入库六问 -->
+  <section class="slide light" id="s22" data-title="每份资料入库前的 6 个问题" data-sub="别急着塞进知识库">
+    <div class="titlebar"><div><div class="kicker">6 QUESTIONS</div><h2>每份资料入库前，先问 6 句</h2></div></div>
+    <div class="grid3" style="margin-top:2vh">
+      <div class="card compact"><div class="num">1</div><div class="label">解决什么问题？</div></div>
+      <div class="card compact"><div class="num">2</div><div class="label">来自哪里？</div></div>
+      <div class="card compact"><div class="num">3</div><div class="label">现在还有效吗？</div></div>
+      <div class="card compact"><div class="num">4</div><div class="label">谁负责确认 / 更新？</div></div>
+      <div class="card compact"><div class="num">5</div><div class="label">有敏感信息吗？</div></div>
+      <div class="card compact"><div class="num">6</div><div class="label">保留原文 / 加工 / 归档？</div></div>
+    </div>
+    <div class="quote" style="margin-top:4vh">不要因为“写得很好”就直接当知识；<span class="accent">事实、来源、状态、版本</span>比“看起来专业”更重要。</div>
+    <div class="footer"><span class="brand">入库标准</span><span>22</span></div>
+  </section>
+
+  <!-- 23 最小建设链路 -->
+  <section class="slide light" id="s23" data-title="第一批内容怎么建" data-sub="最小但完整的链路">
+    <div class="titlebar"><div><div class="kicker">MINIMUM BUILD</div><h2>不考核数量，只跑通一条<span class="blue">最小但完整</span>的建设链路</h2></div></div>
+    <div class="cycle" style="grid-template-columns:1fr 34px 1fr 34px 1fr 34px 1fr;margin-top:6vh">
+      <div class="node"><span class="icon">📚</span><b>选一批真需要的资料</b><small>围绕一个问题</small></div><div class="arr">→</div>
+      <div class="node"><span class="icon teal">🔗</span><b>保留原始资料与来源</b><small>可追溯</small></div><div class="arr">→</div>
+      <div class="node"><span class="icon">🧩</span><b>加工成合适形式</b><small>FAQ / 知识卡 / SOP / 案例…</small></div><div class="arr">→</div>
+      <div class="node"><span class="icon teal">🏠</span><b>从首页或目录找到并使用</b><small>真的能工作</small></div>
+    </div>
+    <div class="exercise" style="margin-top:4vh"><div class="tag">现场任务 · 15 MIN</div><div class="task">从你准备的资料里，完成一条“原始资料 → 加工内容 → 回到来源 → 能被找到”的真实链路。</div></div>
+    <div class="footer"><span class="brand">实操 05</span><span>23</span></div>
+  </section>
+
+  <!-- 24 section -->
+  <section class="slide section" id="s24" data-title="05 让知识库持续活着" data-sub="日常更新与维护">
+    <div class="split-title"><div><div class="section-no">05</div></div><div><div class="eyebrow"><span class="dot"></span> PART FIVE</div><div class="section-title" style="margin-top:2vh">让知识库<br><span class="accent">持续活着</span></div><p class="section-sub">真正有价值的知识库，不是第一次整理得多完整，而是随着真实工作不断新增、更新、纠错和归档。</p></div></div>
+    <div class="footer"><span class="brand">日常维护</span><span>24</span></div>
+  </section>
+
+  <!-- 25 日常闭环 -->
+  <section class="slide light" id="s25" data-title="日常更新闭环" data-sub="不为了维护而维护">
+    <div class="titlebar"><div><div class="kicker">MAINTENANCE LOOP</div><h2>不为了维护而维护<br><span class="accent">在工作变化时顺手更新</span></h2></div></div>
+    <div class="cycle" style="margin-top:4vh">
+      <div class="node"><span class="icon">✨</span><b>新资料 / 新经验</b><small>新规则 / 新项目结果</small></div><div class="arr">→</div>
+      <div class="node"><span class="icon teal">📥</span><b>进入原始素材</b><small>或项目记录</small></div><div class="arr">→</div>
+      <div class="node"><span class="icon">🧠</span><b>判断关系</b><small>和已有知识相比</small></div><div class="arr">→</div>
+      <div class="node"><span class="icon teal">♻</span><b>采取动作</b><small>新增 / 更新 / 待确认 / 归档</small></div>
+    </div>
+    <div class="callout" style="margin-top:4vh"><strong>知识库的日常维护，本质上是在回答：<span class="accent">“这条新信息，会不会改变我以后怎么做？”</span></strong></div>
+    <div class="footer"><span class="brand">更新闭环</span><span>25</span></div>
+  </section>
+
+  <!-- 26 四类动作 -->
+  <section class="slide light" id="s26" data-title="日常最常见的 4 类动作" data-sub="新增 / 更新 / 纠错 / 归档">
+    <div class="titlebar"><div><div class="kicker">4 ACTIONS</div><h2>日常最常见的 4 类动作</h2></div></div>
+    <div class="grid4" style="margin-top:3vh">
+      <div class="card"><span class="icon">＋</span><h3 style="margin-top:1.2vh">新增</h3><p class="muted" style="margin-top:.8vh">以前没有、以后还会复用的信息。</p><div class="pill" style="margin-top:2vh">新问题 · 新案例 · 新方法</div></div>
+      <div class="card"><span class="icon teal">↻</span><h3 style="margin-top:1.2vh">更新</h3><p class="muted" style="margin-top:.8vh">同一知识存在，但规则、流程、事实发生变化。</p><div class="pill teal" style="margin-top:2vh">优先改已有知识</div></div>
+      <div class="card"><span class="icon">!</span><h3 style="margin-top:1.2vh">纠错 / 待确认</h3><p class="muted" style="margin-top:.8vh">内容冲突、来源不清、版本不一致。</p><div class="pill" style="margin-top:2vh">不要让 AI 猜</div></div>
+      <div class="card"><span class="icon teal">↓</span><h3 style="margin-top:1.2vh">归档</h3><p class="muted" style="margin-top:.8vh">过期、被替代、重复或不再使用。</p><div class="pill teal" style="margin-top:2vh">归档 ≠ 删除</div></div>
+    </div>
+    <div class="footer"><span class="brand">日常维护</span><span>26</span></div>
+  </section>
+
+  <!-- 27 三字段 -->
+  <section class="slide light" id="s27" data-title="维护不要复杂" data-sub="个人知识库先抓 3 个字段">
+    <div class="titlebar"><div><div class="kicker">KEEP IT SIMPLE</div><h2>个人知识库，日常维护先抓 3 个字段</h2></div></div>
+    <div class="grid3" style="margin-top:5vh">
+      <div class="card"><div class="num">SOURCE</div><div class="label">来源</div><div class="desc">这条信息从哪里来？能不能回到原始依据？</div></div>
+      <div class="card"><div class="num" style="color:var(--cyan)">STATUS</div><div class="label">状态</div><div class="desc">当前有效 / 待确认 / 过期 / 已归档？</div></div>
+      <div class="card"><div class="num">UPDATE</div><div class="label">更新时间</div><div class="desc">最后一次确认是什么时候？</div></div>
+    </div>
+    <div class="quote" style="margin-top:5vh">不用每天巡检整个知识库。<span class="accent">真正需要维护的是会被反复使用、影响判断、或者已经发生变化的内容。</span></div>
+    <div class="footer"><span class="brand">轻量维护</span><span>27</span></div>
+  </section>
+
+  <!-- 28 更新练习 -->
+  <section class="slide light" id="s28" data-title="实操 6：模拟一次知识更新" data-sub="知识库不是建完就结束">
+    <div class="titlebar"><div><div class="kicker">HANDS-ON 06</div><h2>模拟一次“新信息出现以后”的知识更新</h2></div></div>
+    <div class="grid2" style="align-items:center">
+      <div class="exercise"><div class="tag">现场任务 · 10 MIN</div><div class="task">从刚才的一条知识出发，假设现在出现一条新资料或业务变化。</div><p class="muted" style="margin-top:1.2vh">判断：新增？更新？冲突待确认？还是旧内容应该归档？</p></div>
+      <div class="card"><h3>然后真的改一次</h3><div class="checklist" style="margin-top:1.5vh"><div class="check"><i>✓</i><span>修改状态</span></div><div class="check"><i>✓</i><span>修改更新时间</span></div><div class="check"><i>✓</i><span>修改正文 / 版本</span></div><div class="check"><i>✓</i><span>保留旧内容和来源</span></div></div></div>
+    </div>
+    <div class="footer"><span class="brand">实操 06</span><span>28</span></div>
+  </section>
+
+  <!-- 29 section -->
+  <section class="slide section" id="s29" data-title="06 真正把知识用起来" data-sub="查找 / 问答 / 产出 / 改进">
+    <div class="split-title"><div><div class="section-no">06</div></div><div><div class="eyebrow"><span class="dot"></span> PART SIX</div><div class="section-title" style="margin-top:2vh">最后一步：<br><span class="accent">真正用起来</span></div><p class="section-sub">知识库的价值，不是“里面有多少文件”，而是它能不能在真实工作中帮你更快完成任务。</p></div></div>
+    <div class="footer"><span class="brand">真实使用</span><span>29</span></div>
+  </section>
+
+  <!-- 30 使用四步 -->
+  <section class="slide light" id="s30" data-title="知识库的 4 种真实使用" data-sub="从查找到改进">
+    <div class="titlebar"><div><div class="kicker">USE IT</div><h2>知识库的 4 种真实使用</h2></div></div>
+    <div class="grid4" style="margin-top:4vh">
+      <div class="card"><span class="icon">🔍</span><h3 style="margin-top:1.2vh">查找</h3><p class="muted" style="margin-top:.8vh">找到一条知识，确认来源、版本、状态。</p></div>
+      <div class="card"><span class="icon teal">💬</span><h3 style="margin-top:1.2vh">问答</h3><p class="muted" style="margin-top:.8vh">有依据就回答，没有依据就明确拒答。</p></div>
+      <div class="card"><span class="icon">✍</span><h3 style="margin-top:1.2vh">产出</h3><p class="muted" style="margin-top:.8vh">生成客户回复、方案提纲、学习清单、复盘摘要。</p></div>
+      <div class="card"><span class="icon teal">♻</span><h3 style="margin-top:1.2vh">改进</h3><p class="muted" style="margin-top:.8vh">一次失败，变成下一次知识库更新。</p></div>
+    </div>
+    <div class="callout" style="margin-top:4vh"><strong>使用问题 → 知识缺口 → 补充资料 → 更新知识 → 再验证</strong></div>
+    <div class="footer"><span class="brand">真实使用</span><span>30</span></div>
+  </section>
+
+  <!-- 31 三问测试 -->
+  <section class="slide light" id="s31" data-title="你的知识库真的有效吗" data-sub="三问测试">
+    <div class="titlebar"><div><div class="kicker">3 TESTS</div><h2>最后，用 3 个问题检验你的知识库</h2></div></div>
+    <div class="grid3" style="margin-top:5vh">
+      <div class="card"><div class="num">01</div><div class="label">我能不能快速找到一个常用答案？</div></div>
+      <div class="card"><div class="num" style="color:var(--cyan)">02</div><div class="label">这个答案能不能回到明确来源？</div></div>
+      <div class="card"><div class="num">03</div><div class="label">没有答案 / 有冲突 / 已过期，我能不能明确知道？</div></div>
+    </div>
+    <div class="exercise" style="margin-top:4vh"><div class="tag">现场验收</div><div class="task">用你的知识库完成一次真实任务：查到、引用、产出，或者明确发现缺口。</div></div>
+    <div class="footer"><span class="brand">三问测试</span><span>31</span></div>
+  </section>
+
+  <!-- 32 prompt -->
+  <section class="slide light" id="s32" data-title="一条可以直接用的提示词" data-sub="用知识库完成实际工作">
+    <div class="titlebar"><div><div class="kicker">PROMPT</div><h2>用知识库完成一次实际工作</h2></div><div class="meta">现场可直接复制修改</div></div>
+    <div class="prompt">请只根据我提供的知识库内容，完成以下工作：
+
+任务：[例如：回答客户问题 / 生成方案提纲 / 整理新人培训清单]
+使用场景：[填写具体场景]
+目标对象：[客户 / 销售 / 新人 / 管理者]
+
+请按以下格式输出：
+
+## 可直接使用的结果
+## 使用到的知识条目
+列出标题、版本和来源。
+## 资料没有覆盖的部分
+## 需要人工确认的部分
+## 建议补充进知识库的内容
+
+强制规则：
+- 没有依据就明确说“当前知识库没有足够依据”；
+- 不使用模型常识补充企业事实；
+- 历史版本和当前版本冲突时，不自行选择；
+- 涉及价格、合同、权限、客户隐私和交付承诺时必须人工复核。</div>
+    <div class="footer"><span class="brand">提示词模板</span><span>32</span></div>
+  </section>
+
+  <!-- 33 课后 -->
+  <section class="slide light" id="s33" data-title="课后怎么继续" data-sub="不做数量作业">
+    <div class="titlebar"><div><div class="kicker">AFTER CLASS</div><h2>课后不追数量，继续服务于你的真实场景</h2></div></div>
+    <div class="grid3" style="margin-top:4vh">
+      <div class="card"><div class="num">A</div><div class="label">继续建设</div><div class="desc">真实工作中继续采集、筛选、整理真正会用到的资料。</div></div>
+      <div class="card"><div class="num" style="color:var(--cyan)">B</div><div class="label">完成三问测试</div><div class="desc">能找到？有来源？没有 / 冲突 / 过期能明确知道？</div></div>
+      <div class="card"><div class="num">C</div><div class="label">完成一次真实更新</div><div class="desc">遇到新资料或业务变化，做一次新增 / 更新 / 待确认 / 归档。</div></div>
+    </div>
+    <div class="quote" style="margin-top:5vh">知识库不是一个“项目”，而是一套<span class="accent">随着工作一起生长</span>的系统。</div>
+    <div class="footer"><span class="brand">课后实践</span><span>33</span></div>
+  </section>
+
+  <!-- 34 总结 -->
+  <section class="slide light" id="s34" data-title="今天只记住这 5 句话" data-sub="课程总结">
+    <div class="titlebar"><div><div class="kicker">SUMMARY</div><h2>今天只需要记住这 5 句话</h2></div></div>
+    <div class="grid2" style="margin-top:1vh;gap:1.2vw">
+      <div class="card compact"><div class="label">随手记</div><div class="desc">任意来源的信息，能快速进入本地知识库。</div></div>
+      <div class="card compact"><div class="label">微信聊天提取分析</div><div class="desc">大量历史聊天，可以被检索、定位和分析。</div></div>
+      <div class="card compact"><div class="label">知识库</div><div class="desc">值得保留的内容，可以被找到、理解和复用。</div></div>
+      <div class="card compact"><div class="label">日常维护</div><div class="desc">新知识进得来、旧知识改得动、过期内容退得出。</div></div>
+    </div>
+    <div class="callout" style="margin-top:2.5vh"><strong>先让需要的信息进来，再判断什么值得沉淀；先解决一个真实问题，再扩展知识库；在真实使用中持续新增、更新、纠错和归档。</strong></div>
+    <div class="footer"><span class="brand">课程总结</span><span>34</span></div>
+  </section>
+
+  <!-- 35 结束 -->
+  <section class="slide" id="s35" data-title="从今天开始，让知识真正用起来" data-sub="END">
+    <div class="endcenter">
+      <div class="eyebrow"><span class="dot"></span> END · START</div>
+      <h2 style="margin-top:2vh;font-size:clamp(48px,5vw,86px)">从今天开始，<br>让你的知识<span class="accent">真正用起来</span></h2>
+      <p>先从一个真实问题开始。信息进来、形成知识、开始使用、持续更新。</p>
+      <div class="chips" style="justify-content:center;margin-top:3vh"><span>信息采集</span><span>知识整理</span><span>真实使用</span><span>持续更新</span></div>
+      <div style="margin-top:4vh;font-size:clamp(17px,1.2vw,23px);font-weight:800;color:#d4e3f4">开工智能｜让 AI 开工，真正进入业务</div>
+    </div>
+    <div class="footer"><span class="brand">感谢参与</span><span>35</span></div>
+  </section>
+
+  <div class="overview" id="overview"></div>
+</div>
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const bar=document.getElementById('progressBar');
+  const ov=document.getElementById('overview');
+  const pageJump=document.getElementById('pageJump');
+  const pageTotal=document.getElementById('pageTotal');
+  pageTotal.textContent=slides.length;
+  pageJump.max=slides.length;
+  let index=0, startX=null;
+  function hashIndex(){const m=location.hash.match(/#s(\d+)/);return m?Math.min(slides.length-1,Math.max(0,+m[1]-1)):0}
+  function show(i,push=true){
+    index=Math.min(slides.length-1,Math.max(0,i));
+    slides.forEach((s,j)=>s.classList.toggle('active',j===index));
+    bar.style.width=((index+1)/slides.length*100)+'%';
+    pageJump.value=index+1;
+    document.title=(slides[index].dataset.title||'课件')+'｜从信息到资产';
+    if(push && location.hash!=='#s'+(index+1)) history.replaceState(null,'','#s'+(index+1));
+  }
+  function next(){show(index+1)} function prev(){show(index-1)}
+  function fullscreen(){if(!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.()}
+  function notes(){slides[index].querySelector('.notes')?.classList.toggle('show')}
+  function toggleOverview(){ov.classList.toggle('show')}
+  function buildOverview(){ov.innerHTML='';slides.forEach((s,i)=>{const d=document.createElement('div');d.className='thumb';d.innerHTML=`<div class="tn">${String(i+1).padStart(2,'0')}</div><div class="tt">${s.dataset.title||''}</div><div class="ts">${s.dataset.sub||''}</div>`;d.onclick=()=>{show(i);ov.classList.remove('show')};ov.appendChild(d)})}
+  document.addEventListener('keydown',e=>{
+    if(e.target===pageJump) return;
+    if(ov.classList.contains('show') && e.key==='Escape'){ov.classList.remove('show');return}
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();next()}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev()}
+    else if(e.key==='Home')show(0); else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='f')fullscreen(); else if(e.key.toLowerCase()==='n')notes(); else if(e.key.toLowerCase()==='o')toggleOverview();
+  });
+  document.getElementById('nextBtn').onclick=next;document.getElementById('prevBtn').onclick=prev;
+  pageJump.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      const p=Math.max(1,Math.min(slides.length,parseInt(pageJump.value||'1',10)));
+      show(p-1);
+      pageJump.blur();
+    }
+  });
+  pageJump.addEventListener('change',()=>{
+    const p=Math.max(1,Math.min(slides.length,parseInt(pageJump.value||String(index+1),10)));
+    show(p-1);
+  });
+  pageJump.addEventListener('click',e=>e.target.select());
+  document.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',e=>{if(startX==null)return;let dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>60)(dx<0?next():prev)();startX=null},{passive:true});
+  window.addEventListener('hashchange',()=>show(hashIndex(),false));
+  buildOverview(); show(hashIndex(),false);
+})();
+</script>
+</body>
+</html>
