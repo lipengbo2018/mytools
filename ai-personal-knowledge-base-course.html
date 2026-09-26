@@ -246,7 +246,7 @@
       <div class="step"><span class="icon teal">④</span><b>结构搭好</b><small>目录服务使用</small></div><div class="arrow">→</div>
       <div class="step"><span class="icon">⑤</span><b>开始使用</b><small>查找 / 产出 / 改进</small></div>
     </div>
-    <div class="callout" style="margin-top:4vh"><strong>最终结果：你会拥有一套“能持续进入、能被找到、能被复用、能继续更新”的个人知识系统。</strong></div>
+    <div class="callout" style="margin-top:4vh"><strong>最终结果：你会拥有一套“能持续进入、能被找到、能被复用、能继续更新”，并且达到「AI 能调用」标准的个人知识系统。</strong></div>
     <div class="footer"><span class="brand">课程目标</span><span>03</span></div>
   </section>
 
@@ -263,6 +263,7 @@
       <div class="card compact"><div class="num">07</div><div class="label">日常更新</div><div class="desc">新增 / 更新 / 纠错 / 归档</div></div>
       <div class="card compact"><div class="num">08</div><div class="label">真正使用</div><div class="desc">完成一次真实任务并发现缺口</div></div>
     </div>
+    <div class="callout" style="margin-top:3vh"><strong>课程主线是 8 个环节。课后延伸：让知识库被 Agent 调用——见第 07 章（展望，只讲不练）。</strong></div>
     <div class="footer"><span class="brand">课程地图</span><span>04</span></div>
   </section>
 
@@ -617,8 +618,93 @@
     <div class="footer"><span class="brand">提示词模板</span><span>32</span></div>
   </section>
 
-  <!-- 33 课后 -->
-  <section class="slide light" id="s33" data-title="课后怎么继续" data-sub="不做数量作业">
+  <!-- 33 section 07 -->
+  <section class="slide section" id="s33" data-title="07 知识库的下一程" data-sub="建好之后，往哪走">
+    <div class="split-title"><div><div class="section-no">07</div></div><div><div class="eyebrow"><span class="dot"></span> PART SEVEN · 展望</div><div class="section-title" style="margin-top:2vh">知识库的<br><span class="accent">下一程</span></div><p class="section-sub">前面六章你建的是「资料与知识库」这一块。这一章看它在 AI 工作体系里的位置，以及下一步往哪长。本环节只讲不练，帮你建立判断。</p></div></div>
+    <div class="footer"><span class="brand">知识库的下一程</span><span>33</span></div>
+  </section>
+
+  <!-- 34 知识库在 AI 体系里的位置 -->
+  <section class="slide light" id="s34" data-title="知识库在 AI 体系里的位置" data-sub="Agent · Skill · Tool · 知识库">
+    <div class="titlebar"><div><div class="kicker">WHERE IT LIVES</div><h2>你建的东西，在 AI 工作体系里是哪一块</h2></div><div class="meta">只讲不练 · 建立判断</div></div>
+    <div class="grid2" style="align-items:center;margin-top:1.5vh">
+      <div class="tree">用户 / 任务
+   │
+   ▼
+ 智能体 Agent（组合多个 Skills）
+   │
+   ▼
+ 工作结果：方案 · 回答 · 报告
+
+ Agent ──组合──> Skills（能力模块）
+ Skills ──调用──> Tools（具体动作）
+   │
+   ▼
+ 资料与知识库（底座）</div>
+      <div>
+        <div class="card" style="margin-bottom:1.4vh"><span class="pill">主链路</span><h3 style="margin-top:1.1vh">Agent 把任务做成结果</h3><p class="muted" style="margin-top:.7vh">用户提出任务，智能体组织能力、调用工具，最后产出方案、回答或报告。</p></div>
+        <div class="card" style="margin-bottom:1.4vh"><span class="pill teal">下层支撑</span><h3 style="margin-top:1.1vh">Skills 是能力，Tools 是动作</h3><p class="muted" style="margin-top:.7vh">一个 Agent 组合多个 Skills（检索、写作、分析…），每个 Skill 再调用 Tools 去读文件、查资料、发消息。</p></div>
+        <div class="card"><span class="pill">底座</span><h3 style="margin-top:1.1vh">资料与知识库</h3><p class="muted" style="margin-top:.7vh">账号定位 · 素材 · 案例 · 规则 · 模板 · 历史反馈——正是今天你建的这一块。</p></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:2.4vh"><strong>这张图里那个底座，就是你今天下午建的东西。</strong><p>它不是终点，是 Agent 的燃料。你前面填的需求卡（第 13 页）、定的三字段（第 27 页 来源 / 状态 / 更新时间），规格就是知识库这一格——结构清晰、来源可靠、边界明确，AI 才敢调用。</p></div>
+    <div class="footer"><span class="brand">知识库的下一程</span><span>34</span></div>
+  </section>
+
+  <!-- 35 知识库被 Agent 调用 -->
+  <section class="slide light" id="s35" data-title="知识库怎么被 Agent 调用" data-sub="以公众号内容创作为例">
+    <div class="titlebar"><div><div class="kicker">AGENT IN ACTION</div><h2>知识库被 Agent 调用：一个真实例子</h2></div><div class="meta">公众号内容创作</div></div>
+    <div class="flow" style="margin-top:3vh">
+      <div class="step"><span class="icon">①</span><b>接收需求</b><small>选题 / 指令</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon teal">②</span><b>读取资料</b><small>账号定位 + 本地物料</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon">③</span><b>生成初稿</b><small>调用 Skills 组合</small></div><div class="arrow">→</div>
+      <div class="step"><span class="icon teal">④</span><b>人工审核</b><small>校对 / 确认后发布</small></div>
+    </div>
+    <div class="grid2" style="margin-top:3vh;align-items:center">
+      <div class="card"><div class="tree" style="background:#081827">本地 Vault
+（账号定位 · 案例 · 模板）
+   │  读取
+   ▼
+ 公众号 Agent
+   │  生成
+   ▼
+ 内容初稿
+   ↺ 审核修改后发布</div><p class="muted" style="margin-top:1.1vh">第 ② 步就是知识库被调用：Agent 先读你的账号定位、历史案例和模板，再下笔。换到销售场景，读的就是产品、案例、FAQ 与报价规则。</p></div>
+      <div class="exercise"><div class="tag">和你前面讲的是同一件事</div><div class="task">第 ④ 步「人工审核」不是新规则。它就是你做过三问测试（第 31 页）和提示词（第 32 页）里那句「涉及价格、合同、权限、隐私、交付承诺必须人工复核」。</div><p class="muted" style="margin-top:1.1vh">今天这门课只做一件事：把知识库建到「AI 能调用」的标准。至于 Agent 怎么搭，是另一门课。</p></div>
+    </div>
+    <div class="footer"><span class="brand">知识库的下一程</span><span>35</span></div>
+  </section>
+
+  <!-- 36 一个 Agent 够不够 -->
+  <section class="slide light" id="s36" data-title="一个 Agent 够不够" data-sub="先跑通一个，再加第二个">
+    <div class="titlebar"><div><div class="kicker">ONE OR MANY</div><h2>一个 Agent 就够，还是需要专家团？</h2></div><div class="meta">判断标准</div></div>
+    <div class="need-filter">
+      <div class="need-card easy">
+        <div class="need-head"><div class="badge">1</div><div><h3>一个 Agent 就够</h3><p class="muted" style="font-size:clamp(14px,1vw,19px)">先把单场景跑通</p></div></div>
+        <div class="need-list">
+          <div class="need-item"><span class="need-dot"></span><span><b>流程短</b>：从需求到产出环节少</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>标准一致</b>：判断规则清晰、稳定</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>共用上下文</b>：一份知识库就能支撑</span></div>
+        </div>
+      </div>
+      <div class="need-card true">
+        <div class="need-head"><div class="badge">多</div><div><h3>适合专家团</h3><p class="muted" style="font-size:clamp(14px,1vw,19px)">多角色协同时再拆分</p></div></div>
+        <div class="need-list">
+          <div class="need-item"><span class="need-dot"></span><span><b>多角色</b>：选题、写作、审核分工不同</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>可并行</b>：任务能同时推进</span></div>
+          <div class="need-item"><span class="need-dot"></span><span><b>需独立审核</b>：每段都要单独把关</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="pick-rule">
+      <div><strong>公众号团队就是例子：选题、写稿、审核各司其职，适合拆成多个 Agent；而个人销售知识库这种单人场景，一个 Agent 就够。</strong><br><span>原则一致：先跑通一个 Agent，验证知识库确实被用起来，再加第二个。</span></div>
+      <div class="pill teal" style="white-space:nowrap">第 18 页延伸</div>
+    </div>
+    <div class="footer"><span class="brand">知识库的下一程</span><span>36</span></div>
+  </section>
+
+  <!-- 37 课后 (was 33) -->
+  <section class="slide light" id="s37" data-title="课后怎么继续" data-sub="不做数量作业">
     <div class="titlebar"><div><div class="kicker">AFTER CLASS</div><h2>课后不追数量，继续服务于你的真实场景</h2></div></div>
     <div class="grid3" style="margin-top:4vh">
       <div class="card"><div class="num">A</div><div class="label">继续建设</div><div class="desc">真实工作中继续采集、筛选、整理真正会用到的资料。</div></div>
@@ -626,11 +712,11 @@
       <div class="card"><div class="num">C</div><div class="label">完成一次真实更新</div><div class="desc">遇到新资料或业务变化，做一次新增 / 更新 / 待确认 / 归档。</div></div>
     </div>
     <div class="quote" style="margin-top:5vh">知识库不是一个“项目”，而是一套<span class="accent">随着工作一起生长</span>的系统。</div>
-    <div class="footer"><span class="brand">课后实践</span><span>33</span></div>
+    <div class="footer"><span class="brand">课后实践</span><span>37</span></div>
   </section>
 
-  <!-- 34 总结 -->
-  <section class="slide light" id="s34" data-title="今天只记住这 5 句话" data-sub="课程总结">
+  <!-- 38 总结 (was 34) -->
+  <section class="slide light" id="s38" data-title="今天只记住这 5 句话" data-sub="课程总结">
     <div class="titlebar"><div><div class="kicker">SUMMARY</div><h2>今天只需要记住这 5 句话</h2></div></div>
     <div class="grid2" style="margin-top:1vh;gap:1.2vw">
       <div class="card compact"><div class="label">随手记</div><div class="desc">任意来源的信息，能快速进入本地知识库。</div></div>
@@ -638,12 +724,12 @@
       <div class="card compact"><div class="label">知识库</div><div class="desc">值得保留的内容，可以被找到、理解和复用。</div></div>
       <div class="card compact"><div class="label">日常维护</div><div class="desc">新知识进得来、旧知识改得动、过期内容退得出。</div></div>
     </div>
-    <div class="callout" style="margin-top:2.5vh"><strong>先让需要的信息进来，再判断什么值得沉淀；先解决一个真实问题，再扩展知识库；在真实使用中持续新增、更新、纠错和归档。</strong></div>
-    <div class="footer"><span class="brand">课程总结</span><span>34</span></div>
+    <div class="callout" style="margin-top:2.5vh"><strong>先让需要的信息进来，再判断什么值得沉淀；先解决一个真实问题，再扩展知识库；在真实使用中持续新增、更新、纠错和归档；把它建到「AI 能调用」的标准，下一步就能交给 Agent 去用。</strong></div>
+    <div class="footer"><span class="brand">课程总结</span><span>38</span></div>
   </section>
 
-  <!-- 35 结束 -->
-  <section class="slide" id="s35" data-title="从今天开始，让知识真正用起来" data-sub="END">
+  <!-- 39 结束 (was 35) -->
+  <section class="slide" id="s39" data-title="从今天开始，让知识真正用起来" data-sub="END">
     <div class="endcenter">
       <div class="eyebrow"><span class="dot"></span> END · START</div>
       <h2 style="margin-top:2vh;font-size:clamp(48px,5vw,86px)">从今天开始，<br>让你的知识<span class="accent">真正用起来</span></h2>
@@ -651,7 +737,7 @@
       <div class="chips" style="justify-content:center;margin-top:3vh"><span>信息采集</span><span>知识整理</span><span>真实使用</span><span>持续更新</span></div>
       <div style="margin-top:4vh;font-size:clamp(17px,1.2vw,23px);font-weight:800;color:#d4e3f4">开工智能｜让 AI 开工，真正进入业务</div>
     </div>
-    <div class="footer"><span class="brand">感谢参与</span><span>35</span></div>
+    <div class="footer"><span class="brand">感谢参与</span><span>39</span></div>
   </section>
 
   <div class="overview" id="overview"></div>
